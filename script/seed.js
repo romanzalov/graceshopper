@@ -11,7 +11,7 @@
  */
 
 const db = require('../server/db')
-const {User, Review, Order, productInstance, Product, Category} = require('../server/db/models');
+const {User, Review, Order, productInstance, Product, Category, ProductCategory} = require('../server/db/models');
 
 
 var Products = [
@@ -109,7 +109,9 @@ async function seed () {
         }
     }).spread((category, created) => {
         Product.create(product).then((product) => {
-            product.categoryId = category.id;
+            // product.categoryId = category.id;
+            product.addCategory(category, { through: ProductCategory});
+
             product.save();
             // .then(() => {
 

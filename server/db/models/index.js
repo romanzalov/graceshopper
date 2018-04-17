@@ -1,3 +1,4 @@
+const db = require('../db');
 const User = require('./user');
 const Product = require('./product');
 const Review = require('./review');
@@ -29,11 +30,22 @@ User.hasMany(Review);
 User.hasMany(Order);
 Order.belongsTo(User);
 
-productInstance.belongsToOne(Order)
+productInstance.belongsTo(Order)
 Order.hasMany(productInstance, {as: 'instances'})
 
 productInstance.belongsTo(Product, {as: "parent"});
 Product.hasMany(productInstance, {as: "instances"});
+
+const ProductCategory = db.define('ProductCategory', {
+
+})
+
+Product.belongsToMany(Category, { through: ProductCategory, as: 'categories' });
+Category.belongsToMany(Product, { through: ProductCategory });
+// through is required!
+
+// user.addProject(project, { through: { role: 'manager' }});
+
 
 // Product.belongsToMany(Category, {through: });
 // Category.belongsToMany(Product, {as: "products"});
@@ -44,5 +56,6 @@ module.exports = {
   Review,
   Order,
   productInstance,
-  Category
+  Category,
+  ProductCategory
 }

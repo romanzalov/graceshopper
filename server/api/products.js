@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Product, productInstance, Order, Review} = require('../db/models');
+const {Category, User, Product, productInstance, Order, Review} = require('../db/models');
 const axios = require ('axios');
 
 router.get('/', (req, res, next) => {
@@ -7,7 +7,8 @@ router.get('/', (req, res, next) => {
     Product.findAll({
         where: {},
         include: [
-            {model: productInstance, as:'instances', required:false}
+            {model: productInstance, as:'instances', required:false},
+            {model: Category, as: 'categories', required: false},
         ],
     }).then((products) => {
         res.json(products);
