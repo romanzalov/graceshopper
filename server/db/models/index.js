@@ -25,9 +25,7 @@ Product.hasMany(Review);
 Review.belongsTo(User)
 User.hasMany(Review);
 
-User.hasOne(Order, {as: 'cart'});
-User.hasMany(Order, {as: 'purchaseHistory'});
-
+User.hasMany(Order);
 Order.belongsTo(User);
 
 productInstance.belongsTo(Order)
