@@ -31,8 +31,8 @@ Order.belongsTo(User);
 productInstance.belongsTo(Order)
 Order.hasMany(productInstance)
 
-productInstance.belongsTo(Product);
-Product.hasMany(productInstance);
+productInstance.belongsTo(Product, {as: "parent"});
+Product.hasMany(productInstance, {as: "instances"});
 
 module.exports = {
   User,

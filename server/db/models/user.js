@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Order = require('./order');
 
 const User = db.define('user', {
   email: {
@@ -40,6 +41,29 @@ module.exports = User
 User.prototype.correctPassword = function (candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
+
+User.prototype.completePurchase = async function() {
+  var oldCart = await Order.findById(this.cart.id);
+  oldCart.userId = this.id;
+  await oldCart.save();
+  var newCart = await Order.create({});
+  newCart.cartuserId = this.id;
+  await newCart.save();
+}
+
+User.beforeCreate(user => {
+  Order.create({
+    userId: user.id
+  }).then(cart => {
+    // console.log("48: ", user.id);
+    cart.userId = user.id;
+    cart.save().then(() => {
+      // console.log("50: ", cart);
+      return;
+    });
+  });
+  // return cart.save();
+});
 
 /**
  * classMethods
