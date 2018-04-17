@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Order} = require('../db/models')
+const {User, Order, Review} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -9,90 +9,47 @@ router.get('/', (req, res, next) => {
     // send everything to anyone who asks!
     attributes: ['id', 'email'],
     include: [
-      {model: Order, as:'orders', required:false},
-      // {model: Order, as:'purchaseHistory', required:false},      
+      {model: Order},
+      // {model: Order, as:'purchaseHistory', required:false}, 
     ]
   })
   .then(users => res.json(users))
   .catch(next)
 })
 
-router.post('/create-user', async (req, res, next) => {
-//  try {
-//    let user = await User.create(
-//      {
-//         email:"test@email.com",
-//      });
-//    res.json(user);
-//  } catch (error) {next(error)}
- User.create(req.body)
- .then(user => {Order.create({userId: user.id})})
- .then(res.json(user))
- .catch(next)
-})
-
-// router.post('/:id/purchase-history', async (req, res, next) => {
-router.get('/:id/purchase-history/add', async (req, res, next) => {
-    try {
-    let user = await User.findOne({where:{
-      id:req.params.id,
-     },
-      include: [
-        {model: Order, as:'cart', required:false},
-        {model: Order, as:'purchaseHistory', required:false},      
-      ]
-    });
-    await user.completePurchase();
-    res.json(user);
-  } catch (error) {next(error)}
-  //   let cart = await Order.findById(user.cart.id);
-  //   cart.cartuserId = null;
-  //   cart.userId = user.id;
-  //   await cart.save();
-  //   await user.save();
-  //   res.json(user);
+router.post('/', (req, res, next) => {
+  User.create(req.body)
+  .then(user => {
+    console.log("ran")
+    res.json(user)
+  })
+  .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
   User.findOne({where:{
-    id:req.params.id,
+    id: req.params.id,
    },
     include: [
-      {model: Order, as:'cart', required:false},
-      {model: Order, as:'purchaseHistory', required:false},      
+      {model: Order},
     ]
-  }).then(user => res.json(user)).catch(next); 
+  }).then(user => res.json(user)).catch(next);
  })
 
- router.get('/:id/cart', (req, res, next) => {
-  User.findOne({where:{
-    id:req.params.id,
-   },
-    include: [
-      {model: Order, as:'cart', required:false},
-      {model: Order, as:'purchaseHistory', required:false},      
-    ]
-  }).then(user => res.json(user.cart)).catch(next);
- })
-
- 
- 
  router.put('/:id', (req, res, next) => {
   User.findById(req.params.id)
     .then(user => user.update(req.body))
     .then(user => res.json(user))
     .catch(next)
  })
- 
- router.put('/:id/cart', (req, res, next) => {
-  User.findById(req.params.id)
-    .then(user => user.update(req.body))
-    .then(user => res.json(user))
+
+router.delete('/:userId', (req, res, next) => {
+  User.destroy({where: {id: req.params.userId}})
+    .then(() => res.status(204).end())
     .catch(next)
- })
+})
 
-
- //ADD TO USERS ROUTES
+//Order routes
 //get all orders on specific user
 router.get('/:userId/orders', (req, res, next) => {
   Order.findAll({
@@ -140,4 +97,16 @@ router.post('/:userId/orders', (req, res, next) => {
   Order.create(req.body)
   .then(() => res.sendStatus(201))
   .catch(next)
+})
+
+//review routes
+router.get('/:userId/reviews', (req,res,next)=>{
+ Review.findAll({
+   where: {
+     userId: req.params.userId
+   }
+ })
+ .then((reviews) => {
+  res.json(reviews)
+ })
 })

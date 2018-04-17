@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Product, productInstance, Order} = require('../db/models');
+const {User, Product, productInstance, Order, Review} = require('../db/models');
 const axios = require ('axios');
 
 router.get('/', (req, res, next) => {
@@ -134,5 +134,19 @@ router.get('/:id/add-to-cart', async (req, res, next) => {
         
 ///:id
 // /user/:id/cart
+
+
+//Review routes
+router.get('/:productId/reviews', (req,res,next)=>{
+   Review.findAll({
+        where: {
+           productId: req.params.productId
+        }
+    })
+   .then((reviews) => {
+      res.json(reviews)
+  })
+})
+
 
 module.exports = router;
