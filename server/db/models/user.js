@@ -55,14 +55,11 @@ User.beforeCreate(user => {
   Order.create({
     userId: user.id
   }).then(cart => {
-    // console.log("48: ", user.id);
     cart.userId = user.id;
     cart.save().then(() => {
-      // console.log("50: ", cart);
       return;
     });
   });
-  // return cart.save();
 });
 
 /**

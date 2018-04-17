@@ -8,7 +8,11 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-
+router.get('/:id', (req, res, next) => {
+  Review.findById(req.params.id)
+    .then(review => res.json(review))
+    .catch(next)
+})
 
 router.post('/', (req, res, next) => {
   Review.create(req.body)
@@ -24,7 +28,6 @@ router.put('/:reviewId', (req, res, next) => {
 
 router.delete('/:reviewId', (req, res, next) => {
   Review.destroy({where: {id: req.params.reviewId}})
-    .then(review => review.destroy())
     .then(() => res.status(204).end())
     .catch(next)
 })
