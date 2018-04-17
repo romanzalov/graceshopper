@@ -8,7 +8,7 @@ const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
 module.exports = app
@@ -56,22 +56,25 @@ const createApp = () => {
   app.use('/api', require('./api'))
 
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')))
+  app.use(express.static(path.join(__dirname, '../public')))
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
-    if (path.extname(req.path).length) {
-      const err = new Error('Not found')
-      err.status = 404
-      next(err)
-    } else {
-      next()
-    }
+    next()
+    // if (path.extname(req.path).length) {
+    //   // const err = new Error('Not found')
+    //   // err.status = 404
+    //   // next(err)
+    // } else {
+    //   next()
+    // }
   })
 
   // sends index.html
   app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'))
+    console.log("test 75");
+    res.json({});
+    // res.sendFile(path.join(__dirname, '../public/index.html'))
   })
 
   // error handling endware

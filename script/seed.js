@@ -11,7 +11,7 @@
  */
 
 const db = require('../server/db')
-const {User, Review, Order, productInstance, Product} = require('../server/db/models')
+const {User, Review, Order, productInstance, Product, Category} = require('../server/db/models');
 
 
 var Products = [
@@ -103,26 +103,27 @@ async function seed () {
   ]);
 
   const products = await Promise.all(Products.map((product) => {
-    Product.create(product).then( async (product) => {
-        product.createInstance(-1, orders[0].id).then(instance => {
-            console.log("created instance of : ", product.title, instance);
+    Category.findOrCreate({
+        where: {
+            name:product.sportType,
+        }
+    }).spread((category, created) => {
+        Product.create(product).then((product) => {
+            product.categoryId = category.id;
+            product.save();
+            // .then(() => {
+
+                product.createInstance(-1, orders[0].id).then(instance => {
+                    // console.log("created instance of : ", product.title, instance);
+                });
+                product.createInstance(0, orders[1].id).then(instance => {
+                    // console.log("created instance of : ", product.title, instance);
+                });
+                product.createInstance(1, orders[2].id).then(instance => {
+                    // console.log("created instance of : ", product.title, instance);
+                });
+            // })
         });
-        product.createInstance(0, orders[1].id).then(instance => {
-            console.log("created instance of : ", product.title, instance);
-        });
-        product.createInstance(1, orders[2].id).then(instance => {
-            console.log("created instance of : ", product.title, instance);
-        });
-        // productInstance.create({
-        //     productId:product.id,
-        // })
-        // var examplePrices = [parseFloat(product.price) - 1, parseFloat(product.price) + 1, parseFloat(product.price)];
-        // examplePrices.forEach((price) => {
-        //     productInstance.create({
-        //         productId:product.id,
-        //         price:price,
-        //     });
-        // })
     });
   }))
 

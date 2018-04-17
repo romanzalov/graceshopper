@@ -16,13 +16,17 @@ const Product = db.define('product', {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    imageUrls: {
-      type: Sequelize.ARRAY(Sequelize.STRING),
-      allowNull: true,
-    },
     price: {
       type: Sequelize.DECIMAL,
       defaultValue: 0,
+    },
+    imageUrls: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
+      // allowNull: true,
+      defaultValue: [],
+    },
+    availability: {
+      type: Sequelize.BOOLEAN,
     },
     description: {
       type: Sequelize.TEXT,

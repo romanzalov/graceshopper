@@ -2,10 +2,7 @@ const router = require('express').Router();
 const {User, Product, productInstance, Order} = require('../db/models');
 const axios = require ('axios');
 
-// API Guide
-// get + post for every "array"
-// get + put + delete for every "object"
-
+//Finding all productInstances and attaching models Product and Order on response
 router.get('/', (req, res, next) => {
     productInstance.findAll({
         where:{},
@@ -18,6 +15,7 @@ router.get('/', (req, res, next) => {
     })
 })
 
+// create an instance of a product
 router.post('/', (req, res, next) => {
     Product.findById(req.body.productId).then(product => {
         product.createInstance(0, req.body.orderId).then(instance => {
@@ -32,6 +30,7 @@ router.post('/', (req, res, next) => {
     // })
 });
 
+// find a product instance by ID
 router.get('/:id', (req, res, next) => {
     productInstance.findOne({
         where:{
@@ -45,6 +44,7 @@ router.get('/:id', (req, res, next) => {
     })
 })
 
+//update a product instance by ID
 router.put('/:id', (req, res, next) => {
     productInstance.findById(req.params.id)
     .then((instance) => {
@@ -55,6 +55,7 @@ router.put('/:id', (req, res, next) => {
     })
 })
 
+//delete product instance by ID
 router.delete("/:id", (req, res) => {
     productInstance.findById(req.params.id)
     .then((instance) => {
@@ -64,15 +65,15 @@ router.delete("/:id", (req, res) => {
     })
 })
 
-//How will product instances be added to orders?
-    // 'user/:id/cart/add' -> product.id -> create a new product instance, add it to the user's cart
-        // set instance.orderId to the user's "order"
-router.get('/:id/add-to-cart', async (req, res, next) => {
-    var _Instance = await productInstance.findById(req.params.id);
-    _Instance.orderId = req.body.orderId;
-    _Instance.save().then(instance => {
-        res.json(instance);
-    })
-})
+// //How will product instances be added to orders?
+//     // 'user/:id/cart/add' -> product.id -> create a new product instance, add it to the user's cart
+//         // set instance.orderId to the user's "order"
+// router.get('/:id/add-to-cart', async (req, res, next) => {
+//     var _Instance = await productInstance.findById(req.params.id);
+//     _Instance.orderId = req.body.orderId;
+//     _Instance.save().then(instance => {
+//         res.json(instance);
+//     })
+// })
 
 module.exports = router;
