@@ -1,15 +1,20 @@
 const Sequelize = require('sequelize')
-const db = require('../db')
+const db = require('../db');
+const productInstance = require('./productInstance')
 
 const Order = db.define('order', {
-	userOrGuest: {
-		type: Sequelize.ENUM('user', 'guest'),
-	},
 	isCart: {
 		type: Sequelize.BOOLEAN,
+		defaultValue: true
 	},
 	status: {
-		type: Sequelize.ENUM('open', 'filled'),
+		type: Sequelize.ENUM('Created', 'Processing', 'Cancelled', 'Completed'),
+	}
+}, {
+	defaultScope: {
+		include: [{
+			model: productInstance
+		}]
 	}
 })
 
