@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Order } = require('../db/models')
+const { Order, productInstance } = require('../db/models')
 
 module.exports = router
 
@@ -43,14 +43,13 @@ router.put('/:orderId', (req, res, next) => {
 //change product quantity on order or delete if 0
 router.put('/:orderId/products/:productInstanceId', (req, res, next) => {
 	productInstance.findById(req.params.productInstanceId)
-		.then(product => product.update(req.body))
-		.then(product => {
-			product.quantity === 0 ?
-			(product.destroy()
-				.then(() => res.status(204).end())) :
-			(res.json(product))
-		.catch(next)
-	})
+	.then(product => product.update(req.body))
+	.then(product => {
+		product.quantity === 0 ?
+		(product.destroy()
+			.then(() => res.status(204).end())) :
+		(res.json(product))})
+	.catch(next)
 })
 
 
