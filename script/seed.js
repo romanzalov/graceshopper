@@ -79,13 +79,44 @@ var Products = [
 ];
 
 async function seed () {
-  await db.sync({force: true})
+  await db.sync({force: true});
   console.log('db synced!')
+  await User.destroy({where: {}});
+  await productInstance.destroy({where: {}});
+  await Product.destroy({where: {}});
+  await Review.destroy({where: {}});
+  await Order.destroy({where: {}});
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
+  const orders = await Promise.all([
+    Order.create({}),
+    Order.create({}),
+    Order.create({}),
+  ]);
+
   const products = await Promise.all(Products.map((product) => {
-    Product.create(product);
+    Product.create(product).then( async (product) => {
+        product.createInstance(-1, orders[0].id).then(instance => {
+            console.log("created instance of : ", product.title, instance);
+        });
+        product.createInstance(0, orders[1].id).then(instance => {
+            console.log("created instance of : ", product.title, instance);
+        });
+        product.createInstance(1, orders[2].id).then(instance => {
+            console.log("created instance of : ", product.title, instance);
+        });
+        // productInstance.create({
+        //     productId:product.id,
+        // })
+        // var examplePrices = [parseFloat(product.price) - 1, parseFloat(product.price) + 1, parseFloat(product.price)];
+        // examplePrices.forEach((price) => {
+        //     productInstance.create({
+        //         productId:product.id,
+        //         price:price,
+        //     });
+        // })
+    });
   }))
 
   const users = await Promise.all([
@@ -94,8 +125,8 @@ async function seed () {
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
-  console.log(`seeded ${users.length} users, ${products.length} products`)
-  console.log(`seeded successfully`)
+  console.log(`seeded ${users.length} users, ${products.length} products`);
+  console.log(`seeded successfully`);
 }
 
 // Execute the `seed` function
