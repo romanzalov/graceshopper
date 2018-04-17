@@ -12,7 +12,7 @@ const productInstance = db.define('productInstance', {
 
   quantity: {
     type: Sequelize.INTEGER,
-    allowNull: false
+    defaultValue: 1,
   }
 })
 

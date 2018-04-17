@@ -58,24 +58,31 @@ const createApp = () => {
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '../public')))
 
+  app.use('/product', (req, res) => {
+    console.log("test 75");
+    // res.json({});
+    res.sendFile(path.join(__dirname, '../public/template/product.html'))
+  })
+
+  app.use('/', (req, res) => {
+    console.log("test 75");
+    // res.json({});
+    res.sendFile(path.join(__dirname, '../public/template/main  .html'))
+  })
+
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
     next()
-    // if (path.extname(req.path).length) {
-    //   // const err = new Error('Not found')
-    //   // err.status = 404
-    //   // next(err)
-    // } else {
-    //   next()
-    // }
+    if (path.extname(req.path).length) {
+      // const err = new Error('Not found')
+      // err.status = 404
+      // next(err)
+    } else {
+      next()
+    }
   })
 
   // sends index.html
-  app.use('*', (req, res) => {
-    console.log("test 75");
-    res.json({});
-    // res.sendFile(path.join(__dirname, '../public/index.html'))
-  })
 
   // error handling endware
   app.use((err, req, res, next) => {
@@ -86,7 +93,7 @@ const createApp = () => {
 }
 
 const startListening = () => {
-  // start listening (and create a 'server' object representing our server)
+  // start listening (and create 'server' object representing our server)
   const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`))
 
   // set up our socket control center

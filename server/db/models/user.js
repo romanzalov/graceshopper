@@ -14,14 +14,15 @@ const User = db.define('user', {
   },
   address: {
     type: Sequelize.JSON,
-    allowNull: false
+    allowNull: true,
   },
   addressList: {
-    type: Sequelize.ARRAY(Sequelize.JSON)
+    type: Sequelize.ARRAY(Sequelize.JSON),
+    allowNull: true,
   },
   isAdmin: {
     type: Sequelize.BOOLEAN,
-    defaultValue: false
+    defaultValue: false,
   },
   password: {
     type: Sequelize.STRING,

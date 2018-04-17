@@ -50,6 +50,7 @@ router.put('/:orderId/products/:productInstanceId', (req, res, next) => {
 				.then(() => res.status(204).end())) :
 			(res.json(product))
 		.catch(next)
+	})
 })
 
 
@@ -57,4 +58,4 @@ router.use((req, res, next) => {
   const error = new Error('Not Found')
   error.status = 404
   next(error)
-})
+});

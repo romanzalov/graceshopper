@@ -29,14 +29,14 @@ User.hasMany(Review);
 User.hasMany(Order);
 Order.belongsTo(User);
 
-// productInstance.belongsToMany(Order)
-// Order.belongsToMany(productInstance, {as: 'instances'})
+productInstance.belongsToOne(Order)
+Order.hasMany(productInstance, {as: 'instances'})
 
 productInstance.belongsTo(Product, {as: "parent"});
 Product.hasMany(productInstance, {as: "instances"});
 
-Product.belongsTo(Category);
-Category.hasMany(Product, {as: "products"});
+// Product.belongsToMany(Category, {through: });
+// Category.belongsToMany(Product, {as: "products"});
 
 module.exports = {
   User,
