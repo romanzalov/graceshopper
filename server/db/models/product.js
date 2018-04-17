@@ -28,7 +28,7 @@ const Product = db.define('product', {
     availability: {
       type: Sequelize.BOOLEAN,
     },
-    content: {
+    description: {
       type: Sequelize.TEXT,
     }
 })
