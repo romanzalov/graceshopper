@@ -10,6 +10,18 @@ router.get('/', (req, res, next) => {
 	.catch(next)
 })
 
+//get all orders by status
+
+router.get('/:status', (req, res, next) => {
+	Order.findAll({
+		where: {
+			status: req.params.status
+		}
+	})
+	.then(order => res.json(order))
+	.catch(next)
+})
+
 //get an order
 router.get('/:orderId', (req, res, next) => {
 	Order.findById(req.params.orderId)
@@ -26,6 +38,18 @@ router.put('/:orderId', (req, res, next) => {
 	})
 	.then(order => res.json(order))
 	.catch(next)
+})
+
+//change product quantity on order or delete if 0
+router.put('/:orderId/products/:productInstanceId', (req, res, next) => {
+	productInstance.findById(req.params.productInstanceId)
+		.then(product => product.update(req.body))
+		.then(product => {
+			product.quantity === 0 ?
+			(product.destroy()
+				.then(() => res.status(204).end())) :
+			(res.json(product))
+		.catch(next)
 })
 
 

@@ -16,13 +16,16 @@ const Product = db.define('product', {
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    imageUrl: {
-      type: Sequelize.STRING,
+    imageUrls: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
       allowNull: true,
     },
     price: {
       type: Sequelize.DECIMAL,
       defaultValue: 0,
+    },
+    description: {
+      type: Sequelize.TEXT,
     }
 })
 

@@ -12,6 +12,17 @@ const User = db.define('user', {
       isEmail: true,
     }
   },
+  address: {
+    type: Sequelize.JSON,
+    allowNull: false
+  },
+  addressList: {
+    type: Sequelize.ARRAY(Sequelize.JSON)
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   password: {
     type: Sequelize.STRING,
     // Making `.password` act like a func hides it when serializing to JSON.
