@@ -4,9 +4,15 @@ const axios = require ('axios');
 // const Product = require('./product');
 
 const productInstance = db.define('productInstance', {
+
   price: {
     type: Sequelize.DECIMAL,
-    defaultValue: 0,
+    allowNull: false
+  },
+
+  quantity: {
+    type: Sequelize.INTEGER,
+    allowNull: false
   }
 })
 
@@ -20,7 +26,7 @@ const productInstance = db.define('productInstance', {
 //         instance.price = product.price;
 //     });
 //     //   });
-//     // } 
+//     // }
 //     // return
 // });
 
