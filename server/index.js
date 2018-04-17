@@ -67,7 +67,7 @@ const createApp = () => {
   app.use('/', (req, res) => {
     console.log("test 75");
     // res.json({});
-    res.sendFile(path.join(__dirname, '../public/template/main  .html'))
+    res.sendFile(path.join(__dirname, '../public/template/main.html'))
   })
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
