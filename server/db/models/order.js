@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const db = require('../db');
 const productInstance = require('./productInstance')
+const Product = require('./product')
 
 const Order = db.define('order', {
 	isCart: {
@@ -14,9 +15,20 @@ const Order = db.define('order', {
 	defaultScope: {
 		include: [{
 			model: productInstance, as: 'instances',
-			required: false
+			required: false,
+			include: [
+				{
+					model: Product
+				}
+			]
 		}]
 	}
 })
+
+Order.searchByStatus = status => {
+	return Order.findAll({
+		where: {status}
+	})
+}
 
 module.exports = Order;
