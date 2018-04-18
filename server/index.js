@@ -59,7 +59,6 @@ const createApp = () => {
   app.use(express.static(path.join(__dirname, '../public')))
 
   app.use('/product', (req, res) => {
-    console.log("test 75");
     // res.json({});
     res.sendFile(path.join(__dirname, '../public/template/product.html'))
   })
@@ -70,7 +69,6 @@ const createApp = () => {
 
 
   app.use('/', (req, res) => {
-    console.log("test 75");
     // res.json({});
     res.sendFile(path.join(__dirname, '../public/main.html'))
     // res.sendFile(path.join(__dirname, '../public/template/main.html'))
