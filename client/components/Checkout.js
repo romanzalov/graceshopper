@@ -8,9 +8,7 @@ class Checkout extends Component {
 		super(props);
 	}
 	render() {
-        const stripe = Stripe('pk_test_6pRNASCoBOKtIshFeQd4XMUh');
-        const elements = stripe.elements();
-		return (
+        return (
 			<div className="container">
 			<h1 className="my-4">Checkout</h1>
 			<div className="row" style={{"paddingBottom":"10px"}}>
@@ -77,27 +75,31 @@ class Checkout extends Component {
             </div>            
 
             <div className="form-group">
+                <label for="exampleInputEmail1"><b>Name on Card</b></label>
+                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+            </div>
+
+            <div className="form-group">
                 <label for="exampleInputEmail1"><b>Credit Card Number</b></label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
-            </div>            
-
-
-            <form action="/charge" method="post" id="payment-form">
-                    <div className="form-row">
-                        <label for="card-element">
-                        Credit or debit card
-                        </label>
-                        <div id="card-element">
-                        </div>
-
-                        <div id="card-errors" role="alert"></div>
-                    </div>
-
-                    <button>Submit Payment</button>
-            </form>
-
             </div>
-				<button type="submit" className="btn btn-primary" style={{"margin-top":"0px"}}><b>Save</b></button>
+                        
+            <div className="form-group col-sm-4" style={{paddingLeft:"0px", display:"inline-block"}}>            
+                <label style={{paddingLeft:"0px"}} for="cvv"><b>CVV Code</b></label>
+                <input type="text" className="form-control" name="cvv" id="cvv" placeholder="Security Code"/>
+            </div>
+            <div className="form-group col-sm-offset-5 col-sm-6" style={{paddingLeft:"0px", float:"right", display:"inline-block"}}>            
+            
+            <label style={{paddingLeft:"0px"}} for="expiry"><b>Expiry</b></label>
+            <div className="row" style={{marginLeft:"0px"}}>
+                <input type="text" className="form-control" name="year" id="cvv" placeholder="YYYY" 
+                style={{width:"40%", display:"inline-block", marginRight:"10px"}}/>
+                <input type="text" className="form-control" name="month" id="cvv" placeholder="MM" style={{width:"40%", display:"inline-block"}}/>
+            </div>
+            
+            </div>
+            </div>
+				<button type="submit" className="btn btn-primary" style={{"margin-top":"0px"}}><b>Submit Order</b></button>
 			</div>
 			</div>
 			</div>
