@@ -11,6 +11,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
+const axios = require('axios');
 const {User, Review, Order, productInstance, Product, Category, ProductCategory} = require('../server/db/models');
 module.exports = app
 
@@ -70,17 +71,27 @@ const createApp = () => {
   
   app.use('/logout', (req, res) => {
     console.log("destroying session");
-    req.session.destroy();
+    // req.session.destroy();
+    req.session.cart = {};
     res.send("session destroyed")      
   })
 
-  app.use('/', (req, res) => {
+  app.use('/', (req, res, next) => {
     if (req.session.passport) {
+      // var url = `/api/users/${req.session.passport.user}`;
+      // console.log("LINE 81: ", url);
+      // axios.get(url).then(response => {
+      //   console.log("LINE 82");
+      //   console.log("user's current cart:", response.data.orders[-1]);
+      // });
+      // next();
       // if (!(req.session.user.lastorder.isCart)) {
       //   req.session.cart = req.session.user.lastorder;
       // }
     }
-    if (!req.session.cart) {
+    if (!req.session.cart 
+      || Object.keys(req.session.cart).length == 0) {
+      console.log("no cart");
       Order.create(
         {
           isCart: true,
@@ -96,14 +107,18 @@ const createApp = () => {
           ]
         }]},
       ).then(order => {
-        console.log("(Updated) no cart found! req.session: ", req.session);
-        if (req.session.passort) {
-          order.userId = req.session.passport.user.id;
+        console.log("(Updated) no cart found! req.session: ", req.session, req.session.passport);
+        if ('passport' in req.session) {
+          console.log("passport found");
+          console.log("setting userId of cart: ", order.userId);
+          order.userId = req.session.passport.user;
           order.save().then(() => {
+            req.session.cart = order;
             res.sendFile(path.join(__dirname, '../public/main.html'))
           })
         }
         else {
+          console.log("no passport found");
           req.session.cart = order;
           res.sendFile(path.join(__dirname, '../public/main.html'))
         }
@@ -111,6 +126,7 @@ const createApp = () => {
     }
     else {
       console.log("existing cart found! req.session: ", req.session);
+      // req.session.cart
       res.sendFile(path.join(__dirname, '../public/main.html'))      
     }
     // res.json({});

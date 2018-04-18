@@ -12,10 +12,7 @@ router.use('/orders', require('./orders'));
 
 router.use('/category', require('./category'));
 
-router.get('/session', (req, res) => {
-  //add to cart -> req.session = cart;
-  res.json(req.session);
-})
+router.use('/session', require('./session'));
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
