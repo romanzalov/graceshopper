@@ -126,11 +126,6 @@ var Users = [
 async function seed () {
   await db.sync({force: true});
   console.log('db synced!')
-  await User.destroy({where: {}});
-  await productInstance.destroy({where: {}});
-  await Product.destroy({where: {}});
-  await Review.destroy({where: {}});
-  await Order.destroy({where: {}});
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
