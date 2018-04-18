@@ -7,17 +7,17 @@ import axios from 'axios'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  // const {email} = props
-  console.log("props", props);
-  var products = [{name:"test"}]; 
+  // // const {email} = props
+  // console.log("props", props);
+  // var products = [{name:"test"}]; 
 
-  var getProducts = async function() {
-    await axios.get('api/products').then(response => {
-      products = response.data;
-      console.log("productList", products);
-    });
-  }  
-  getProducts();
+  // var getProducts = async function() {
+  //   await axios.get('api/products').then(response => {
+  //     products = response.data;
+  //     console.log("productList", products);
+  //   });
+  // }  
+  // getProducts();
 
   return (
   <div className="container">
@@ -63,9 +63,9 @@ export const UserHome = (props) => {
       </div>
 
       <div className="row">
-        {products.map(product => {
+        {props.products.map(product => {
           return(
-            <div className="col-lg-4 col-md-6 mb-4" key="product.id">
+            <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
             <div className="card h-100">
               <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
               <div className="card-body">
@@ -82,101 +82,6 @@ export const UserHome = (props) => {
           </div>              
           )
         })}
-        <div className="col-lg-4 col-md-6 mb-4">
-          <div className="card h-100">
-            <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
-            <div className="card-body">
-              <h4 className="card-title">
-                <a href="#">Item One</a>
-              </h4>
-              <h5>$24.99</h5>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-4 col-md-6 mb-4">
-          <div className="card h-100">
-            <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
-            <div className="card-body">
-              <h4 className="card-title">
-                <a href="#">Item Two</a>
-              </h4>
-              <h5>$24.99</h5>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-4 col-md-6 mb-4">
-          <div className="card h-100">
-            <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
-            <div className="card-body">
-              <h4 className="card-title">
-                <a href="#">Item Three</a>
-              </h4>
-              <h5>$24.99</h5>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-4 col-md-6 mb-4">
-          <div className="card h-100">
-            <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
-            <div className="card-body">
-              <h4 className="card-title">
-                <a href="#">Item Four</a>
-              </h4>
-              <h5>$24.99</h5>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-4 col-md-6 mb-4">
-          <div className="card h-100">
-            <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
-            <div className="card-body">
-              <h4 className="card-title">
-                <a href="#">Item Five</a>
-              </h4>
-              <h5>$24.99</h5>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur! Lorem ipsum dolor sit amet.</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-lg-4 col-md-6 mb-4">
-          <div className="card h-100">
-            <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
-            <div className="card-body">
-              <h4 className="card-title">
-                <a href="#">Item Six</a>
-              </h4>
-              <h5>$24.99</h5>
-              <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-            </div>
-            <div className="card-footer">
-              <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-            </div>
-          </div>
-        </div>
 
       </div>
 
@@ -194,8 +99,7 @@ export const UserHome = (props) => {
 const mapState = (state) => {
   return {
     email: state.user.email,
-    test: "test",
-    state,
+    products: state.products,
   }
 }
 
