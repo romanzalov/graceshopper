@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import {Checkout, Cart, AddProduct, EditProduct, AdminDashboard, Login, Signup, UserHome, OrderHistory, SingleUser, AccountInfo } from './components'
 import {me} from './store'
 import {fetchProducts} from './store/products'
+import {fetchOrders} from './store/orders'
 import axios from 'axios';
 
 /**
@@ -17,8 +18,6 @@ class Routes extends Component {
 
   render () {
     const {isLoggedIn} = this.props
-    console.log("line 18");
-    console.log("routes.js props", this.props);
     return (      
       <Switch>
         {/* Routes placed here are available to all visitors */}
@@ -63,6 +62,7 @@ const mapDispatch = (dispatch) => {
     loadInitialData () {
       dispatch(me())
       dispatch(fetchProducts())
+      dispatch(fetchOrders())
     }
   }
 }

@@ -9,7 +9,7 @@ router.get('/', (req, res, next) => {
     // send everything to anyone who asks!
     attributes: ['id', 'email'],
     include: [
-      {model: Order, as: 'orders'},
+      {model: Order, as: 'orders', nested: true},
     ]
   })
   .then(users => res.json(users))
@@ -30,7 +30,7 @@ router.get('/:id', (req, res, next) => {
     id: req.params.id,
    },
     include: [
-      {model: Order},
+      {model: Order, nested: true},
     ]
   }).then(user => res.json(user)).catch(next);
  })

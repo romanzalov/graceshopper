@@ -33,7 +33,7 @@ Order.belongsTo(User);
 productInstance.belongsTo(Order)
 Order.hasMany(productInstance, {as: 'instances'})
 
-productInstance.belongsTo(Product, {as: "parent"});
+productInstance.belongsTo(Product);
 Product.hasMany(productInstance, {as: "instances"});
 
 const ProductCategory = db.define('ProductCategory', {
