@@ -8,7 +8,7 @@ router.get('/', (req, res, next) => {
 	Order.findAll({include: [User, {
 		model: productInstance,
 		as: 'instances',
-		include: [{model: Product, as: 'parent'}]
+		include: [{model: Product}]
 	}]})
 	.then(order => res.json(order))
 	.catch(next)
