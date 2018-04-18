@@ -31,9 +31,9 @@ class OrderHistory extends Component {
 									<td>
 										{order.instances.map(instance => (
 											<div key={instance.id} style={{border: "1px solid black", marginBottom:"5px"}}>
-												<a href="#"><img className="card-img-top" src={instance.parent.imageUrls[0]} alt="" 
+												<a href="#"><img className="card-img-top" src={instance.product.imageUrls[0]} alt="" 
 												style={{width:"200px", marginRight:"5px"}}/></a>
-												{instance.parent.description}
+												{instance.product.description}
 											</div>
 										))}
 									</td>
