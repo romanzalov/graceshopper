@@ -114,6 +114,8 @@ var Orders = [
   {isCart: false, userId: 1, status: 'Created'},
   {isCart: false, userId: 2, status: 'Cancelled'},
   {isCart: false, userId: 1, status: 'Completed'},
+  {isCart: true, userId: 1},
+  {isCart: true, userId: 2},
 ]
 
 var Users = [
