@@ -75,9 +75,16 @@ const createApp = () => {
   })
 
   app.use('/', (req, res) => {
+    if (req.session.passport) {
+      // if (!(req.session.user.lastorder.isCart)) {
+      //   req.session.cart = req.session.user.lastorder;
+      // }
+    }
     if (!req.session.cart) {
       Order.create(
-        {},
+        {
+          isCart: true,
+        },
         {
           include: [{
           model: productInstance, as: 'instances',
@@ -90,8 +97,16 @@ const createApp = () => {
         }]},
       ).then(order => {
         console.log("(Updated) no cart found! req.session: ", req.session);
-        req.session.cart = order;
-        res.sendFile(path.join(__dirname, '../public/main.html'))
+        if (req.session.passort) {
+          order.userId = req.session.passport.user.id;
+          order.save().then(() => {
+            res.sendFile(path.join(__dirname, '../public/main.html'))
+          })
+        }
+        else {
+          req.session.cart = order;
+          res.sendFile(path.join(__dirname, '../public/main.html'))
+        }
       })
     }
     else {
