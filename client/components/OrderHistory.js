@@ -21,7 +21,8 @@ class OrderHistory extends Component {
 								<th>Order Placed</th>
 								<th>Total</th>
 								<th>Shipped To</th>
-								<th>Items</th> 
+								<th>Items</th>
+								<th>Status</th>
 							</tr>
 							{orders.filter(order => order.isCart===false).map((order) => (
 								<tr key={order.id}>				  
@@ -37,6 +38,7 @@ class OrderHistory extends Component {
 											</div>
 										))}
 									</td>
+									<td>{order.status}</td>
 								</tr>
 							))}
 						</tbody>
