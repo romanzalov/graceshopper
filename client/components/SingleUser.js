@@ -9,11 +9,17 @@ class SingleUser extends Component {
 	}
 
 	render() {
-		const {user} = this.props;
-		const pastOrders = user.orders.filter(order => order.isCart === false)
-		const cart = user.orders.filter(order => order.isCart === true)
+		const {user} = this.props.user;
+		// const pastOrders = user.orders.filter(order => order.isCart === false);
+		// const cart = user.orders.filter(order => order.isCart === true);
+		const pastOrders = [];
+		const cart = [];
+		
+		console.log("Line 15 rendering SingleUser");
+		
 		return (
-			<div>
+			<div className="container">
+			Test...
 				<h1>Past Orders</h1>
 				<table>
 					{pastOrders.map(order => {
