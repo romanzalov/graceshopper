@@ -9,7 +9,27 @@ class AccountInfo extends Component {
 
 	render() {
 		return (
-			<div></div>
+			<div className="container">
+				<div className="row">
+				<h1 className="my-4">All Users</h1>
+				<table style={{width:"100%"}} className="table">
+				<tbody>
+				  <tr>
+					<th>Email</th>
+					<th>Name</th>
+					<th>Orders</th>
+					<th>Items</th> 
+				  </tr>
+				  <tr>				  
+				  <td>April 15th, 2018</td> 
+				  <td>$59.99</td> 
+				  <td>Address here</td>
+					<td></td>
+				</tr>
+				</tbody>
+			</table>
+				</div>	
+			</div>
 			)
 	}
 }

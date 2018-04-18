@@ -38,8 +38,23 @@ class OrderHistory extends Component {
 											</div>
 										))}
 									</td>
-									<td>{order.status}</td>
-								</tr>
+                  <td>
+                    {order.status}
+                  <br/>
+                  <div class="form-group">
+                    <label for="exampleFormControlSelect1">Order Status:</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                      <option>{order.status}</option>
+                      <option>Cancelled</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                  <button style={{"margin-top":"10px"}} className="btn btn-primary">Save</button>
+                  </td>
+
+                  </tr>
 							))}
 						</tbody>
 				  </table>
