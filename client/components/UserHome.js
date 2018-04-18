@@ -7,18 +7,6 @@ import axios from 'axios'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  // // const {email} = props
-  // console.log("props", props);
-  // var products = [{name:"test"}]; 
-
-  // var getProducts = async function() {
-  //   await axios.get('api/products').then(response => {
-  //     products = response.data;
-  //     console.log("productList", products);
-  //   });
-  // }  
-  // getProducts();
-
   return (
   <div className="container">
     <div className="row">
@@ -67,13 +55,13 @@ export const UserHome = (props) => {
           return(
             <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
             <div className="card h-100">
-              <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""/></a>
+              <a href="#"><img className="card-img-top" src={product.imageUrls[0]} alt=""/></a>
               <div className="card-body">
                 <h4 className="card-title">
                   <a href="#">{product.title}</a>
                 </h4>
-                <h5>$24.99</h5>
-                <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
+                <h5>${product.price}</h5>
+                <p className="card-text">{product.description}</p>
               </div>
               <div className="card-footer">
                 <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
@@ -85,9 +73,7 @@ export const UserHome = (props) => {
 
       </div>
 
-    </div>
-
-      
+    </div>     
     </div>
   </div>
   )
