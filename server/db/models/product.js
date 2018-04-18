@@ -23,7 +23,7 @@ const Product = db.define('product', {
     imageUrls: {
       type: Sequelize.ARRAY(Sequelize.STRING),
       // allowNull: true,
-      defaultValue: [],
+      defaultValue: ['https://picsum.photos/700/400'],
     },
     availability: {
       type: Sequelize.BOOLEAN,
