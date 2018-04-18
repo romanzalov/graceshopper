@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 
 //get all orders by status
 
-router.get('/:status', (req, res, next) => {
+router.get('/status/:status', (req, res, next) => {
 	Order.findAll({
 		where: {
 			status: req.params.status
