@@ -2,28 +2,65 @@ import axios from 'axios';
 
 //action types
 const GET_PRODUCTS = 'GET_PRODUCTS';
+const CREATE_PRODUCT = 'CREATE_PRODUCT';
+const EDIT_PRODUCT = 'EDIT_PRODUCT';
+const DELETE_PRODUCT = 'DELETE_PRODUCT';
 
-//initial state
-const defaultProducts = []
 
 //action creators
-const getProducts = products => ({type: GET_PRODUCTS, products});
+const init = products => ({type: GET_PRODUCTS, products});
+const create = product => ({type: CREATE_PRODUCT, product});
+const edit = product => ({type: EDIT_PRODUCT, product});
+const remove = id => ({type: DELETE_PRODUCT, id});
 
 //THUNKS
-export const fetchProducts = () =>
-	dispatch =>
-    axios.get('/api/products')
-      .then(res =>
-        dispatch(getProducts(res.data || defaultProducts)))
-      .catch(err => console.log(err))
+export const fetchProducts = function(){
+	return function thunk(dispatch) {
+		return axios.get('/api/products')
+		.then(res =>
+			dispatch(init(res.data)))
+		.catch(err => console.log(err))
+	}
+}
+
+export const addProduct = function(product){
+	return function thunk(dispatch) {
+		return axios.post('/api/products', product)
+		.then(res =>
+			dispatch(create(res.data)))
+		.catch(err => console.error(err))
+	}
+}
+
+export const editProduct = function(id, product){
+	return function thunk(dispatch) {
+		return axios.put(`/api/products/${id}`, product)
+		.then(res => dispatch(edit(res.data)))
+		.catch(err => console.error(err))
+	}
+}
+
+export const removeStore = function(id){
+	return function thunk(dispatch) {
+		return axios.delete(`/api/products/${id}`)
+		.then(() => dispatch(remove(id)))
+		.catch(err => console.error(err))
+	}
+}
 
 //reducer
-export default function(state = defaultProducts, action){
+export default function(products = [], action){
 	switch (action.type){
 		case GET_PRODUCTS:
 			return action.products
+		case CREATE_PRODUCT:
+			return [...products, action.product]
+		case EDIT_PRODUCT:
+			return products.map(product => (action.product.id === product.id ? action.product : product))
+		case DELETE_PRODUCT:
+			return products.filter(product => (product.id !== action.id))
 		default:
-			return state
+			return products
 	}
 }
 
