@@ -9,8 +9,7 @@ router.get('/', (req, res, next) => {
     // send everything to anyone who asks!
     attributes: ['id', 'email'],
     include: [
-      {model: Order},
-      // {model: Order, as:'purchaseHistory', required:false}, 
+      {model: Order, as: 'orders'},
     ]
   })
   .then(users => res.json(users))

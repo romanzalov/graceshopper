@@ -13,7 +13,8 @@ const Order = db.define('order', {
 }, {
 	defaultScope: {
 		include: [{
-			model: productInstance
+			model: productInstance,
+			as: 'instances',
 		}]
 	}
 })

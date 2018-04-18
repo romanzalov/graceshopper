@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
+import {Login, Signup, UserHome, OrderHistory} from './components'
 import {me} from './store'
+import axios from 'axios';
 
 /**
  * COMPONENT
@@ -15,12 +16,15 @@ class Routes extends Component {
 
   render () {
     const {isLoggedIn} = this.props
-
-    return (
+    console.log("line 18");
+    console.log("routes.js props", this.props);
+    return (      
       <Switch>
         {/* Routes placed here are available to all visitors */}
+        <Route path="/order-history" component={OrderHistory} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route exact path="/" component={UserHome} />
         {
           isLoggedIn &&
             <Switch>
