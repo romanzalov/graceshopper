@@ -38,7 +38,7 @@ class Routes extends Component {
         <Route path="/order-history" component={OrderHistory} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/single-order" component={SingleOrder} />
+        <Route path="/order/:id" component={SingleOrder} />
         <Route exact path="/product/:id" component={SingleProduct} />
         <Route exact path="/" component={UserHome} />
         {
