@@ -54,6 +54,15 @@ router.post('/cart', async (req, res) => {
     }
 })
 
+router.post('/checkout', async(req, res) => {
+    let thisCart = await Order.findById(req.session.cart.id);
+    thisCart.isCart = false;
+    thisCart.status = "Processing";
+    await thisCart.save();
+    req.session.cart = {};
+    res.json(thisCart);
+})
+
 //UPDATE SESSION (CART) ON...
     //user login
     //user logout
