@@ -43,11 +43,10 @@ router.get('/:orderId', (req, res, next) => {
 //change order status, used by admin
 router.put('/:orderId', (req, res, next) => {
 	Order.update({status: req.body.status}, {
-		where: {
-			id: req.params.orderId,
-		}
+		where: {id: req.params.orderId}, returning: true
 	})
-	.then(order => res.json(order))
+	.then(order => {
+		res.json(order)})
 	.catch(next)
 })
 
