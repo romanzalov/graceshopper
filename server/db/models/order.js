@@ -22,7 +22,12 @@ const Order = db.define('order', {
 				}
 			]
 		}]
-	}
+	},
+	// getterMethods: {
+	// 	numItems() {
+	// 	//   return this.instances.length;
+	// 	}
+	// },	
 })
 
 Order.searchByStatus = status => {
