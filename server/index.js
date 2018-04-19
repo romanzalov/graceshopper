@@ -59,15 +59,6 @@ const createApp = () => {
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '../public')))
-
-  app.use('/product', (req, res) => {
-    // res.json({});
-    res.sendFile(path.join(__dirname, '../public/template/product.html'))
-  })
-
-  app.use('/template', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/template/main.html'))
-  })
   
   app.use('/logout', (req, res) => {
     console.log("destroying session");
