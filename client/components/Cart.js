@@ -8,9 +8,13 @@ class Cart extends Component {
 	}
 
 	render() {
-
+		// const {orders, user, productInstances} = this.props;
+		// const {cart} = this.state
 		const {orders, user, productInstances, cart} = this.props;
-
+		console.log(cart)
+		// const cart = orders.find((order) => {
+		// 	return order.isCart === true && order.user.id === this.props.user.id
+		// })
 
 		return (
 			<div className="container">
@@ -24,7 +28,7 @@ class Cart extends Component {
 				<th>Quantity</th>
 				<th>Remove</th>
 			  </tr>
-			  {cart ? cart.instances.map(item => (
+			  {cart.instances ? cart.instances.map(item => (
 				<tr key={item.id}>
 					<td>
 						<div style={{border: "1px solid black", marginBottom:"5px"}}>
