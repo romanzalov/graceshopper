@@ -36,7 +36,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <li>
           <Link to={'/user-account'}>User Account</Link>
         </li>
-        </ul>       
+        </ul>
         )}
     </div>
   </div>
