@@ -4,6 +4,60 @@ const {User, Review, Order, productInstance, Product, Category, ProductCategory}
 
 module.exports = router;
 
+router.post('/test', (req, res) => {
+    console.log("test post route hit");
+    res.json({test: "test"});
+})
+//ADD TO CART
+router.post('/cart', async (req, res) => {
+    console.log("line 13");
+    var productId = parseInt(req.body.productId);
+    console.log("line 15 req.body.productId: ", req.body.productId);
+    console.log("line 16 req.body: ", req.body, productId); 
+    var relatedProduct = await Product.findById(productId);
+    console.log("line 17");
+    var hasCart = !(!('cart' in req.session) || req.session.cart == {} 
+    || !(req.session.cart) || Object.keys(req.session.cart).length == 0);
+    var hasUser = (('passport' in req.session) && ('user' in req.session.passport));
+    console.log(req.session);
+    if (hasCart) {
+        console.log("has existing cart");
+        var orderId = parseInt(req.session.cart.id);
+        if (hasUser) {
+            console.log("hasUser");
+            var userId = parseInt(req.session.passport.user);
+            let thisCart = await Order.findById(orderId);
+            if (parseInt(thisCart.userId) != userId) {
+                thisCart.userId = userId;
+                thisCart.setUser(userId);
+                await thisCart.save();
+            }
+        }
+        let newItem = await relatedProduct.createInstance(0, parseInt(orderId), 1);
+        let updatedCart = await Order.findById(orderId);
+        req.session.cart = updatedCart;
+        res.json(updatedCart);
+    }
+    else {
+        console.log("no existing cart");
+        let newCart = await Order.create({}); 
+        var orderId = newCart.id;
+        let newItem = await relatedProduct.createInstance(0, parseInt(orderId), 1);
+        if (hasUser) {
+            newCart.userId = parseInt(req.session.passport.user);
+            await newCart.save();            
+        }         
+        await newCart.save();
+        req.session.cart = newCart;           
+        res.json(newCart);
+    }
+})
+
+//UPDATE SESSION (CART) ON...
+    //user login
+    //user logout
+    //order completion
+
 // router.put('/update-cart', (req, res) => {
 router.get('/set-cart/:id', (req, res) => { //IF CART EXISTS -> GET FROM CART ID
     // res.send(req.params.id);

@@ -11,7 +11,7 @@ router.get('/', (req, res, next) => {
 		as: 'instances',
 		include: [{model: Product}]
 		}]
-})
+	})
 	.then(orders => {
 		orders.sort(function(a, b) {
 		  return a.id - b.id;
@@ -73,21 +73,6 @@ router.get('/:orderId/items', (req, res, next) => {
 			res.json(item);
 		})
 	})
-	// productInstance.create(
-	// 	req.body,
-	// 	// {price: 1239.99, quantity: 1, orderId: 3, productId: 7},		
-	// ).then(item => {
-	// 	item.setOrder(req.params.orderId);
-	// 	res.json(item);
-	// });
-	// productInstance.findById(req.params.productInstanceId)
-	// .then(product => product.update(req.body))
-	// .then(product => {
-	// 	product.quantity === 0 ?
-	// 	(product.destroy()
-	// 		.then(() => res.status(204).end())) :
-	// 	(res.json(product))})
-	// .catch(next)
 })
 
 

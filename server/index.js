@@ -77,18 +77,6 @@ const createApp = () => {
   })
 
   app.use('/', (req, res, next) => {
-    if (req.session.passport) {
-      // var url = `/api/users/${req.session.passport.user}`;
-      // console.log("LINE 81: ", url);
-      // axios.get(url).then(response => {
-      //   console.log("LINE 82");
-      //   console.log("user's current cart:", response.data.orders[-1]);
-      // });
-      // next();
-      // if (!(req.session.user.lastorder.isCart)) {
-      //   req.session.cart = req.session.user.lastorder;
-      // }
-    }
     if (!req.session.cart 
       || Object.keys(req.session.cart).length == 0) {
       console.log("no cart");
