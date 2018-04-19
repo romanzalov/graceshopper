@@ -10,28 +10,13 @@ class Cart extends Component {
 		}
 	}
 
-	componentDidMount() {
-		// const {orders, user, productInstances} = this.props;
-		// const cart = orders.find((order) => {
-		// 	return order.isCart === true && order.user.id === this.props.user.id
-		// })	
-		// this.setState({
-		// 	cart
-		// })
-	}
-
 	render() {
 		// const {orders, user, productInstances} = this.props;
 		// const {cart} = this.state
 		const {orders, user, productInstances} = this.props;
 		const cart = orders.find((order) => {
 			return order.isCart === true && order.user.id === this.props.user.id
-		})	
-
-		console.log("this.state: ", this.state);
-		console.log("this.props: ", this.props);
-		console.log(orders, users, prodcutInstances);
-		// cart.instances = [{}, {}, {}];
+		})
 
 		return (
 			<div className="container">
@@ -45,11 +30,11 @@ class Cart extends Component {
 				<th>Quantity</th>
 				<th>Remove</th>
 			  </tr>
-			  {cart.instances.map(item => (
-				<tr>
+			  {cart ? cart.instances.map(item => (
+				<tr key={item.id}>
 					<td>
 						<div style={{border: "1px solid black", marginBottom:"5px"}}>
-							<a href="#"><img className="card-img-top" src={item.product.imageUrl[0]} alt="" 
+							<a href="#"><img className="card-img-top" src={item.product.imageUrls[0]} alt="" 
 							style={{width:"200px", marginRight:"5px"}}/></a>
 							{item.product.description}
 						</div>
@@ -66,29 +51,7 @@ class Cart extends Component {
 					  <button className="btn btn-danger">X</button>
 					</td>
 				</tr>
-			  ))}
-
-			  <tr>				  
-				<td>
-					<div style={{border: "1px solid black", marginBottom:"5px"}}>
-						<a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt="" 
-						style={{width:"200px", marginRight:"5px"}}/></a>
-						Item description here
-					</div>
-				</td>
-				<td>$59.99</td> 
-				<td>
-				3 
-				<br/><br/>
-				<button className="btn btn-danger">-</button>
-					&nbsp; &nbsp;
-				<button className="btn btn-success">+</button>
-				</td> 
-			  <td>
-			  <button className="btn btn-danger">X</button>
-			  </td>
-			  </tr>
-			  
+			  )) : null}
 			</tbody>
 		  </table>
 
