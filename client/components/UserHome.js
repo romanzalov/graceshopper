@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 /**
  * COMPONENT
@@ -58,7 +59,7 @@ export const UserHome = (props) => {
               <a href="#"><img className="card-img-top" src={product.imageUrls[0]} alt=""/></a>
               <div className="card-body">
                 <h4 className="card-title">
-                  <a href="#">{product.title}</a>
+                  <Link to={`/product/${product.id}`}>{product.title}</Link>
                 </h4>
                 <h5>${product.price}</h5>
                 <p className="card-text">{product.description}</p>
