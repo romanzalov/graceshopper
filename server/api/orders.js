@@ -5,12 +5,19 @@ module.exports = router
 
 //get all orders
 router.get('/', (req, res, next) => {
-	Order.findAll({include: [User, {
+	Order.findAll({
+		include: [User, {
 		model: productInstance,
 		as: 'instances',
 		include: [{model: Product}]
-	}]})
-	.then(order => res.json(order))
+		}]
+})
+	.then(orders => {
+		orders.sort(function(a, b) {
+		  return a.id - b.id;
+		});		
+		res.json(orders);
+	})
 	.catch(next)
 })
 
@@ -54,6 +61,33 @@ router.put('/:orderId/products/:productInstanceId', (req, res, next) => {
 			.then(() => res.status(204).end())) :
 		(res.json(product))})
 	.catch(next)
+})
+
+// router.post('/:orderId/items', (req, res, next) => {
+router.get('/:orderId/items', (req, res, next) => {
+	var orderId = req.params.orderId;
+	var productId = req.body.productId;
+	productId = 10; //for testing
+	Product.findById(productId).then(product => {
+		product.createInstance(0, parseInt(req.params.orderId), 1).then(item => {
+			res.json(item);
+		})
+	})
+	// productInstance.create(
+	// 	req.body,
+	// 	// {price: 1239.99, quantity: 1, orderId: 3, productId: 7},		
+	// ).then(item => {
+	// 	item.setOrder(req.params.orderId);
+	// 	res.json(item);
+	// });
+	// productInstance.findById(req.params.productInstanceId)
+	// .then(product => product.update(req.body))
+	// .then(product => {
+	// 	product.quantity === 0 ?
+	// 	(product.destroy()
+	// 		.then(() => res.status(204).end())) :
+	// 	(res.json(product))})
+	// .catch(next)
 })
 
 

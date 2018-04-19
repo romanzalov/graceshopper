@@ -51,13 +51,14 @@ Product.searchbyCategory = function(category) {
   })
 }
 
-Product.prototype.createInstance = function(priceDiff, orderId=null) {
+Product.prototype.createInstance = function(priceDiff=0, orderId=null, quantity=1) {
   //- 1 from quantity?
   console.log("creating product instace with price: ", parseFloat(this.price + priceDiff));
   return productInstance.create({
       productId: this.id,
       orderId,
       price: parseFloat(this.price) + priceDiff,
+      quantity,
   });
 }
 

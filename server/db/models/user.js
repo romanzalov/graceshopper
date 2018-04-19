@@ -63,6 +63,16 @@ User.prototype.completePurchase = async function() {
   await newCart.save();
 }
 
+User.prototype.getPurchaseHistory = async function () {
+  var oldOrders = await Order.findAll(
+    {
+      where: {
+        userId:this.id, 
+        isCart:false} //status == 'Completed?
+    });
+  return oldOrders;
+}
+
 User.beforeCreate(user => {
   Order.create({
     userId: user.id
