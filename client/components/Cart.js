@@ -11,20 +11,27 @@ class Cart extends Component {
 	}
 
 	componentDidMount() {
+		// const {orders, user, productInstances} = this.props;
+		// const cart = orders.find((order) => {
+		// 	return order.isCart === true && order.user.id === this.props.user.id
+		// })	
+		// this.setState({
+		// 	cart
+		// })
+	}
+
+	render() {
+		// const {orders, user, productInstances} = this.props;
+		// const {cart} = this.state
 		const {orders, user, productInstances} = this.props;
 		const cart = orders.find((order) => {
 			return order.isCart === true && order.user.id === this.props.user.id
 		})	
-		this.setState({
-			cart
-		})
-	}
 
-	render() {
-		const {orders, user, productInstances} = this.props;
-		const {cart} = this.state
-
-		console.log(this.state)
+		console.log("this.state: ", this.state);
+		console.log("this.props: ", this.props);
+		console.log(orders, users, prodcutInstances);
+		// cart.instances = [{}, {}, {}];
 
 		return (
 			<div className="container">
