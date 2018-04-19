@@ -12,9 +12,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarResponsive">
+    {isLoggedIn ? (
       <ul className="navbar-nav ml-auto">
-        {isLoggedIn ? (
-        <div>
           {/* The navbar will show these links after you log in */}
           <li className="nav-item active">
             <a className="nav-link" href="/home">Home
@@ -23,21 +22,22 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
-          </li>          
-        </div>) 
+          </li>
+      </ul>)
+
         : (
-        <div style={{display:"inline-block", width:"500px"}} className="navbar-nav ml-auto">
-          {/* The navbar will show these links before you log in */}
-          </div>
-        )}
+      <ul className="navbar-nav ml-auto">
         <li className="nav-item active">
           <Link className="nav-link" to="/login">Login</Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link" to="/signup">Sign Up</Link>
         </li>
-
-      </ul>
+        <li>
+          <Link to={'/user-account'}>User Account</Link>
+        </li>
+        </ul>       
+        )}
     </div>
   </div>
 </nav>)

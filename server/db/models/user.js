@@ -63,15 +63,25 @@ User.prototype.completePurchase = async function() {
   await newCart.save();
 }
 
-User.beforeCreate(user => {
-  Order.create({
-    userId: user.id
-  }).then(cart => {
-    cart.userId = user.id;
-    cart.save().then(() => {
-      return;
+User.prototype.getPurchaseHistory = async function () {
+  var oldOrders = await Order.findAll(
+    {
+      where: {
+        userId:this.id, 
+        isCart:false} //status == 'Completed?
     });
-  });
+  return oldOrders;
+}
+
+User.beforeCreate(user => {
+  // Order.create({
+  //   userId: user.id
+  // }).then(cart => {
+  //   cart.userId = user.id;
+  //   cart.save().then(() => {
+  //     return;
+  //   });
+  // });
 });
 
 /**

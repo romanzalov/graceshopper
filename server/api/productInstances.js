@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
     productInstance.findAll({
         where:{},
         include: [
-            {model: Product, as:'parent', required:false},
+            {model: Product, required:false},
             {model: Order, required:false}
         ],
     }).then((instances) => {
@@ -37,7 +37,7 @@ router.get('/:id', (req, res, next) => {
             id:req.params.id,
         },
         include: [
-            {model: Product, as:'parent', required:false}
+            {model: Product, required:false}
         ],
     }).then((instances) => {
         res.json(instances);

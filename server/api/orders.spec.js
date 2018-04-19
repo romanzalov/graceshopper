@@ -61,8 +61,13 @@ describe('Order routes', () => {
 
     it('PUT /api/orders/:id', () => {
       return request(app)
-        .put('/api/orders/1', {status: 'Completed'})
+        .put('/api/orders/1')
+        .send({status: 'Completed'})
         .expect(200)
+        .then(res => {
+          expect(res.body).to.be.an('array')
+          expect(res.body[1][0].status).to.be.equal('Completed')
+        })
     })
   })
 
