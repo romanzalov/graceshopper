@@ -22,7 +22,7 @@ const Order = db.define('order', {
 				}
 			]
 		}]
-	}
+	},
 })
 
 Order.searchByStatus = status => {

@@ -23,8 +23,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
-          </li>          
-        </div>) 
+          </li>
+        </div>)
         : (
         <div style={{display:"inline-block", width:"500px"}} className="navbar-nav ml-auto">
           {/* The navbar will show these links before you log in */}
@@ -36,7 +36,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
         <li className="nav-item">
           <Link className="nav-link" to="/signup">Sign Up</Link>
         </li>
-
+        <Link to={'/user-account'}>User Account</Link>
       </ul>
     </div>
   </div>
