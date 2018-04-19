@@ -1,21 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 class SingleProduct extends Component {
 	constructor(props) {
 		super(props);
+		this.addtoCart = this.addtoCart.bind(this);
+	}
+	addtoCart() {
+		const thisProductId = this.props.match.params.id;
+		console.log("add to cart URL:", "/api/session/cart", thisProductId);
+		axios.post("/api/session/cart", {
+			productId: thisProductId,
+		});		
 	}
 
 	render() {
-		//const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
-		const foundProduct = {
-			title: "Baseball Bat",
-			quantity: 3,
-			price: 15,
-			availability: true,
-			description: 'used during '}
-			console.log(foundProduct)
+		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
+		// const foundProduct = {
+		// 	title: "Baseball Bat",
+		// 	quantity: 3,
+		// 	price: 15,
+		// 	availability: true,
+		// 	description: 'used during '}
+		// 	console.log(foundProduct)
 		
 		return (
 			<div className="container">
@@ -38,7 +47,9 @@ class SingleProduct extends Component {
 						<div className="card mt-4">
 							<img className="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""/>
 								<div className="card-body">
-									<h3 className="card-title">{foundProduct.title}</h3>
+									<h3 className="card-title">{foundProduct.title}
+									<button style={{"float":"right"}} className="btn btn-success" onClick={this.addtoCart}>Add To Cart</button>
+									</h3>
 									<h4>{foundProduct.price}</h4>
 									<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
 									<span className="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
