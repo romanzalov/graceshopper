@@ -53,7 +53,7 @@ Product.searchbyCategory = function(category) {
 
 Product.prototype.createInstance = function(priceDiff=0, orderId=null, quantity=1) {
   //- 1 from quantity?
-  console.log("creating product instace with price: ", parseFloat(this.price + priceDiff));
+  console.log("creating product instance with price: ", parseFloat(this.price + priceDiff), orderId, quantity);
   return productInstance.create({
       productId: this.id,
       orderId,
