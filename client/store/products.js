@@ -40,7 +40,7 @@ export const editProduct = function(id, product){
 	}
 }
 
-export const removeStore = function(id){
+export const removeProduct = function(id){
 	return function thunk(dispatch) {
 		return axios.delete(`/api/products/${id}`)
 		.then(() => dispatch(remove(id)))
