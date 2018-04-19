@@ -5,18 +5,12 @@ import {Link} from 'react-router-dom'
 class Cart extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			cart: {}
-		}
 	}
 
 	render() {
-		// const {orders, user, productInstances} = this.props;
-		// const {cart} = this.state
-		const {orders, user, productInstances} = this.props;
-		const cart = orders.find((order) => {
-			return order.isCart === true && order.user.id === this.props.user.id
-		})
+
+		const {orders, user, productInstances, cart} = this.props;
+
 
 		return (
 			<div className="container">
@@ -46,7 +40,7 @@ class Cart extends Component {
 					<button className="btn btn-danger">-</button>
 						&nbsp; &nbsp;
 					<button className="btn btn-success">+</button>
-					</td> 
+					</td>
 				  	<td>
 					  <button className="btn btn-danger">X</button>
 					</td>
@@ -66,7 +60,8 @@ const mapStateToProps = function(state) {
 	return {
 		orders: state.orders,
 		user: state.user,
-		productInstances: state.productInstances
+		productInstances: state.productInstances,
+		cart: state.cart
 	}
 }
 

@@ -2,37 +2,23 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { addProductToCart } from '../store/cart'
 
 class SingleProduct extends Component {
 	constructor(props) {
 		super(props);
-		this.addtoCart = this.addtoCart.bind(this);
+		this.handleClick = this.handleClick.bind(this);
 	}
-	addtoCart() {
-		const thisProductId = this.props.match.params.id;
-		console.log("add to cart URL:", "/api/session/cart", thisProductId);
-		axios.post("/api/session/cart", {
-			productId: thisProductId,
-		});		
+
+	handleClick(){
+		this.props.addToCart(parseInt((this.props.match.params.id)));
 	}
 
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
-		// const foundProduct = {
-		// 	title: "Baseball Bat",
-		// 	quantity: 3,
-		// 	price: 15,
-		// 	availability: true,
-		// 	description: 'used during '}
-		// 	console.log(foundProduct)
-		
+
 		return (
 			<div className="container">
-			<div>
-				<p>{foundProduct.quantity}</p>
-				
-				<button>Add To Cart</button>
-			</div>
 				<div className="row">
 
 					<div className="col-lg-3">
@@ -48,7 +34,7 @@ class SingleProduct extends Component {
 							<img className="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""/>
 								<div className="card-body">
 									<h3 className="card-title">{foundProduct.title}
-									<button style={{"float":"right"}} className="btn btn-success" onClick={this.addtoCart}>Add To Cart</button>
+									<button style={{"float":"right"}} className="btn btn-success" onClick={this.handleClick}>Add To Cart</button>
 									</h3>
 									<h4>{foundProduct.price}</h4>
 									<p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
@@ -88,7 +74,11 @@ const mapStateToProps = function (state) {
 }
 
 const mapDispatchToProps = function (dispatch) {
-
+	return {
+		addToCart: (id) => {
+			dispatch(addProductToCart(id))
+		}
+	}
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
