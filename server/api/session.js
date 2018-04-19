@@ -16,6 +16,7 @@ router.post('/cart', async (req, res) => {
     console.log("line 16 req.body: ", req.body, productId); 
     var relatedProduct = await Product.findById(productId);
     console.log("line 17");
+    req.session.test = "post edit";
     var hasCart = !(!('cart' in req.session) || req.session.cart == {} 
     || !(req.session.cart) || Object.keys(req.session.cart).length == 0);
     var hasUser = (('passport' in req.session) && ('user' in req.session.passport));

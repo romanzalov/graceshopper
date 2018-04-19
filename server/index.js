@@ -77,48 +77,7 @@ const createApp = () => {
   })
 
   app.use('/', (req, res, next) => {
-    if (!req.session.cart 
-      || Object.keys(req.session.cart).length == 0) {
-      console.log("no cart");
-      Order.create(
-        {
-          isCart: true,
-        },
-        {
-          include: [{
-          model: productInstance, as: 'instances',
-          required: false,
-          include: [
-            {
-              model: Product
-            }
-          ]
-        }]},
-      ).then(order => {
-        console.log("(Updated) no cart found! req.session: ", req.session, req.session.passport);
-        if ('passport' in req.session) {
-          console.log("passport found");
-          console.log("setting userId of cart: ", order.userId);
-          order.userId = req.session.passport.user;
-          order.save().then(() => {
-            req.session.cart = order;
-            res.sendFile(path.join(__dirname, '../public/main.html'))
-          })
-        }
-        else {
-          console.log("no passport found");
-          req.session.cart = order;
-          res.sendFile(path.join(__dirname, '../public/main.html'))
-        }
-      })
-    }
-    else {
-      console.log("existing cart found! req.session: ", req.session);
-      // req.session.cart
-      res.sendFile(path.join(__dirname, '../public/main.html'))      
-    }
-    // res.json({});
-    // res.sendFile(path.join(__dirname, '../public/template/main.html'))
+    res.sendFile(path.join(__dirname, '../public/main.html'))      
   })
 
 
@@ -126,9 +85,9 @@ const createApp = () => {
   app.use((req, res, next) => {
     next()
     if (path.extname(req.path).length) {
-      // const err = new Error('Not found')
-      // err.status = 404
-      // next(err)
+      const err = new Error('Not found')
+      err.status = 404
+      next(err)
     } else {
       next()
     }
