@@ -6,6 +6,7 @@ import {SingleProduct, Checkout, Cart, AddProduct, EditProduct, AdminDashboard, 
 import {me} from './store'
 import {fetchProducts} from './store/products'
 import {fetchOrders} from './store/orders'
+import {fetchCart} from './store/cart'
 import axios from 'axios';
 
 /**
@@ -71,6 +72,7 @@ const mapDispatch = (dispatch) => {
       dispatch(me())
       dispatch(fetchProducts())
       dispatch(fetchOrders())
+      dispatch(fetchCart())
     }
   }
 }

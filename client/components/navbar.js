@@ -16,9 +16,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
       <ul className="navbar-nav ml-auto">
           {/* The navbar will show these links after you log in */}
           <li className="nav-item active">
-            <a className="nav-link" href="/home">Home
+            <Link to="/">Home</Link>
               <span className="sr-only">(current)</span>
-            </a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
