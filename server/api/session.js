@@ -9,14 +9,14 @@ router.post('/test', (req, res) => {
     res.json({test: "test"});
 })
 
-router.get('/cart', async(req, res) => {
+router.get('/cart', (req, res) => {
     if ('cart' in req.session && Object.keys(req.session.cart).length > 0) {
         Order.findById(req.session.cart.id).then(cart => {
             res.json(cart);
         })
     }
     else {
-        res.json(false)
+        res.json({})
     }
 })
 //ADD TO CART
@@ -65,16 +65,6 @@ router.post('/cart', async (req, res) => {
     }
 })
 
-router.get('/cart', (req, res) => {
-    if ('cart' in req.session && Object.keys(req.session.cart).length > 0) {
-        Order.findById(req.session.cart.id)
-        .then(cart => {
-            res.json(cart);
-        })
-    }
-    else{
-        res.json({})
-    }
 router.post('/checkout', async(req, res) => {
     let thisCart = await Order.findById(req.session.cart.id);
     thisCart.isCart = false;
