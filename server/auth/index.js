@@ -24,7 +24,14 @@ router.post('/login', async (req, res, next) => {
           });
         }
         else {
-          req.login(user, err => (err ? next(err) : res.json(user)))
+          console.log("NO CART...")
+          user.findCart().then(cart => {
+            console.log("cart...", cart);
+            if (cart) {
+              req.session.cart = cart;
+            }
+            req.login(user, err => (err ? next(err) : res.json(user)))            
+          })
         }
       }
     })

@@ -73,6 +73,30 @@ User.prototype.getPurchaseHistory = async function () {
   return oldOrders;
 }
 
+User.prototype.findCart = function() {
+  console.log("finding cart...");
+  return cart = Order.findOne({
+    where: {
+      userId:this.id,
+      isCart:true,
+    }
+  });
+}
+
+User.stashCarts = async function() {
+  var linkedOrders = await Order.findAll({
+    where: {
+      where: {
+        userId:this.id,
+      }
+    }
+  });
+  for (var i = 0; i < linkedOrders.length; i ++) {
+    linkedOrders[i].isCart = false;
+    await linkedOrders[i].save();
+  }
+}
+
 User.beforeCreate(user => {
   // Order.create({
   //   userId: user.id

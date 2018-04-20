@@ -24,7 +24,7 @@ class Cart extends Component {
 				<th>Quantity</th>
 				<th>Remove</th>
 			  </tr>
-			  {cart ? cart.instances.map(item => (
+			  {cart.instances ? cart.instances.map(item => (
 				<tr key={item.id}>
 					<td>
 						<div style={{border: "1px solid black", marginBottom:"5px"}}>
