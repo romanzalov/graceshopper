@@ -13,10 +13,9 @@ const remove = () => ({type: REMOVE_CART});
 //THUNKS
 export const fetchCart = function(){
 	return function thunk(dispatch) {
-		return axios.get('/api/session')
+		return axios.get('/api/session/cart')
 		.then(res => {
-			if (res.data.cart) dispatch(init(res.data.cart))
-			if (!res.data.passport) dispatch(remove())
+			dispatch(init(res.data))
 		})
 		.catch(err => console.log(err))
 	}
@@ -27,9 +26,9 @@ export const fetchCart = function(){
 // 		return axios.put('/api/session')
 // 	}
 // }
-// export const editOrder = function(id, order){
+// export const editQuantity = function(id){
 // 	return function thunk(dispatch) {
-// 		return axios.put(`/api/orders/${id}`, order)
+// 		return axios.put(`/api/session/cart`)
 // 		.then(res => dispatch(edit(res.data)))
 // 		.catch(err => console.error(err))
 // 	}

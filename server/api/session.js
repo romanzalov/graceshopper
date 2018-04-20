@@ -54,6 +54,18 @@ router.post('/cart', async (req, res) => {
     }
 })
 
+router.get('/cart', (req, res) => {
+    if ('cart' in req.session && Object.keys(req.session.cart).length > 0) {
+        Order.findById(req.session.cart.id)
+        .then(cart => {
+            res.json(cart);
+        })
+    }
+    else{
+        res.json({})
+    }
+})
+
 //UPDATE SESSION (CART) ON...
     //user login
     //user logout
