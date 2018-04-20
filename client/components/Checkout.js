@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import axios from 'axios';
+import history from '../history';
 
 class Checkout extends Component {
 	constructor(props) {
@@ -10,6 +11,7 @@ class Checkout extends Component {
             cart: {},
             loaded: false,
         }
+        this.handleSubmit = this.handleSubmit.bind(this);
     }    
     componentDidMount() {
         axios.get('/api/session/cart').then(response => {
@@ -36,11 +38,46 @@ class Checkout extends Component {
                 }
             })
         })
-        // /:orderId/products/:productInstanceId        
+    }
+    removeItem(id) {
+        console.log("removing item: ", id);
+        var orderId = this.state.cart.id;
+        axios.delete(`/api/orders/${orderId}/products/${id}`).then(() =>  {
+            axios.get('/api/session/cart').then(response => {
+                if (response.data) {
+                    this.setState({
+                        cart: response.data,
+                        loaded: true,
+                    })
+                }
+            })            
+        })
     }
     buttonClicked() {
         console.log("buttonClicked");
     }
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log("submitting...", event.target);
+        console.log("event.target.email: ", event.target.email.value);
+        let orderInfo = {};
+        history.push('/');
+
+        orderInfo.email = event.target.email.value;
+        orderInfo.address = event.target.address.value;
+        orderInfo.cardName = event.target.cardName.value;
+        orderInfo.cardNumber = event.target.cardNumber.value;
+        orderInfo.cvv = event.target.cvv.value;
+        orderInfo.cardYear = event.target.cardYear.value;
+        orderInfo.cardMonth = event.target.cardMonth.value;
+        console.log("orderInfo: ", orderInfo);
+        axios.post('/api/session/checkout', {
+            cartId: this.state.cart.id,
+            information: orderInfo,
+        }).then((postedCart) => {
+            history.push('/');
+        });
+    }       
 	render() {
         console.log("props: ", this.props);
         console.log("state: ", this.state);
@@ -78,7 +115,7 @@ class Checkout extends Component {
                       <button className="btn btn-success" onClick={() => this.changeQuantity(instance.id, instance.quantity + 1)}>+</button>
                       </td> 
                     <td>
-                        <button className="btn btn-danger">X</button>
+                    <button className="btn btn-danger" onClick={() => this.removeItem(instance.id)}>X</button>
                       </td>
                     </tr>)})) : (null)}
                 </tbody>
@@ -87,44 +124,47 @@ class Checkout extends Component {
 
 			<div className="col-lg-6">
             <h3>Payment & Shipping Information</h3>
+            <form onSubmit={this.handleSubmit}>
             <div className="form-group">
             <div className="form-group">
                 <label htmlFor="exampleInputEmail1"><b>Email</b></label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+                <input name="email" type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
             </div>            
 
             <div className="form-group">
                 <label htmlFor="exampleInputEmail1"><b>Shipping Address</b></label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+                <input name="address" type="text" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter address"/>
             </div>            
 
             <div className="form-group">
                 <label htmlFor="exampleInputEmail1"><b>Name on Card</b></label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+                <input name="cardName" type="cardName" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter card name"/>
             </div>
 
             <div className="form-group">
                 <label htmlFor="exampleInputEmail1"><b>Credit Card Number</b></label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"/>
+                <input name="cardNumber" type="number" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Card Number"/>
             </div>
                         
             <div className="form-group col-sm-4" style={{paddingLeft:"0px", display:"inline-block"}}>            
                 <label style={{paddingLeft:"0px"}} htmlFor="cvv"><b>CVV Code</b></label>
-                <input type="text" className="form-control" name="cvv" id="cvv" placeholder="Security Code"/>
+                <input name="cvv" type="number" className="form-control" id="cvv" placeholder="Security Code"/>
             </div>
             <div className="form-group col-sm-offset-5 col-sm-6" style={{paddingLeft:"0px", float:"right", display:"inline-block"}}>            
             
             <label style={{paddingLeft:"0px"}} htmlFor="expiry"><b>Expiry</b></label>
             <div className="row" style={{marginLeft:"0px"}}>
-                <input type="text" className="form-control" name="year" id="cvv" placeholder="YYYY" 
+                <input name="cardYear" type="text" className="form-control" id="year" placeholder="YYYY" 
                 style={{width:"40%", display:"inline-block", marginRight:"10px"}}/>
-                <input type="text" className="form-control" name="month" id="cvv" placeholder="MM" style={{width:"40%", display:"inline-block"}}/>
+                <input name="cardMonth" type="text" className="form-control" id="month" placeholder="MM" style={{width:"40%", display:"inline-block"}}/>
             </div>
             
             </div>
             </div>
-				<button type="submit" className="btn btn-primary" style={{"marginTop":"0px"}}><b>Submit Order</b></button>
-			</div>
+                <button type="submit" className="btn btn-primary" style={{"marginTop":"0px"}}><b>
+                Submit Order</b></button>
+            </form>
+            </div>
 			</div>
 			</div>
 			)

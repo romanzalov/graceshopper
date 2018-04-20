@@ -28,7 +28,7 @@ class OrderHistory extends Component {
 								<tr key={order.id}>				  
 									<td>{order.createdAt}</td> 
 									<td>TOTAL PRICE</td> 
-									<td>{order.user.address.Description}</td>
+									<td>{(order.user) ? (order.user.address.Description) : (null) }</td>
 									<td>
 										{order.instances.map(instance => (
 											<div key={instance.id} style={{border: "1px solid black", marginBottom:"5px"}}>

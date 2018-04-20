@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
+import history from '../history';
 
 class Cart extends Component {
 	constructor(props) {
@@ -57,7 +58,7 @@ class Cart extends Component {
 			</tbody>
 		  </table>
 
-			<button className="btn btn-success">Checkout</button>
+			<button className="btn btn-success" onClick={() => history.push('/checkout')}>Checkout</button>
 			</div>
 			</div>
 			)
