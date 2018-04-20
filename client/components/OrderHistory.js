@@ -9,6 +9,14 @@ class OrderHistory extends Component {
 		super(props);
 	}
 
+	getTotalPrice = order => {
+		let total = 0;
+		order.instances.forEach((instance) => {
+			total = total + instance.price * instance.quantity;
+		})
+		return total
+	}
+
 	render() {
 		const {orders} = this.props
 		return (
@@ -27,7 +35,7 @@ class OrderHistory extends Component {
 							{orders.filter(order => order.isCart===false).map((order) => (
 								<tr key={order.id}>				  
 									<td>{order.createdAt}</td> 
-									<td>TOTAL PRICE</td> 
+									<td>{this.getTotalPrice(order)}</td> 
 									<td>{order.user.address.Description}</td>
 									<td>
 										{order.instances.map(instance => (
@@ -41,9 +49,9 @@ class OrderHistory extends Component {
                   <td>
                     {order.status}
                   <br/>
-                  <div class="form-group">
-                    <label for="exampleFormControlSelect1">Order Status:</label>
-                    <select class="form-control" id="exampleFormControlSelect1">
+                  <div className="form-group">
+                    <label htmlFor="exampleFormControlSelect1">Order Status:</label>
+                    <select className="form-control" id="exampleFormControlSelect1">
                       <option>{order.status}</option>
                       <option>Cancelled</option>
                       <option>3</option>
@@ -51,7 +59,7 @@ class OrderHistory extends Component {
                       <option>5</option>
                     </select>
                   </div>
-                  <button style={{"margin-top":"10px"}} className="btn btn-primary">Save</button>
+                  <button style={{"marginTop":"10px"}} className="btn btn-primary">Save</button>
                   </td>
 
                   </tr>
