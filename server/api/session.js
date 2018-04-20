@@ -8,6 +8,17 @@ router.post('/test', (req, res) => {
     console.log("test post route hit");
     res.json({test: "test"});
 })
+
+router.get('/cart', async(req, res) => {
+    if ('cart' in req.session && Object.keys(req.session.cart).length > 0) {
+        Order.findById(req.session.cart.id).then(cart => {
+            res.json(cart);
+        })
+    }
+    else {
+        res.json(false)
+    }
+})
 //ADD TO CART
 router.post('/cart', async (req, res) => {
     console.log("line 13");
@@ -64,6 +75,13 @@ router.get('/cart', (req, res) => {
     else{
         res.json({})
     }
+router.post('/checkout', async(req, res) => {
+    let thisCart = await Order.findById(req.session.cart.id);
+    thisCart.isCart = false;
+    thisCart.status = "Processing";
+    await thisCart.save();
+    req.session.cart = {};
+    res.json(thisCart);
 })
 
 //UPDATE SESSION (CART) ON...

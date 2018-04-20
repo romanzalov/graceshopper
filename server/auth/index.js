@@ -1,8 +1,8 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
+const {User, Order} = require('../db/models/index')
 module.exports = router
 
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
   User.findOne({where: {email: req.body.email}})
     .then(user => {
       if (!user) {
@@ -10,7 +10,29 @@ router.post('/login', (req, res, next) => {
       } else if (!user.correctPassword(req.body.password)) {
         res.status(401).send('Incorrect password')
       } else {
-        req.login(user, err => (err ? next(err) : res.json(user)))
+        console.log("LOGIN LINE 13: ", req.session);
+        if ('cart' in req.session && Object.keys(req.session.cart).length > 0) {
+          console.log('cart in req.session');
+          Order.findById(req.session.cart.id).then(thisCart => {
+            thisCart.setUser(user.id);
+            console.log("LINE 18: ", thisCart);
+            thisCart.save().then(() => {
+              console.log("LINE 19: ", thisCart);
+              req.session.cart = thisCart; //"update cart"
+              req.login(user, err => (err ? next(err) : res.json(user)))
+            });
+          });
+        }
+        else {
+          console.log("NO CART...")
+          user.findCart().then(cart => {
+            console.log("cart...", cart);
+            if (cart) {
+              req.session.cart = cart;
+            }
+            req.login(user, err => (err ? next(err) : res.json(user)))            
+          })
+        }
       }
     })
     .catch(next)
