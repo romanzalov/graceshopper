@@ -24,7 +24,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
             <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
           </li>
           <li>
-            <Link to={'/user-account'}>User Account</Link>
+            <Link to={'/single-user'}>User Account</Link>
           </li>
           <li>
             <Link to={'/cart'}>Cart</Link>
@@ -33,6 +33,10 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 
         : (
       <ul className="navbar-nav ml-auto">
+        <li className="nav-item active">
+          <Link to="/">Home</Link>
+              <span className="sr-only">(current)</span>
+          </li>
         <li className="nav-item active">
           <Link className="nav-link" to="/login">Login</Link>
         </li>

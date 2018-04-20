@@ -76,7 +76,7 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = function(dispatch) {
 	return {
-
+		
 	}
 }
 
