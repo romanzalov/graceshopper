@@ -23,7 +23,7 @@ router.post('/', (req, res, next) => {
     })
 })
 
-router.get('/instances', (req, res, next) => { 
+router.get('/instances', (req, res, next) => {
     productInstance.findAll({
         where:{},
         include: [
@@ -35,7 +35,7 @@ router.get('/instances', (req, res, next) => {
     })
 })
 
-router.post('/instances', (req, res, next) => { 
+router.post('/instances', (req, res, next) => {
     productInstance.create(req.body).then((instance) => res.json(instance));
 })
 
@@ -132,7 +132,7 @@ router.get('/:id/add-to-cart', async (req, res, next) => {
     var _Instance = await _Product.createInstance(0, req.body.orderId);
     res.json(_Instance);
 })
-        
+
 ///:id
 // /user/:id/cart
 

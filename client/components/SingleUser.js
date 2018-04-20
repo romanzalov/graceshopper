@@ -60,7 +60,7 @@ class SingleUser extends Component {
 											})
 										}
 									</table>
-									<button onClick={(() => this.props.history.push('/cart'))}>Edit Cart</button>
+									<button onClick={(() => this.props.history.push('/cart'))}>View & Edit</button>
 								</div>
 								: <h1>No items in cart</h1>
 							}
