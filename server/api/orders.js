@@ -62,6 +62,14 @@ router.put('/:orderId/products/:productInstanceId', (req, res, next) => {
 	.catch(next)
 })
 
+router.delete('/:orderId/products/:productInstanceId', (req, res, next) => {
+	productInstance.findById(req.params.productInstanceId)
+	.then(product => product.destroy().then(() => {
+		res.status(204).end();
+	}))
+	.catch(next);
+})
+
 router.post('/:orderId/items', (req, res, next) => {
 // router.get('/:orderId/items', (req, res, next) => {
 	var orderId = req.params.orderId;

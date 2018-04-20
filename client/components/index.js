@@ -19,5 +19,6 @@ export {default as EditUser} from './EditUser'
 export {default as EditOrder} from './EditOrder'
 export {default as Review} from './EditOrder'
 export {default as Checkout} from './Checkout'
+export {default as Confirmation} from './Confirmation'
 
 export {Login, Signup} from './AuthForm'

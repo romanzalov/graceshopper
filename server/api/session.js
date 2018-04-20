@@ -1,6 +1,7 @@
 /* eslint-disable */
 const router = require('express').Router()
 const {User, Review, Order, productInstance, Product, Category, ProductCategory} = require('../db/models');
+const axios = require('axios'); 
 
 module.exports = router;
 
@@ -66,11 +67,14 @@ router.post('/cart', async (req, res) => {
 })
 
 router.post('/checkout', async(req, res) => {
-    let thisCart = await Order.findById(req.session.cart.id);
+    // let thisSession = await axios.get('/api/session');
+    let thisCart = await Order.findById(req.body.cartId);
     thisCart.isCart = false;
-    thisCart.status = "Processing";
+    thisCart.status = "Completed";
+    thisCart.information = req.body.information;
     await thisCart.save();
     req.session.cart = {};
+    req.session.lastCart = thisCart;
     res.json(thisCart);
 })
 
