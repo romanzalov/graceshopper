@@ -7,6 +7,10 @@ class Cart extends Component {
 		super(props);
 	}
 
+	handleAdd(){
+		
+	}
+
 	render() {
 		// const {orders, user, productInstances} = this.props;
 		// const {cart} = this.state
