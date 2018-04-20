@@ -14,39 +14,43 @@ class SingleOrder extends Component {
 		for(let i=0; i<order.instances.length; i++){
 			sum += order.instances[i].price * order.instances[i].quantity;
 		}
-		return sum/100;
+		return sum;
 	}
 
 
 	render() {
-		const {order} = this.props;
-		console.log('props', this.props)
+		const {order} = this.props
+		console.log('props', this.props, 'order', order)
 		return (
 			<div>
-				<h3>Order created: {order.createdAt.slice(0,9)}</h3>
-				<h3>Status: {order.status}</h3>
-				<h3>Total: {this.getOrderTotal()}</h3>
-				<table>
-					{order.instances.map(instance => {
-						return (
-							<tr key={instance.id}>
-								<td>{instance.product.title}</td>
-								<td>{instance.price}</td>
-								<td>{instance.quantity}</td>
-							</tr>
-						)
-					})}
-				</table>
+			<h1>Test</h1>
+			{ order &&
+				<div>
+					<h3>Order created: {order.createdAt.slice(0,10)}</h3>
+					<h3>Status: {order.status}</h3>
+					<h3>Total: {this.getOrderTotal()}</h3>
+					<table>
+						{order.instances.map(instance => {
+							return (
+								<tr key={instance.id}>
+									<td>{instance.product.title}</td>
+									<td>{instance.price}</td>
+									<td>{instance.quantity}</td>
+								</tr>
+							)
+						})}
+					</table>
+				</div>
+			}
 			</div>
-
-			)
+		)
 	}
 }
 
 const mapStateToProps = function(state, ownProps) {
 	console.log('orders', state.orders)
 	return {
-		order: state.orders.filter(order => order.id === ownProps.match.params.id)
+		order: state.orders.find(order => order.id === +ownProps.match.params.id)
 	}
 }
 
