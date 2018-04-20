@@ -3,16 +3,62 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { addProductToCart } from '../store/cart'
+import {addReview} from '../store/reviews'
 
 class SingleProduct extends Component {
 	constructor(props) {
 		super(props);
 		this.handleClick = this.handleClick.bind(this);
+		this.reviewForm = this.reviewForm.bind(this);
+		this.showForm = this.showForm.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+
+		this.state = {
+			showForm: false,
+			tempReview: '',
+		};
+	}
+
+	handleChange(e) {
+		this.setState({
+			tempReview: e.target.value
+		})
+		console.log(this.state.tempReview)
+	}	
+	handleSubmit (e) {
+		e.preventDefault()
+		this.props.addReview(this.state.tempReview)
+
 	}
 
 	handleClick(){
 		this.props.addToCart(parseInt((this.props.match.params.id)));
 	}
+
+	reviewForm(){
+		return(
+		<form onSubmit = {this.handleSubmit}>
+			<label>
+    <input type="text" value = {this.state.tempReview} onChange = {this.handleChange}/>
+			</label>
+			<input type="submit" value="Submit" />
+		</form>
+		)}
+
+	showForm() {
+		if (this.state.showForm) {
+			this.setState({
+				showForm: false,
+			})
+		}
+		else {
+			this.setState({
+				showForm: true,
+			})
+		}
+	}
+
 
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
@@ -55,7 +101,8 @@ class SingleProduct extends Component {
 								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
 								<small className="text-muted">Posted by Anonymous on 3/1/17</small>
 								<hr />
-								<a href="#" className="btn btn-success">Leave a Review</a>
+								<a href="#" className="btn btn-success" onClick={this.showForm}>Leave a Review</a>
+								{(this.state.showForm) ? this.reviewForm() : null}
 							</div>
 						</div>
 					</div>
@@ -75,7 +122,12 @@ const mapDispatchToProps = function (dispatch) {
 	return {
 		addToCart: (id) => {
 			dispatch(addProductToCart(id))
+	
+		},
+		addReview: (review) => {
+			dispatch(addReview(review))
 		}
+		
 	}
 }
 
