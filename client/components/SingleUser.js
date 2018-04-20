@@ -34,15 +34,42 @@ class SingleUser extends Component {
 
 		return (
 			<div className="container">
- 				<div className="row" style={{"paddingTop":"10px"}}>
+ 				<div>
 			        { user.id &&
 			        	<div>
 			        		<h3>Account Info</h3>
 							<p>{user.email}</p>
-							<p>{user.address.Description}</p>
+							<button className="btn btn-success">Change Password</button>
 						</div>
 					}
 			        <hr />
+			        <div>
+			        <h3>Current Cart</h3>
+			        <table className="table">
+			        	<tbody>
+				        	<tr>
+								<th>Item</th>
+								<th>Category</th>
+								<th>Quantity</th>
+								<th>Price</th>
+							</tr>
+				        	{
+								cart ? cart.instances.map(instance => (
+									
+										<tr key={instance.id}>
+											<td>{instance.product.title}</td>
+											<td>{instance.product.sportType}</td>
+											<td>{instance.quantity} item(s)</td>
+											<td>${instance.price}</td>
+										</tr>
+									)
+								) : null
+							}
+						</tbody>
+			        </table>
+			        </div>
+			        <hr />
+			        <div>
 			        <h3>Past Orders</h3>
 			        <table className="table">
 				        <tbody>
@@ -69,31 +96,8 @@ class SingleUser extends Component {
 								}
 				         </tbody>
 			        </table>
-			        <hr />
-			        <h3>Current Cart</h3>
-			        <table className="table">
-			        	<tbody>
-				        	<tr>
-								<th>Item</th>
-								<th>Category</th>
-								<th>Quantity</th>
-								<th>Price</th>
-							</tr>
-				        	{
-								cart ? cart.instances.map(instance => (
-									
-										<tr key={instance.id}>
-											<td>{instance.product.title}</td>
-											<td>{instance.product.sportType}</td>
-											<td>{instance.quantity}</td>
-											<td>{instance.price}</td>
-										</tr>
-									)
-								) : null
-							}
-						</tbody>
-			        </table>
 			        <button onClick={(() => this.props.history.push('/cart'))} className="btn btn-success">Edit Cart</button>
+			    	</div>
 			    </div> 
 	        </div>
 		)

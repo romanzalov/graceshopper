@@ -8,6 +8,7 @@ import {fetchProducts} from './store/products'
 import {fetchOrders} from './store/orders'
 import {fetchCart} from './store/cart'
 import {fetchproductInstances} from './store/productInstances'
+import {fetchReviews} from './store/reviews'
 import axios from 'axios';
 
 /**
@@ -75,6 +76,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchOrders())
       dispatch(fetchCart())
       dispatch(fetchproductInstances())
+      dispatch(fetchReviews())
     }
   }
 }
