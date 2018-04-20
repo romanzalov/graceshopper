@@ -7,6 +7,7 @@ import {me} from './store'
 import {fetchProducts} from './store/products'
 import {fetchOrders} from './store/orders'
 import {fetchCart} from './store/cart'
+import {fetchproductInstances} from './store/productInstances'
 import axios from 'axios';
 
 /**
@@ -73,6 +74,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchProducts())
       dispatch(fetchOrders())
       dispatch(fetchCart())
+      dispatch(fetchproductInstances())
     }
   }
 }

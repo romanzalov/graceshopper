@@ -21,19 +21,6 @@ export const fetchCart = function(){
 	}
 }
 
-// export const updateCart = function() {
-// 	return function thunk(dispatch) {
-// 		return axios.put('/api/session')
-// 	}
-// }
-// export const editQuantity = function(id){
-// 	return function thunk(dispatch) {
-// 		return axios.put(`/api/session/cart`)
-// 		.then(res => dispatch(edit(res.data)))
-// 		.catch(err => console.error(err))
-// 	}
-// }
-
 //add product to cart
 export const addProductToCart = function(id){
 	return function thunk(dispatch) {
@@ -46,14 +33,14 @@ export const addProductToCart = function(id){
 	}
 }
 
-// export const removeCartUponLogout = function() {
-// 	return function	thunk(dispatch) {
-// 		return axios.get('/api/session')
-// 		.then(res => {
-
-// 		})
-// 	}
-// }
+export const removeCartUponLogout = function() {
+	return function	thunk(dispatch) {
+		return axios.get('/api/session/cart')
+		.then(res => {
+			dispatch(remove())
+		})
+	}
+}
 
 //reducer
 export default function(cart = {}, action){
@@ -63,7 +50,7 @@ export default function(cart = {}, action){
 		case EDIT_CART:
 			return cart.map(el => (action.cart.id === el.id ? action.cart : el))
 		case REMOVE_CART:
-			return cart
+			return {}
 		default:
 			return cart
 	}
