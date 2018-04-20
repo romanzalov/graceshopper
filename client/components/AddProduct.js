@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { addProduct } from '../store'
-import history from '../history'
 
 class AddProduct extends Component {
 	constructor(props) {
@@ -74,7 +73,7 @@ const mapStateToProps = function (state) {
 	return {}
 }
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function (dispatch, ownProps) {
 	return {
 		handleSubmit: event => {
 			event.preventDefault();
@@ -90,7 +89,7 @@ const mapDispatchToProps = function (dispatch) {
 				quantity,
 				price
 			}))
-			history.push('/admin-dashboard')
+			ownProps.history.push('/admin-dashboard')
 		}
 	}
 }
