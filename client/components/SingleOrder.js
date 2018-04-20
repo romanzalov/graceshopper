@@ -14,7 +14,7 @@ class SingleOrder extends Component {
 		for(let i=0; i<order.instances.length; i++){
 			sum += order.instances[i].price * order.instances[i].quantity;
 		}
-		return sum;
+		return sum/100;
 	}
 
 
@@ -44,6 +44,7 @@ class SingleOrder extends Component {
 }
 
 const mapStateToProps = function(state, ownProps) {
+	console.log('orders', state.orders)
 	return {
 		order: state.orders.filter(order => order.id === ownProps.match.params.id)
 	}

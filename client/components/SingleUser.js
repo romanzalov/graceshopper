@@ -17,53 +17,60 @@ class SingleUser extends Component {
 	}
 //user not eager loaded
 	render() {
-		const {user} = this.props;
-		console.log('user', this.props.user)
-		// if (user.id) {
-		// 	const pastOrders = user.orders.filter(order => order.isCart === false)
-		// 	const cart = user.orders.filter(order => order.isCart === true)
-		// }
+		const {user, orders} = this.props;
+		console.log('props', this.props)
+		const pastOrders = orders.filter(order => order.isCart === false)
+		const cart = orders.filter(order => order.isCart === true)
+		console.log('past orders', pastOrders)
+		console.log('cart', cart)
+
 		return (
 			<div>
-				{user.id &&
+				<h1>Test</h1>
 				<div>
-					{/*<h1>Past Orders</h1>
-					<table>
-						{pastOrders.map(order => {
-							return (
-								<tr key={order.id}>
-								<td>
-									<Link to={`/orders/${order.id}`}>Past Order 1</Link>
-								</td>
-								<td>{this.getQuantity(order)} items</td>
-								<td>{order.status}</td>
-								<td>{order.createdAt.slice(0,9)}</td>
-							</tr>
-							)
-						})}
-					</table>
-					<br />
-					<h1>Cart</h1>
-					<table>
-						{
-							cart.map(instance => {
+					<h1>Past Orders</h1>
+					{orders.length > 0 &&
+					<div>
+						<table>
+							{pastOrders.map(order => {
 								return (
-									<tr key={instance.id}>
-										<td>{instance.product.title}</td>
-										<td>{instance.product.sportType}</td>
-										<td>{instance.quantity}</td>
-									</tr>
+									<tr key={order.id}>
+									<td>
+										<Link to={`/order/${order.id}`}>Past Order 1</Link>
+									</td>
+									<td>{this.getQuantity(order)} items</td>
+									<td>{order.status}</td>
+									<td>{order.createdAt.slice(0, 10)}</td>
+								</tr>
 								)
-							})
-						}
-					</table>
-					*/}
-					<table>
-						<tr>{user.email}</tr>
-						<tr>{user.address}</tr>
-						{user.googleId && <tr>{user.googleId}</tr>}
-					</table>
-				</div>
+							})}
+						</table>
+						<br />
+						<h1>Cart</h1>
+						{/*cart.instances.length > 0 &&
+						<table>
+							{
+								cart.instances.map(instance => {
+									return (
+										<tr key={instance.id}>
+											<td>{instance.product.title}</td>
+											<td>{instance.product.sportType}</td>
+											<td>{instance.quantity}</td>
+										</tr>
+									)
+								})
+							}
+						</table>
+						*/}
+					</div>
+				}
+
+					{user.id &&
+						<table>
+							<tr>{user.email}</tr>
+							<tr>{user.address}</tr>
+						</table>}
+					</div>
 				}
 			</div>
 		)
@@ -72,7 +79,8 @@ class SingleUser extends Component {
 
 const mapStateToProps = function(state) {
 	return {
-		user: state.user
+		user: state.user,
+		orders: state.orders.filter(order => order.userId === state.user.id)
 	}
 }
 
