@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import history from '../history'
-import {fetchUsers} from '../store'
+import {fetchUsers, removeProduct, destroyUser} from '../store'
 
 class AdminDashboard extends Component {
 	constructor(props) {
 		super(props);
 	}
+
 
 	componentDidMount(){
 		this.props.fetchUsers();
@@ -59,7 +60,6 @@ class AdminDashboard extends Component {
 						<th>Email</th>
 						<th>Name</th>
 						<th>Address</th>
-						<th>Orders</th>
 						<th></th>
 					</tr>
 					{users.map(user =>{
@@ -68,8 +68,8 @@ class AdminDashboard extends Component {
 								<td>{user.email}</td>
 								<td>{user.name}</td>
 								<td>{user.address}</td>
-								<td>{user.orders.length}</td>
 								<td><button onClick={()=>history.push(`/edit-user/${user.id}`)} className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
+								<td><button onClick={()=>this.props.handleUserDelete(user.id)} className="btn btn-danger" style={{display:"inline-block"}}>Delete</button></td>
 							</tr>
 						)
 					})
@@ -93,7 +93,8 @@ const mapStateToProps = function(state) {
 
 const mapDispatchToProps = function(dispatch) {
 	return {
-		fetchUsers: () => dispatch(fetchUsers())
+		fetchUsers: () => dispatch(fetchUsers()),
+		handleUserDelete: id => dispatch(destroyUser(id))
 	}
 }
 

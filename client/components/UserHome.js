@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom'
  * COMPONENT
  */
 export const UserHome = (props) => {
+  const availableProducts = props.products.filter(product => product.availability === true)
   return (
   <div className="container">
     <div className="row">
@@ -52,7 +53,7 @@ export const UserHome = (props) => {
       </div>
 
       <div className="row">
-        {props.products.map(product => {
+        {availableProducts.map(product => {
           return(
             <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
             <div className="card h-100">
@@ -68,13 +69,13 @@ export const UserHome = (props) => {
                 <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
               </div>
             </div>
-          </div>              
+          </div>
           )
         })}
 
       </div>
 
-    </div>     
+    </div>
     </div>
   </div>
   )

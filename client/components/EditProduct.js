@@ -16,7 +16,7 @@ class EditProduct extends Component {
 		const description = event.target.description.value;
 		const quantity = event.target.quantity.value;
 		const price = event.target.price.value;
-		const availability = event.target.availability.value;
+		const availability = event.target.availability.value === 'Available';
 		const id = this.props.product.id;
 		const categories = [];
 
@@ -50,9 +50,18 @@ class EditProduct extends Component {
 								<label><b>Quantity</b></label>
 								<input type="number" className="form-control" id="quantity" defaultValue={product.quantity} />
 							</div>
-							<div className="form-check">
-								<input type="checkbox" defaultChecked={product.availability} className="form-check-input" id="availability" />
-								<label className="form-check-label">Available</label>
+							<div className="form-group">
+								<label><b>Availability</b></label>
+								{product.availability &&
+								<select className="form-control" id="availability">
+									<option selected>Available</option>
+									<option>Not Available</option>
+								</select>}
+								{!product.availability &&
+									<select className="form-control" id="availability">
+										<option>Available</option>
+										<option selected>Not Available</option>
+									</select>}
 							</div>
 							<div className="form-group">
 								<label><b>Price</b></label>
