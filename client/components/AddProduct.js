@@ -16,16 +16,16 @@ class AddProduct extends Component {
 					<div className="row" style={{ "padding-bottom": "10px" }}>
 						<div className="col-lg-6">
 							<div className="form-group">
-								<label for="productTitle"><b>Product Title</b></label>
+								<label><b>Product Title</b></label>
 								<input type="string" className="form-control" id="productTitle" aria-describedby="emailHelp" placeholder="Enter product name" />
 								<small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
 							</div>
 							<div className="form-group">
-								<label for="productDescription"><b>Product Description</b></label>
+								<label><b>Product Description</b></label>
 								<input type="string" className="form-control" id="productDescription" placeholder="Enter description" />
 							</div>
 							<div className="form-group">
-								<label for="imageUrl"><b>Product Images (up to 3)</b></label>
+								<label><b>Product Images (up to 3)</b></label>
 								<input type="file" className="form-control" id="imageUrl1" placeholder="Password" />
 								<input type="file" className="form-control" id="imageUrl2" placeholder="Password" />
 								<input type="file" className="form-control" id="imageUrl3" placeholder="Password" />
@@ -33,12 +33,12 @@ class AddProduct extends Component {
 						</div>
 						<div className="col-lg-6">
 							<div className="form-group">
-								<label for="quantity"><b>Quantity</b></label>
+								<label><b>Quantity</b></label>
 								<input type="number" className="form-control" id="quantity" placeholder="Enter Quantity" />
 							</div>
 
 							<div className="form-group">
-								<label for="price"><b>Price</b></label>
+								<label><b>Price</b></label>
 								<input type="number" className="form-control" id="price" placeholder="Enter Price" />
 							</div>
 							<b>Product Categories</b>

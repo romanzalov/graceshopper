@@ -10,7 +10,7 @@ router.use('/product-instances', require('./productInstances'));
 
 router.use('/orders', require('./orders'));
 
-router.use('/category', require('./category'));
+router.use('/categories', require('./categories'));
 
 router.use('/session', require('./session'));
 

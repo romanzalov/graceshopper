@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {editProduct} from '../store'
+import { editProduct, fetchCategories } from '../store'
 
 class EditProduct extends Component {
 	constructor(props) {
@@ -9,72 +9,83 @@ class EditProduct extends Component {
 	}
 
 	handleSubmit = event => {
+
+		console.log('event', event.target.availability.value)
 		event.preventDefault();
 		const title = event.target.title.value;
 		const description = event.target.description.value;
 		const quantity = event.target.quantity.value;
-		const availability = event.target.availability.value;
 		const price = event.target.price.value;
+		const availability = event.target.availability.value === 'Available';
 		const id = this.props.product.id;
-		editProduct(id, {title, description, quantity, availability, price});
+		const categories = [];
 
+		this.props.editProduct({ ...this.props.product, title, description, quantity, price, availability}, id);
+		this.props.history.push('/admin-dashboard');
+	}
+
+	componentDidMount() {
+		this.props.fetchCategories();
 	}
 
 	render() {
-		const { product } = this.props;
+		const { product, categories } = this.props;
 		console.log('props', this.props)
 		console.log('product', product)
 		return (
 			<div className="container">
-				<form onSubmit={this.props.handleSubmit}>
+				<form onSubmit={this.handleSubmit}>
 					<h1 className="my-4">Edit Product</h1>
 					<div className="row" style={{ "padding-bottom": "10px" }}>
 						<div className="col-lg-6">
 							<div className="form-group">
-								<label for="title"><b>Product Title</b></label>
-								<input type="string" className="form-control" id="title" aria-describedby="emailHelp" placeholder="Enter Product Title" value={product.title} />
+								<label><b>Product Title</b></label>
+								<input type="string" className="form-control" id="title" aria-describedby="emailHelp" defaultValue={product.title} />
 							</div>
 							<div className="form-group">
-								<label for="description"><b>Product Description</b></label>
-								<input type="text" className="form-control" id="description" value={product.description} placeholder="Enter Product Description" />
+								<label><b>Product Description</b></label>
+								<input type="text" className="form-control" id="description" defaultValue={product.description} />
 							</div>
 							<div className="form-group">
-								<label for="quantity"><b>Quantity</b></label>
-								<input type="number" className="form-control" id="quantity" value={product.quantity} placeholder="Enter Quantity" />
+								<label><b>Quantity</b></label>
+								<input type="number" className="form-control" id="quantity" defaultValue={product.quantity} />
 							</div>
 							<div className="form-group">
-								<label for="availability"><b>Availability</b></label>
-								<input type="number" className="form-control" id="availability" value={product.availability} placeholder="Enter Quantity" />
+								<label><b>Availability</b></label>
+								{product.availability &&
+								<select className="form-control" id="availability">
+									<option selected>Available</option>
+									<option>Not Available</option>
+								</select>}
+								{!product.availability &&
+									<select className="form-control" id="availability">
+										<option>Available</option>
+										<option selected>Not Available</option>
+									</select>}
 							</div>
 							<div className="form-group">
-								<label for="price"><b>Price</b></label>
-								<input type="number" className="form-control" id="price" value={product.price} placeholder="Enter Price" />
+								<label><b>Price</b></label>
+								<input type="number" className="form-control" id="price" defaultValue={product.price} />
 							</div>
 							<b>Product Categories</b>
 							<div className="form-check">
-								<input type="checkbox" className="form-check-input" id="exampleCheck1" />
-								<label className="form-check-label" for="exampleCheck1">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck1" />
-								<label className="form-check-label" for="exampleCheck1">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck1" />
-								<label className="form-check-label" for="exampleCheck1">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck1" />
-								<label className="form-check-label" for="exampleCheck1">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck1" />
-								<label className="form-check-label" for="exampleCheck1">Check me out</label>
-								<br />
+								{categories.length > 0 && categories.map(category => {
+									return (
+										<div key={category.id}>
+											<input type="checkbox" checked={category.id} className="form-check-input" id={category.name} />
+											<label className="form-check-label">{category.name}</label>
+											<br />
+										</div>
+									)
+								})}
+
+
+
 							</div>
-
-
-
 						</div>
 						<div className="col-lg-6">
 							<div className="form-group">
-								<label for="exampleInputPassword1"><b>Product Images</b></label>
+								<label><b>Product Images</b></label>
 								<div id="carouselExampleIndicators" className="carousel slide" data-ride="carousel"
 									style={{ marginTop: "0px !important", paddingTop: "0px" }}
 								>
@@ -120,14 +131,15 @@ class EditProduct extends Component {
 
 const mapStateToProps = function (state, ownProps) {
 	return {
-		product: state.products.find(product => product.id === +ownProps.match.params.id)
+		product: state.products.find(product => product.id === +ownProps.match.params.id),
+		categories: state.categories
 	}
 }
 
 const mapDispatchToProps = function (dispatch) {
 	return {
-		editProduct: (id, product) => dispatch(editProduct(id, product))
-
+		editProduct: (id, product) => dispatch(editProduct(id, product)),
+		fetchCategories: () => dispatch(fetchCategories())
 	}
 }
 
