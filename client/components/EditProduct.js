@@ -34,7 +34,8 @@ class EditProduct extends Component {
 		const availability = event.target.availability.value === 'Available';
 		const id = this.props.product.id;
 		const categories = [];
-		this.props.editProduct({ ...this.props.product, title, description, quantity, price, availability, categories: categoryIDs, removecategories: uncheckedCategoryIDs}, id).then(result => {
+		this.props.editProduct({ ...this.props.product, title, description, quantity, price, availability, categories: categoryIDs, removecategories: uncheckedCategoryIDs}, id)
+		.then(result => {
 			this.props.history.push('/admin-dashboard');
 		});
 	}
