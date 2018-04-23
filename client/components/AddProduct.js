@@ -9,6 +9,7 @@ class AddProduct extends Component {
 	}
 
 	render() {
+		console.log("Categories: ", this.props.categories);
 		return (
 			<div className="container">
 				<h1 className="my-4">Add Product</h1>
@@ -43,21 +44,22 @@ class AddProduct extends Component {
 							</div>
 							<b>Product Categories</b>
 							<div className="form-check">
-								<input type="checkbox" className="form-check-input" id="exampleCheck1" />
-								<label className="form-check-label" for="exampleCheck1">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck2" />
-								<label className="form-check-label" for="exampleCheck2">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck3" />
-								<label className="form-check-label" for="exampleCheck3">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck4" />
-								<label className="form-check-label" for="exampleCheck4">Check me out</label>
-								<br />
-								<input type="checkbox" className="form-check-input" id="exampleCheck5" />
-								<label className="form-check-label" for="exampleCheck5">Check me out</label>
-								<br />
+								{this.props.categories.map(category => {
+									return(
+										<div key={category.id}>
+											<input value={category.id} name="categories" type="checkbox" className="form-check-input" id="exampleCheck1" />
+											<label value={category.id} className="form-check-label" for="exampleCheck1">{category.name}</label>
+											<br />
+										</div>												
+									)
+								})}
+							</div>
+							<div className="form-group">
+								<label><b>Availability</b></label>
+								<select className="form-control" id="availability">
+									<option selected>Available</option>
+									<option>Not Available</option>
+								</select>
 							</div>
 							<button type="submit" className="btn btn-primary" style={{ "margin-top": "10px" }}><b>Submit</b></button>
 						</div>
@@ -70,7 +72,9 @@ class AddProduct extends Component {
 }
 
 const mapStateToProps = function (state) {
-	return {}
+	return {
+		categories:state.categories,
+	}
 }
 
 const mapDispatchToProps = function (dispatch, ownProps) {
@@ -78,16 +82,28 @@ const mapDispatchToProps = function (dispatch, ownProps) {
 		handleSubmit: event => {
 			event.preventDefault();
 			console.log('event', event.target.productTitle.value)
-			const productTitle = event.target.productTitle.value
-			const productDescription = event.target.productDescription.value
+			const title = event.target.productTitle.value
+			const description = event.target.productDescription.value
 			const quantity = event.target.quantity.value
 			const price = event.target.price.value
+			const categoryChecklist = event.target.categories		
+			console.log("categoryChecklist: ", categoryChecklist)
+			let categoryIDs = [];
+			categoryChecklist.forEach(checkbox => {
+				if (checkbox.checked) {
+					categoryIDs.push(parseInt(checkbox.value));
+				}			
+			})
+			const availability = event.target.availability.value === 'Available'
+			// const imgUrl
 			dispatch(addProduct({
-				sportType: 'Baseball',
-				title: productTitle,
-				description: productDescription,
+				sportType: 'Baseball', //for testing
+				title,
+				description,
 				quantity,
-				price
+				price,
+				availability,
+        categories:categoryIDs,
 			}))
 			ownProps.history.push('/admin-dashboard')
 		}

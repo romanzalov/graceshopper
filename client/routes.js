@@ -50,7 +50,7 @@ class Routes extends Component {
             {/* Routes placed here are only available after logging in */}
             <Route path="/home" component={UserHome} />
             {
-              isAdmin &&
+              // isAdmin &&
               <Switch>
                 {/* Routes placed here are only available for admin users */}
                 <Route path="/edit-product/:id" component={EditProduct} />

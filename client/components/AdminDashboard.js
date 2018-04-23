@@ -16,8 +16,8 @@ class AdminDashboard extends Component {
 
 	render() {
 		console.log('users', this.props.users);
-		const {products, users} = this.props;
-
+		const {products, users, categories} = this.props;
+		console.log("products: ", products);
 		return (
 			<div className="container">
 			<h1 className="my-4">Admin Dashboard</h1>
@@ -39,7 +39,12 @@ class AdminDashboard extends Component {
 					{products.map(product =>{
 						return (
 						<tr key={product.id}>
-							<td>{product.sportType}</td>
+							<td>{(product.categories.length == 1) ? (product.categories[0].name)
+								:
+								product.categories.map(category => {
+									return(category.name + " ")
+							})}
+							</td>
 							<td>{product.title}</td>
 							<td>{product.quantity}</td>
 							<td>{product.availability}</td>
