@@ -6,6 +6,7 @@ import { addProductToCart } from '../store/cart'
 import {addReview} from '../store/reviews'
 import {editproductInstance} from '../store/productInstances'
 
+
 class SingleProduct extends Component {
 	constructor(props) {
 		super(props);
@@ -92,16 +93,16 @@ class SingleProduct extends Component {
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
 		const {reviews, user} = this.props
-		console.log("user", user)
 		return (
 			<div className="container">
+				{foundProduct &&
 				<div className="row">
 					<div className="col-lg-3">
-						<h1 className="my-4">Import Sports</h1>
+						<h1 className="my-4">Categories</h1>
 						<div className="list-group">
-							<a href="#" className="list-group-item active">Category 1</a>
-							<a href="#" className="list-group-item">Category 2</a>
-							<a href="#" className="list-group-item">Category 3</a>
+						{this.props.categories.map(category => {
+							return(<Link key={category.id} disabled className="list-group-item" to={`/category/${category.id}`}>{category.name}</Link>)
+						  })}							
 						</div>
 					</div>
 					<div className="col-lg-9">
@@ -130,7 +131,7 @@ class SingleProduct extends Component {
 									<hr />
 								</div>
 							)) : null}
-								{user.id ? 
+								{user.id ?
 									(<div>
 										<a href="#" className="btn btn-success" onClick={this.showForm}>Leave a Review</a>
 										{(this.state.showForm) ? this.reviewForm(event) : null}
@@ -139,14 +140,16 @@ class SingleProduct extends Component {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>}
 			</div>
+
 		)
 	}
 }
 
 const mapStateToProps = function (state) {
 	return {
+		categories: state.categories,
 		products: state.products,
 		reviews: state.reviews,
 		user: state.user,
@@ -166,7 +169,6 @@ const mapDispatchToProps = function (dispatch) {
 		editproductInstance: (id,product) => {
 			dispatch(editproductInstance(id, product))
 		}
-
 	}
 }
 

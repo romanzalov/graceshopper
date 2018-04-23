@@ -6,6 +6,10 @@ import store from '../store'
 class SingleUser extends Component {
 	constructor() {
 		super();
+		this.state = {
+			showChangePassword:false,
+		};
+		this.showChangePassword = this.showChangePassword.bind(this);
 	}
 
 	getQuantity = order => {
@@ -26,6 +30,19 @@ class SingleUser extends Component {
 		})
 		return total
 	}
+	
+	showChangePassword() {
+		if (!this.state.showChangePassword) {
+			this.setState({
+				showChangePassword: true,
+			})
+		}
+		else {
+			this.setState({
+				showChangePassword: false,
+			})			
+		}
+	}
 	//user not eager loaded
 	render() {
 		const { user, orders,reviews, productInstances, products, cart } = this.props;
@@ -42,7 +59,7 @@ class SingleUser extends Component {
 			        	<div>
 			        		<h3>Account Info</h3>
 							<p>{user.email}</p>
-							<button className="btn btn-success">Change Password</button>
+							<button className="btn btn-success" onClick={this.showChangePassword}>Change Password</button>
 						</div>
 					}
 			        <hr />
