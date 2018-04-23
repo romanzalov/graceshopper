@@ -19,6 +19,13 @@ router.post('/', (req, res, next) => {
     Product
     .create(req.body)
     .then((product) => {
+        if (req.body.categories && req.body.categories.length > 0) {
+            req.body.categories.forEach(async categoryId => {
+                var addCategory = await Category.findById(categoryId);
+                addCategory.addProduct(product);
+                await addCategory.save();
+            })                
+        }
         res.json(product);
     })
 })
