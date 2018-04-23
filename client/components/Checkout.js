@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
 import axios from 'axios';
+
 import {checkoutCartOrder, removeproductInstance, editproductInstance, editUser} from '../store'
 import history from '../history';
 

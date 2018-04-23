@@ -2,6 +2,7 @@
 const router = require('express').Router()
 const {User, Review, Order, productInstance, Product, Category, ProductCategory} = require('../db/models');
 const axios = require('axios'); 
+const {confirmedEmail, sendMail, confirmed, shipped, updated} = require('./sendemail');
 
 module.exports = router;
 
@@ -68,6 +69,16 @@ router.post('/cart', async (req, res) => {
 
 router.post('/checkout', async(req, res) => {
     // let thisSession = await axios.get('/api/session');
+    console.log("sending confirmedEmail: ");
+    console.log("req.body: ", req.body);
+    var emailInput = confirmed;
+    var productString = "";
+    req.body.cart.instances.forEach(instance => {
+        productString += instance.product.title + ", ";
+    })
+    // emailInput.text = JSON.stringify(req.body.information);
+    emailInput.text = "Products: " + productString;
+    sendMail(confirmed);
     let thisCart = await Order.findById(req.body.cartId);
     thisCart.isCart = false;
     thisCart.status = "Completed";

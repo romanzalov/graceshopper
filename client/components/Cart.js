@@ -11,6 +11,7 @@ class Cart extends Component {
 	}
 
 	changeQuantity(id, instance, amount) {
+
         this.props.editproductInstance(id , {...instance, quantity: amount})
     }
     removeItem(id) {
