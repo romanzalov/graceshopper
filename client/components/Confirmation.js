@@ -23,7 +23,6 @@ class Confirmation extends Component {
 
 	render() {
         let orderInfo = this.state.orderInformation;
-        console.log("orderInfo: ", orderInfo);
 		return (
 			<div className="container">
 			<h1 className="my-4">Confirmation</h1>

@@ -79,6 +79,7 @@ class EditUser extends Component {
 								<th>Total</th>
 								<th>Quantity</th>
 								<th>Status</th>
+								<th></th>
 							</tr>
 							{pastOrders.length > 0 && pastOrders.map(order =>
 								(
@@ -89,6 +90,7 @@ class EditUser extends Component {
 										<td>{order.createdAt.slice(0, 10)}</td>
 										<td>${this.getTotalPrice(order)}</td>
 										<td>{this.getQuantity(order)} items</td>
+										<td>
 										<form onSubmit={this.props.handleOrderChange(order.id)}>
 											<td>
 												{order.status === 'Created' &&
@@ -134,6 +136,8 @@ class EditUser extends Component {
 											</td>
 											<td><button>Save</button></td>
 										</form>
+										</td>
+										<td><button>Save</button></td>
 									</tr>
 								)
 							)

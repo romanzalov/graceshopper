@@ -96,7 +96,6 @@ class AdminDashboard extends Component {
 }
 
 const mapStateToProps = function(state) {
-	console.log('state', state)
 	return {
 		users: state.users,
 		products: state.products

@@ -9,6 +9,7 @@ import {Link} from 'react-router-dom'
  */
 export const UserHome = (props) => {
   const availableProducts = props.products.filter(product => product.availability === true)
+
   return (
   <div className="container">
     <div className="row">
@@ -74,7 +75,7 @@ export const UserHome = (props) => {
                 <p className="card-text">{product.description}</p>
               </div>
               <div className="card-footer">
-                <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+                <small className="text-muted"></small>
               </div>
             </div>
           </div>

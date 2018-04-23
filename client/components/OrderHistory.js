@@ -50,7 +50,7 @@ class OrderHistory extends Component {
 										))}
 									</td>
                   <td>
-                    {order.status}
+                    <p>{order.status}</p>
                   <br/>
                   <div className="form-group">
                     <label htmlFor="exampleFormControlSelect1">Order Status:</label>
