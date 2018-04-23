@@ -117,7 +117,7 @@ class SingleProduct extends Component {
 							<img className="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""/>
 							<div className="card-body">
 								<h3 className="card-title">{foundProduct.title}
-								{foundProduct.availability ? <button style={{float:"right"}} className="btn btn-success" onClick={this.handleClick}>Add To Cart Test</button> : <h3 style={{float:"right"}}>Currently Unavailable</h3>}
+								{foundProduct.availability ? <button style={{float:"right"}} className="btn btn-success" onClick={this.handleClick}>Add To Cart</button> : <h3 style={{float:"right"}}>Currently Unavailable</h3>}
 								</h3>
 								<h4>{foundProduct.price}</h4>
 								<p className="card-text">{foundProduct.description}</p>
