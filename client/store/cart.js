@@ -35,7 +35,7 @@ export const addProductToCart = function(id){
 
 export const checkoutCartOrder = function(cart) {
 	return function thunk(dispatch) {
-		return axios.post('/api/session/checkout',{cartId: cart.id, information: cart.information})
+		return axios.post('/api/session/checkout',{cartId: cart.id, information: cart.information, cart:cart})
 		.then((res) => {
 			dispatch(edit(res.data))
 		})

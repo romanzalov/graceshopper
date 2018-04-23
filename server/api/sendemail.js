@@ -35,26 +35,47 @@ let updated = {
 };
 
 
-const confirmedEmail = transporter.sendMail(confirmed, (error,info) => {
-    if(error) {
-        console.log(error);
-    }
-    console.log('The message was sent!');
-    console.log(info);
-});
+// const confirmedEmail = transporter.sendMail(confirmed, (error,info) => {
+//     if(error) {
+//         console.log(error);
+//     }
+//     console.log('The message was sent!');
+//     console.log(info);
+// });
 
-const updatedEmail = transporter.sendMail(updated, (error,info) => {
-    if(error) {
-        console.log(error);
-    }
-    console.log('The message was sent!');
-    console.log(info);
-});
+// const deliveredEmail = transporter.sendMail(updated, (error,info) => {
+//     if(error) {
+//         console.log(error);
+//     }
+//     console.log('The message was sent!');
+//     console.log(info);
+// });
 
-const shippedEmail = transporter.sendMail(shipped, (error,info) => {
-    if(error) {
-        console.log(error);
-    }
-    console.log('The message was sent!');
-    console.log(info);
-});
+// const shippedEmail = transporter.sendMail(shipped, (error,info) => {
+//     if(error) {
+//         console.log(error);
+//     }
+//     console.log('The message was sent!');
+//     console.log(info);
+// });
+
+let sendMail = function(input) {
+    transporter.sendMail(input, (error,info) => {
+        if(error) {
+            console.log(error);
+        }
+        console.log('The message was sent!');
+        console.log(info);
+    }); 
+    // return
+}
+
+module.exports = {
+    // confirmedEmail,
+    // deliveredEmail,
+    // shippedEmail,
+    sendMail,
+    confirmed,
+    updated,
+    shipped
+}
