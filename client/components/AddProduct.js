@@ -9,7 +9,6 @@ class AddProduct extends Component {
 	}
 
 	render() {
-		console.log("Categories: ", this.props.categories);
 		return (
 			<div className="container">
 				<h1 className="my-4">Add Product</h1>
@@ -81,13 +80,11 @@ const mapDispatchToProps = function (dispatch, ownProps) {
 	return {
 		handleSubmit: event => {
 			event.preventDefault();
-			console.log('event', event.target.productTitle.value)
 			const title = event.target.productTitle.value
 			const description = event.target.productDescription.value
 			const quantity = event.target.quantity.value
 			const price = event.target.price.value
 			const categoryChecklist = event.target.categories		
-			console.log("categoryChecklist: ", categoryChecklist)
 			let categoryIDs = [];
 			categoryChecklist.forEach(checkbox => {
 				if (checkbox.checked) {

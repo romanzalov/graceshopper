@@ -15,9 +15,7 @@ class CategoryProducts extends Component {
 
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
-        console.log("CategoryProducts categories: ", this.props.categories);
         const foundCategory = this.props.categories.find(category => category.id === parseInt((this.props.match.params.id)))
-        console.log("This Category Products: ", foundCategory.products)
 		return (
             <div className="container">
             <div className="row">

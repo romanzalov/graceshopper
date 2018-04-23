@@ -56,7 +56,6 @@ class SingleProduct extends Component {
 			this.props.addToCart(parseInt((this.props.match.params.id)));				
 		}
 		else {
-			console.log("THIS.PROPS.CART.ID: ", this.props.cart.id);
 			this.props.editproductInstance(parseInt(this.props.match.params.id),{orderId: this.props.cart.id});
 		}
 	}
@@ -102,7 +101,6 @@ class SingleProduct extends Component {
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
 		const {reviews, user} = this.props
-		console.log("rendered: ", 97);
 		return (
 			<div className="container">
 				{foundProduct &&
