@@ -17,6 +17,14 @@ export const UserHome = (props) => {
 
         <h1 className="my-4">Categories</h1>
         <div className="list-group">
+        <div id="searchBar">
+        <form onSubmit={function(event) {
+            event.preventDefault();
+        }}>
+          <input type="text" placeholder="Search" style={{"marginBottom":"5px", "width":"70%", display:"inline-block"}}></input>
+          <button style={{"width":"20%", display:"inline-block", "marginLeft":"5px"}}>Go</button>
+        </form>
+        </div>
         {props.categories.map(category => {
           return(<Link key={category.id} disabled className="list-group-item" to={`/category/${category.id}`}>{category.name}</Link>)
         })}							

@@ -2,6 +2,13 @@ const router = require('express').Router();
 const {Category, User, Product, productInstance, Order, Review} = require('../db/models');
 const axios = require ('axios');
 
+router.get('/search/:term', (req, res, next) => {
+    console.log("req.params.term: ", req.params.term);
+    Product.findByName(req.params.term).then(foundProducts => {
+        res.json(foundProducts);
+    })
+})
+
 router.get('/', (req, res, next) => {
     // res.json({});
     Product.findAll({

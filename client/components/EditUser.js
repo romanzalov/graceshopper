@@ -92,6 +92,8 @@ class EditUser extends Component {
 										<td>{this.getQuantity(order)} items</td>
 										<td>
 										<form onSubmit={this.props.handleOrderChange(order.id)}>
+											<td>
+												{order.status === 'Created' &&
 												<div className="form-group">
 													<select className="form-control" id="status">
 														<option selected>Created</option>
@@ -100,6 +102,39 @@ class EditUser extends Component {
 														<option>Completed</option>
 													</select>
 												</div>
+												}
+												{order.status === 'Processing' &&
+												<div className="form-group">
+													<select className="form-control" id="status">
+														<option>Created</option>
+														<option selected>Processing</option>
+														<option>Cancelled</option>
+														<option>Completed</option>
+													</select>
+												</div>
+												}
+												{order.status === 'Cancelled' &&
+												<div className="form-group">
+													<select className="form-control" id="status">
+														<option>Created</option>
+														<option>Processing</option>
+														<option selected>Cancelled</option>
+														<option>Completed</option>
+													</select>
+												</div>
+												}
+												{order.status === 'Completed' &&
+												<div className="form-group">
+													<select className="form-control" id="status">
+														<option>Created</option>
+														<option>Processing</option>
+														<option>Cancelled</option>
+														<option selected>Completed</option>
+													</select>
+												</div>
+												}
+											</td>
+											<td><button>Save</button></td>
 										</form>
 										</td>
 										<td><button>Save</button></td>

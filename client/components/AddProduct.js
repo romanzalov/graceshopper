@@ -49,7 +49,7 @@ class AddProduct extends Component {
 											<input value={category.id} name="categories" type="checkbox" className="form-check-input" id="exampleCheck1" />
 											<label value={category.id} className="form-check-label" for="exampleCheck1">{category.name}</label>
 											<br />
-										</div>												
+										</div>
 									)
 								})}
 							</div>
@@ -85,16 +85,17 @@ const mapDispatchToProps = function (dispatch, ownProps) {
 			const quantity = event.target.quantity.value
 			const price = event.target.price.value
 			const categoryChecklist = event.target.categories		
+
 			let categoryIDs = [];
 			categoryChecklist.forEach(checkbox => {
 				if (checkbox.checked) {
 					categoryIDs.push(parseInt(checkbox.value));
-				}			
+				}
 			})
 			const availability = event.target.availability.value === 'Available'
 			// const imgUrl
 			dispatch(addProduct({
-				sportType: 'Baseball', //for testing
+				// sportType: 'Baseball', //for testing
 				title,
 				description,
 				quantity,
