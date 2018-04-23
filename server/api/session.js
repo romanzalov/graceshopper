@@ -25,11 +25,11 @@ router.post('/cart', async (req, res) => {
     console.log("line 13");
     var productId = parseInt(req.body.productId);
     console.log("line 15 req.body.productId: ", req.body.productId);
-    console.log("line 16 req.body: ", req.body, productId); 
+    console.log("line 16 req.body: ", req.body, productId);
     var relatedProduct = await Product.findById(productId);
     console.log("line 17");
     req.session.test = "post edit";
-    var hasCart = !(!('cart' in req.session) || req.session.cart == {} 
+    var hasCart = !(!('cart' in req.session) || req.session.cart == {}
     || !(req.session.cart) || Object.keys(req.session.cart).length == 0);
     var hasUser = (('passport' in req.session) && ('user' in req.session.passport));
     console.log(req.session);
@@ -53,15 +53,15 @@ router.post('/cart', async (req, res) => {
     }
     else {
         console.log("no existing cart");
-        let newCart = await Order.create({}); 
+        let newCart = await Order.create({});
         var orderId = newCart.id;
         let newItem = await relatedProduct.createInstance(0, parseInt(orderId), 1);
         if (hasUser) {
             newCart.userId = parseInt(req.session.passport.user);
-            await newCart.save();            
-        }         
+            await newCart.save();
+        }
         await newCart.save();
-        req.session.cart = newCart;           
+        req.session.cart = newCart;
         res.json(newCart);
     }
 })
@@ -99,7 +99,7 @@ router.get('/set-cart/:id', (req, res) => { //IF CART EXISTS -> GET FROM CART ID
     }).then(order => {
         req.session.cart = order;
         res.json(order);
-    })    
+    })
 })
 
 router.get('/update-cart', (req, res) => {
@@ -110,7 +110,7 @@ router.get('/update-cart', (req, res) => {
         })
     }
     else {
-        res.send("no user");        
+        res.send("no user");
     }
 })
 
@@ -132,16 +132,16 @@ router.get('/update-cart', (req, res) => {
 
 //"Get info" route -> use to get # of cart items
 router.get('/get-info', async(req, res) => {
-    if (!('cart' in req.session) || req.session.cart == {} 
+    if (!('cart' in req.session) || req.session.cart == {}
     || !(req.session.cart) || Object.keys(req.session.cart).length == 0) {
         req.session.hasCart = false;
     }
     else {
-        req.session.hasCart = true;        
+        req.session.hasCart = true;
     }
     if (('passport' in req.session) && ('user' in req.session.passport)) {
         req.session.hasUser = true;
-    } 
+    }
     else {
         req.session.hasUser = false;
     }
@@ -155,11 +155,11 @@ router.get('/get-info', async(req, res) => {
 //Initialize/update -> get the number of items in "cart" (0 if it doesn't exist)
 router.get('/initialize', async(req, res) => {
     // No cart in session case
-    if (!('cart' in req.session) || req.session.cart == {} 
-    || !(req.session.cart) || Object.keys(req.session.cart).length == 0) { 
+    if (!('cart' in req.session) || req.session.cart == {}
+    || !(req.session.cart) || Object.keys(req.session.cart).length == 0) {
         req.session.numcartItems = 0; //Later make this a property of orders
         req.session.hasCart = false;
-        //Logged-in user has cart case 
+        //Logged-in user has cart case
         if (('passport' in req.session) && ('user' in req.session.passport)) {
             // var userId = parseInt(req.session.passport.user);
             var userId = 2;
@@ -172,8 +172,8 @@ router.get('/initialize', async(req, res) => {
                     return
                 }
             })
-        }                     
-    }  
+        }
+    }
     // Has cart in session case
     else { //Prioritize this over user's existing cart
         req.session.hasCart = true;
@@ -191,8 +191,8 @@ router.get('/initialize', async(req, res) => {
             thisCart.save();
             console.log("found thisCart", thisCart);
             req.session.cart = thisCart;
-        } 
-        req.session.numcartItems = req.session.cart.instances.length;        
+        }
+        req.session.numcartItems = req.session.cart.instances.length;
     }
     res.json(req.session);
     return
@@ -211,8 +211,8 @@ router.get('/login', async(req, res) => {
             else {
                 res.json(req.session)
             }
-        })    
-    } 
+        })
+    }
     else { //Set all user orders to isCart = false and assign req.session.cart to user's cart
         var userId = parseInt(req.session.passport.user);
         var existingCarts = await Order.findAll({where:{userId:userId, isCart:true}});
@@ -228,19 +228,19 @@ router.get('/login', async(req, res) => {
             });
         })
     }
-    res.json(req.session);     
+    res.json(req.session);
 })
 
 //Add to cart
 router.get('/add-product', async (req, res) => { //On add product
 // router.post('/add-product', async (req, res) => { //On add product
-    if (!('cart' in req.session) || req.session.cart == {} 
+    if (!('cart' in req.session) || req.session.cart == {}
     || !(req.session.cart) || Object.keys(req.session.cart).length == 0) {
         var newCart = await Order.create({}); //use req.body to add product later
         if (('passport' in req.session) && ('user' in req.session.passport)) {
             newCart.setUser(parseInt(req.session.passport.user));
             req.session.hasUser = true;
-        } 
+        }
         else {
             req.session.hasUser = false;
         }
@@ -253,7 +253,7 @@ router.get('/add-product', async (req, res) => { //On add product
     else {
         if (('passport' in req.session) && ('user' in req.session.passport)) {
             req.session.hasUser = true;
-        } 
+        }
         else {
             req.session.hasUser = false;
         }
@@ -290,7 +290,7 @@ router.get('/complete-purchase', async (req, res) => {
     //
 
 // router.post('/add-cart', (req, res) => {
-router.get('/add-cart/:id', (req, res) => { //IF CART DOESN'T ALREADY EXIST AND USER LOGGED IN 
+router.get('/add-cart/:id', (req, res) => { //IF CART DOESN'T ALREADY EXIST AND USER LOGGED IN
         Order.create({
             // userId:req.params.id,
         })
@@ -302,8 +302,8 @@ router.get('/add-cart/:id', (req, res) => { //IF CART DOESN'T ALREADY EXIST AND 
             //     res.json(order);
             // })
             req.session.cart = order;
-            res.json(order);        
-        })            
+            res.json(order);
+        })
 })
 
 // router.delete('/', (req, res) => {

@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
 	.then(orders => {
 		orders.sort(function(a, b) {
 		  return a.id - b.id;
-		});		
+		});
 		res.json(orders);
 	})
 	.catch(next)
@@ -80,6 +80,15 @@ router.post('/:orderId/items', (req, res, next) => {
 			res.json(item);
 		})
 	})
+})
+
+//delete order and all product instances on that order, when cancelled by admin
+
+router.delete('/:orderId', (req, res, next) => {
+  productInstance.destroy({where: {orderId: req.params.orderId}})
+    .then(() => Order.destroy({where: {id: req.params.orderId}}))
+    .then(() => res.status(204).end())
+    .catch(next)
 })
 
 

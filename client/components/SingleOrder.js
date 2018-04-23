@@ -17,38 +17,48 @@ class SingleOrder extends Component {
 		return sum;
 	}
 
-
 	render() {
 		const {order} = this.props
-		console.log('props', this.props, 'order', order)
 		return (
-			<div>
-			<h1>Test</h1>
-			{ order &&
-				<div>
-					<h3>Order created: {order.createdAt.slice(0,10)}</h3>
-					<h3>Status: {order.status}</h3>
-					<h3>Total: {this.getOrderTotal()}</h3>
-					<table>
-						{order.instances.map(instance => {
-							return (
-								<tr key={instance.id}>
-									<td>{instance.product.title}</td>
-									<td>{instance.price}</td>
-									<td>{instance.quantity}</td>
-								</tr>
-							)
-						})}
-					</table>
+			<div className="container">
+				<div className="row">
+					<h1 className="my-4">Order</h1>
+					<table style={{width:"100%"}} className="table">
+						{order ? (
+						<tbody>
+							<tr>
+								<th>Order Placed</th>
+								<th>Total</th>
+								<th>Shipped To</th>
+								<th>Items</th>
+								<th>Status</th>
+							</tr>
+							<tr>
+								<td>{order.createdAt}</td> 
+								<td>${this.getOrderTotal()}</td> 
+								<td>{order.user.address.Description ? order.user.address.Description : null}</td>
+								<td>
+									{order.instances.map(instance => (
+										<div key={instance.id} style={{border: "1px solid black", marginBottom:"5px"}}>
+											<a href="#"><img className="card-img-top" src={instance.product.imageUrls[0]} alt="" 
+											style={{width:"200px", marginRight:"5px"}}/></a>
+											{instance.product.description}
+										</div>
+									))}
+								</td>
+								<td>{order.status}</td>
+	             			</tr>
+						</tbody>
+						) : null
+					}
+				  </table>
 				</div>
-			}
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = function(state, ownProps) {
-	console.log('orders', state.orders)
 	return {
 		order: state.orders.find(order => order.id === +ownProps.match.params.id)
 	}

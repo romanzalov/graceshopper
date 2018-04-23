@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {User, Order, Review} = require('../db/models')
+const {User, Order, Review, productInstance} = require('../db/models')
 module.exports = router
 
 router.get('/', (req, res, next) => {
@@ -47,8 +47,15 @@ router.get('/:id', (req, res, next) => {
     .catch(next)
  })
 
+//delete a user and all orders belonging to that user, used by admin
+
 router.delete('/:userId', (req, res, next) => {
-  User.destroy({where: {id: req.params.userId}})
+  Order.findAll({where: {userId: req.params.userId}})
+    .then(orders => orders.forEach(order => {
+      productInstance.destroy({where: {orderId: order.id}})
+    }))
+    .then(() => Order.destroy({where: {userId: req.params.userId}}))
+    .then(() => User.destroy({where: {id: req.params.userId}}))
     .then(() => res.status(204).end())
     .catch(next)
 })

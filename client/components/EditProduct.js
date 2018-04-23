@@ -6,11 +6,25 @@ import { editProduct, fetchCategories } from '../store'
 class EditProduct extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {};
 	}
 
 	handleSubmit = event => {
 
 		console.log('event', event.target.availability.value)
+		console.log("category values: ", event.target.categories)
+		let categoryIDs = [];
+		let uncheckedCategoryIDs = [];
+		event.target.categories.forEach(checkbox => {
+			if (checkbox.checked) {
+				console.log("checked: ", checkbox.value);
+				categoryIDs.push(parseInt(checkbox.value));
+			}			
+			else {
+				uncheckedCategoryIDs.push(parseInt(checkbox.value));
+			}
+			console.log("categoryIDs: ", categoryIDs);
+		})
 		event.preventDefault();
 		const title = event.target.title.value;
 		const description = event.target.description.value;
@@ -19,19 +33,28 @@ class EditProduct extends Component {
 		const availability = event.target.availability.value === 'Available';
 		const id = this.props.product.id;
 		const categories = [];
-
-		this.props.editProduct({ ...this.props.product, title, description, quantity, price, availability}, id);
+		this.props.editProduct({ ...this.props.product, title, description, quantity, price, availability, categories: categoryIDs, removecategories: uncheckedCategoryIDs}, id);
 		this.props.history.push('/admin-dashboard');
 	}
 
 	componentDidMount() {
 		this.props.fetchCategories();
+		this.setState({
+			productCategories:this.props.product.categories,
+		});
 	}
 
 	render() {
 		const { product, categories } = this.props;
-		console.log('props', this.props)
-		console.log('product', product)
+		const categoryIDs = [];
+		if (this.props.product && this.props.product.categories) {
+			this.props.product.categories.forEach(category => {
+				categoryIDs.push(category.id);
+			})
+		}
+		// console.log('props', this.props)
+		// console.log('product', product)
+		console.log("categoryIDs: ", categoryIDs, this.props.product);
 		return (
 			<div className="container">
 				<form onSubmit={this.handleSubmit}>
@@ -67,12 +90,12 @@ class EditProduct extends Component {
 								<label><b>Price</b></label>
 								<input type="number" className="form-control" id="price" defaultValue={product.price} />
 							</div>
-							<b>Product Categories</b>
+							<b>Product Categories (Check & Uncheck to Add or Remove Categories)</b>
 							<div className="form-check">
 								{categories.length > 0 && categories.map(category => {
 									return (
 										<div key={category.id}>
-											<input type="checkbox" checked={category.id} className="form-check-input" id={category.name} />
+											<input type="checkbox" name="categories" value={category.id} defaultChecked={categoryIDs.includes(parseInt(category.id)) ? true : false} className="form-check-input" id={category.name} />
 											<label className="form-check-label">{category.name}</label>
 											<br />
 										</div>

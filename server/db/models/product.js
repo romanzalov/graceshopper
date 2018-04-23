@@ -28,6 +28,7 @@ const Product = db.define('product', {
     },
     availability: {
       type: Sequelize.BOOLEAN,
+      defaultValue: true
     },
     description: {
       type: Sequelize.TEXT,

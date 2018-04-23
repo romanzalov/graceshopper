@@ -2,18 +2,22 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import history from '../history'
+import {fetchUsers, removeProduct, destroyUser} from '../store'
 
 class AdminDashboard extends Component {
 	constructor(props) {
 		super(props);
 	}
 
-	// handleAddProduct = () =>{
-	// 	history.push('/')
-	// }
+
+	componentDidMount(){
+		this.props.fetchUsers();
+	}
 
 	render() {
-		console.log("render 11");
+		console.log('users', this.props.users);
+		const {products, users} = this.props;
+
 		return (
 			<div className="container">
 			<h1 className="my-4">Admin Dashboard</h1>
@@ -29,37 +33,21 @@ class AdminDashboard extends Component {
 						<th>Category</th>
 						<th>Name</th>
 						<th>Quantity</th>
-						<th>Available</th>
+						<th>Availability</th>
 						<th></th>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
+					{products.map(product =>{
+						return (
+						<tr>
+							<td>{product.sportType}</td>
+							<td>{product.title}</td>
+							<td>{product.quantity}</td>
+							<td>{product.availability}</td>
+							<td><button onClick={()=>history.push(`/edit-product/${product.id}`)} className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
+						</tr>
+						)
+					})
+					}
 					</tbody>
 					</table>
 				</div>
@@ -72,37 +60,20 @@ class AdminDashboard extends Component {
 						<th>Email</th>
 						<th>Name</th>
 						<th>Address</th>
-						<th>Orders</th>
 						<th></th>
 					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-						<td>5</td>
-						<td><button className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
-					</tr>
+					{users.map(user =>{
+						return (
+							<tr>
+								<td>{user.email}</td>
+								<td>{user.name}</td>
+								<td>{user.address}</td>
+								<td><button onClick={()=>history.push(`/edit-user/${user.id}`)} className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
+								<td><button onClick={()=>this.props.handleUserDelete(user.id)} className="btn btn-danger" style={{display:"inline-block"}}>Delete</button></td>
+							</tr>
+						)
+					})
+					}
 					</tbody>
 					</table>
 				</div>
@@ -113,11 +84,18 @@ class AdminDashboard extends Component {
 }
 
 const mapStateToProps = function(state) {
-
+	console.log('state', state)
+	return {
+		users: state.users,
+		products: state.products
+	}
 }
 
 const mapDispatchToProps = function(dispatch) {
-
+	return {
+		fetchUsers: () => dispatch(fetchUsers()),
+		handleUserDelete: id => dispatch(destroyUser(id))
+	}
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(AdminDashboard)

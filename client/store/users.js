@@ -9,13 +9,6 @@ const CREATE_USER = 'CREATE_USER'
 const DELETE_USER = 'DELETE_USER'
 const UPDATE_USER = 'UPDATE_USER'
 
-/**
- * INITIAL STATE
- */
-const initialState = {
-  users: [],
-
-}
 
 /**
  * ACTION CREATORS
@@ -63,22 +56,22 @@ export const editUser = (user, id) => {
 /**
  * REDUCER
  */
-export default function (state = initialState, action) {
+export default function (users = [], action) {
   switch (action.type) {
     case GET_USERS:
       return action.users;
 
     case CREATE_USER:
-      return {...state, users: [...state.users, action.user]};
+      return [...users, action.user];
 
     case DELETE_USER:
-      return {...state, users: state.users.filter(user => user.id !== action.id)};
+      return users.filter(user => user.id !== action.id);
 
     case UPDATE_USER:
-      return {...state, users: state.users.map(user => (action.user.id === user.id ? action.user : user
-      ))}
+      return users.map(user => (action.user.id === user.id ? action.user : user
+      ))
 
     default:
-      return state;
+      return users;
   }
 }

@@ -23,7 +23,7 @@ router.post('/', (req, res, next) => {
     })
 })
 
-router.get('/instances', (req, res, next) => { 
+router.get('/instances', (req, res, next) => {
     productInstance.findAll({
         where:{},
         include: [
@@ -35,7 +35,7 @@ router.get('/instances', (req, res, next) => {
     })
 })
 
-router.post('/instances', (req, res, next) => { 
+router.post('/instances', (req, res, next) => {
     productInstance.create(req.body).then((instance) => res.json(instance));
 })
 
@@ -77,7 +77,8 @@ router.get('/:id', async (req, res, next) => {
             id:req.params.id,
         },
         include: [
-            {model: productInstance, as:'instances', required:false}
+            {model: productInstance, as:'instances', required:false},
+            {model: Category, as: 'categories', required: false},
         ],
     });
     res.json(product);
@@ -86,6 +87,21 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
     var product = await Product.findById(req.params.id);
+    console.log("req.body 89: ", req.body);
+    if (req.body.categories && req.body.categories.length > 0) {
+        req.body.categories.forEach(async categoryId => {
+            var addCategory = await Category.findById(categoryId);
+            addCategory.addProduct(product);
+            await addCategory.save();
+        })
+    }
+    if (req.body.removecategories && req.body.removecategories.length > 0) {
+        req.body.removecategories.forEach(async categoryId => {
+            var removeCategory = await Category.findById(categoryId);
+            removeCategory.removeProduct(product);
+            await removeCategory.save();
+        })
+    }
     await product.update(req.body);
     res.json(product);
     return;
@@ -132,7 +148,7 @@ router.get('/:id/add-to-cart', async (req, res, next) => {
     var _Instance = await _Product.createInstance(0, req.body.orderId);
     res.json(_Instance);
 })
-        
+
 ///:id
 // /user/:id/cart
 

@@ -8,17 +8,15 @@ import {Link} from 'react-router-dom'
  * COMPONENT
  */
 export const UserHome = (props) => {
-  // constructor() {
-  //   super();
-  //   this.state = {};
-  // }  
-  console.log("UserHome.props: ", props);
+  console.log("props.categories: ", props.categories);
+  // const availableProducts = props.products.filter(product => product.availability === true)
+  const availableProducts = props.products;
   return (
   <div className="container">
     <div className="row">
       <div className="col-lg-3">
 
-        <h1 className="my-4">Categories</h1>
+        <h1 className="my-4">All Categories</h1>
         <div className="list-group">
         <Link disabled className="list-group-item" to={`/`}>View All</Link>
         {props.categories.map(category => {
@@ -58,7 +56,7 @@ export const UserHome = (props) => {
       </div>
 
       <div className="row">
-        {props.products.map(product => {
+        {availableProducts.map(product => {
           return(
             <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
             <div className="card h-100">
@@ -74,13 +72,13 @@ export const UserHome = (props) => {
                 <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
               </div>
             </div>
-          </div>              
+          </div>
           )
         })}
 
       </div>
 
-    </div>     
+    </div>
     </div>
   </div>
   )
@@ -93,7 +91,7 @@ const mapState = (state) => {
   return {
     email: state.user.email,
     products: state.products,
-    categories: state.category,
+    categories: state.categories,
   }
 }
 
