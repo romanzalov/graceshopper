@@ -59,6 +59,13 @@ class AddProduct extends Component {
 								<label className="form-check-label" for="exampleCheck5">Check me out</label>
 								<br />
 							</div>
+							<div className="form-group">
+								<label><b>Availability</b></label>
+								<select className="form-control" id="availability">
+									<option selected>Available</option>
+									<option>Not Available</option>
+								</select>
+							</div>
 							<button type="submit" className="btn btn-primary" style={{ "margin-top": "10px" }}><b>Submit</b></button>
 						</div>
 					</div>
@@ -78,16 +85,19 @@ const mapDispatchToProps = function (dispatch, ownProps) {
 		handleSubmit: event => {
 			event.preventDefault();
 			console.log('event', event.target.productTitle.value)
-			const productTitle = event.target.productTitle.value
-			const productDescription = event.target.productDescription.value
+			const title = event.target.productTitle.value
+			const description = event.target.productDescription.value
 			const quantity = event.target.quantity.value
 			const price = event.target.price.value
+			const availability = event.target.availability.value === 'Available'
+			// const imgUrl
 			dispatch(addProduct({
-				sportType: 'Baseball',
-				title: productTitle,
-				description: productDescription,
+				sportType: 'Baseball', //for testing
+				title,
+				description,
 				quantity,
-				price
+				price,
+				availability
 			}))
 			ownProps.history.push('/admin-dashboard')
 		}
