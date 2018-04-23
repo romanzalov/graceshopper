@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import history from '../history';
 import {checkoutCartOrder, removeproductInstance, editproductInstance} from '../store'
 
@@ -51,8 +51,15 @@ class Cart extends Component {
 	render() {
 		// const {orders, user, productInstances} = this.props;
 		// const {cart} = this.state
-		const {orders, user, productInstances, cart} = this.props;
-		console.log(cart)
+		const {orders, user, productInstances, cart, products} = this.props;
+
+		const instances = productInstances.filter(elem => {
+			return elem.orderId===cart.id
+		})
+
+
+
+		console.log(cart, instances)
 		// const cart = orders.find((order) => {
 		// 	return order.isCart === true && order.user.id === this.props.user.id
 		// })
@@ -60,7 +67,7 @@ class Cart extends Component {
 		return (
 			<div className="container">
 			<h1 className="my-4">Cart</h1>
-				{cart.instances ? 
+				{instances.length>0 ? 
 				<div className="row" style={{"paddingBottom":"10px"}}>
 				<table style={{width:"100%"}} className="table">
 				<tbody>
@@ -70,13 +77,15 @@ class Cart extends Component {
 					<th>Quantity</th>
 					<th>Remove</th>
 				  </tr>
-				  {cart.instances.map(item => (
+				  {instances.map(item => (
 					<tr key={item.id}>
 						<td>
 							<div style={{border: "1px solid black", marginBottom:"5px"}}>
-								<a href="#"><img className="card-img-top" src={item.product.imageUrls[0]} alt="" 
+								<a href="#"><img className="card-img-top" 
+								src={products.find(product => product.id === item.productId).imageUrls[0]}
+								alt="" 
 								style={{width:"200px", marginRight:"5px"}}/></a>
-								{item.product.description}
+								{products.find(product => product.id === item.productId).description}
 							</div>
 						</td>
 						<td>${item.price}</td> 
@@ -102,7 +111,7 @@ class Cart extends Component {
 				  ))}
 				</tbody>
 			  </table>
-			  	{cart.instances.length ?
+			  	{instances.length>0 ?
 					<button className="btn btn-success" onClick={() => history.push('/checkout')}>Checkout</button>
 			  	: null}
 				</div>
@@ -117,7 +126,8 @@ const mapStateToProps = function(state) {
 		orders: state.orders,
 		user: state.user,
 		productInstances: state.productInstances,
-		cart: state.cart
+		cart: state.cart,
+		products: state.products
 	}
 }
 
