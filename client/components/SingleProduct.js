@@ -96,11 +96,11 @@ class SingleProduct extends Component {
 			<div className="container">
 				<div className="row">
 					<div className="col-lg-3">
-						<h1 className="my-4">Import Sports</h1>
+						<h1 className="my-4">Categories</h1>
 						<div className="list-group">
-							<a href="#" className="list-group-item active">Category 1</a>
-							<a href="#" className="list-group-item">Category 2</a>
-							<a href="#" className="list-group-item">Category 3</a>
+						{this.props.categories.map(category => {
+							return(<Link key={category.id} disabled className="list-group-item" to={`/category/${category.id}`}>{category.name}</Link>)
+						  })}							
 						</div>
 					</div>
 					<div className="col-lg-9">
@@ -146,6 +146,7 @@ class SingleProduct extends Component {
 
 const mapStateToProps = function (state) {
 	return {
+		categories: state.categories,
 		products: state.products,
 		reviews: state.reviews,
 		user: state.user

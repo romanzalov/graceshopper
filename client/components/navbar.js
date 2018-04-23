@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {removeCartUponLogout} from '../store/cart'
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div className="container">
     <Link className="navbar-brand" to="/">Home</Link>
@@ -16,21 +16,25 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
     {isLoggedIn ? (
       <ul className="navbar-nav ml-auto">
           {/* The navbar will show these links after you log in */}
-          <li className="nav-item active">
+          <li className="nav-item active" style={{"marginRight": "10px"}}>
             <Link to="/">Home</Link>
               <span className="sr-only">(current)</span>
           </li>
-          <li className="nav-item">
-            <a className="nav-link" href="#" onClick={handleClick}>Logout</a>
+          <li className="nav-item" style={{"marginRight": "10px"}}>
+            <Link to="/" onClick={handleClick}>Logout</Link>
           </li>
           <li>
-            <Link to={'/single-user'}>User Account</Link>
+            <Link to={'/single-user'} style={{"marginRight": "10px"}}>User Account</Link>
           </li>
           <li>
-            <Link to={'/cart'}>Cart</Link>
-        </li>
+            <Link to={'/cart'} style={{"marginRight": "10px"}}>Cart</Link>
+          </li>
+          {isAdmin ? (
+            <li>
+              <Link to={'/admin-dashboard'} style={{"marginRight": "10px"}}>Admin</Link>
+            </li>            
+          ) : null}
       </ul>)
-
         : (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item active">
@@ -57,7 +61,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: !!state.user.id && state.user.isAdmin,
   }
 }
 
@@ -78,5 +83,6 @@ export default connect(mapState, mapDispatch)(Navbar)
  */
 Navbar.propTypes = {
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 }
