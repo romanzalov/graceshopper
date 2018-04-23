@@ -28,9 +28,12 @@ class SingleUser extends Component {
 	}
 	//user not eager loaded
 	render() {
-		const { user, orders,reviews } = this.props;
+		const { user, orders,reviews, productInstances, products, cart } = this.props;
 		const pastOrders = orders.filter(order => order.isCart === false)
-		const cart = orders.find(order => order.isCart === true)
+
+		const instances = productInstances.filter(elem => {
+            return elem.orderId===cart.id
+        })
 
 		return (
 			<div className="container">
@@ -54,11 +57,11 @@ class SingleUser extends Component {
 								<th>Price</th>
 							</tr>
 				        	{
-								cart ? cart.instances.map(instance => (
+								instances.length > 0 ? instances.map(instance => (
 									
 										<tr key={instance.id}>
-											<td>{instance.product.title}</td>
-											<td>{instance.product.sportType}</td>
+											<td>{products.find(product => product.id === instance.productId).title}</td>
+											<td>{products.find(product => product.id === instance.productId).sportType}</td>
 											<td>{instance.quantity} item(s)</td>
 											<td>${instance.price}</td>
 										</tr>
@@ -123,7 +126,10 @@ const mapStateToProps = function (state) {
 	return {
 		user: state.user,
 		orders: state.orders.filter(order => order.userId === state.user.id),
-		reviews: state.reviews
+		reviews: state.reviews,
+		productInstances: state.productInstances,
+		products: state.products,
+		cart: state.cart
 	}
 }
 
