@@ -43,13 +43,10 @@ export const destroyUser = id =>
       .then(() => dispatch(deleteUser(id)))
       .catch(err => console.error(`Removing user: ${id} unsuccessful`, err));
 
-export const editUser = (user, id) => {
-  return async function thunk (dispatch){
-    let updatedUser = await axios.put(`/api/users/${id}`, user).data;
-    dispatch(updateUser(updatedUser));
-    //history.push(/path)
-    return updatedUser;
-  }
+export const editUser = (user, id) => dispatch => {
+  return axios.put(`/api/users/${id}`, user)
+  .then(res => dispatch(updateUser(res.data)))
+  .catch(err => console.error(err))
 }
 
 

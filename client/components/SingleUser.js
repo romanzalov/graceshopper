@@ -28,7 +28,7 @@ class SingleUser extends Component {
 	}
 	//user not eager loaded
 	render() {
-		const { user, orders } = this.props;
+		const { user, orders,reviews } = this.props;
 		const pastOrders = orders.filter(order => order.isCart === false)
 		const cart = orders.find(order => order.isCart === true)
 
@@ -98,6 +98,21 @@ class SingleUser extends Component {
 			        </table>
 			        <button onClick={(() => this.props.history.push('/cart'))} className="btn btn-success">Edit Cart</button>
 			    	</div>
+			    	<div className="card card-outline-secondary my-4">
+						<div className="card-header">
+							User Reviews
+						</div>
+						<div className="card-body">
+						{reviews.length ? reviews.filter(review => review.userId === user.id).map(review => (
+							<div key={review.id}>
+								<p>{review.content}</p>
+								<p>{review.stars} stars out of 5</p>
+								<small className="text-muted">Posted by user ID {review.userId} on {review.createdAt.slice(0,10)}</small>
+								<hr />
+							</div>
+						)) : <div>No reviews</div>}
+						</div>
+					</div>
 			    </div> 
 	        </div>
 		)
@@ -107,7 +122,8 @@ class SingleUser extends Component {
 const mapStateToProps = function (state) {
 	return {
 		user: state.user,
-		orders: state.orders.filter(order => order.userId === state.user.id)
+		orders: state.orders.filter(order => order.userId === state.user.id),
+		reviews: state.reviews
 	}
 }
 

@@ -36,7 +36,7 @@ class EditProduct extends Component {
 			<div className="container">
 				<form onSubmit={this.handleSubmit}>
 					<h1 className="my-4">Edit Product</h1>
-					<div className="row" style={{ "padding-bottom": "10px" }}>
+					<div className="row" style={{ "paddingBottom": "10px" }}>
 						<div className="col-lg-6">
 							<div className="form-group">
 								<label><b>Product Title</b></label>
@@ -120,7 +120,7 @@ class EditProduct extends Component {
 								Change Image 2: <input type="file" className="form-control" id="exampleInputPassword1" placeholder="Password" />
 								Change Image 3: <input type="file" className="form-control" id="exampleInputPassword1" placeholder="Password" />
 							</div>
-							<button type="submit" className="btn btn-primary" style={{ "margin-top": "0px" }}><b>Save</b></button>
+							<button type="submit" className="btn btn-primary" style={{ "marginTop": "0px" }}><b>Save</b></button>
 						</div>
 					</div>
 				</form>
