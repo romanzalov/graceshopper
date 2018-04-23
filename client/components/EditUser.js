@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {destroyUser, editUser, editOrder} from '../store'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { destroyUser, editUser, editOrder } from '../store'
 
 class EditUser extends Component {
 	constructor(props) {
@@ -41,81 +41,98 @@ class EditUser extends Component {
 		return (
 			<div className="container">
 				{user ? (
-				<div>
-				<h3>Account Info</h3>
-					<p>{user.email}</p>
-					{user.isAdmin ? (
-						<button
-						className="btn btn-danger"
-						onClick={() => this.toggleAdmin(user)}
-						>Demote to Regular User</button>
+					<div>
+						<h3>Account Info</h3>
+						<p>{user.email}</p>
+						{user.isAdmin ? (
+							<button
+								className="btn btn-danger"
+								onClick={() => this.toggleAdmin(user)}
+							>Demote to Regular User</button>
 						) : (
-						<button
-						className="btn btn-primary"
-						onClick={() => this.toggleAdmin(user)}
-						>Promote to Admin</button>
-						)
-					}
+								<button
+									className="btn btn-primary"
+									onClick={() => this.toggleAdmin(user)}
+								>Promote to Admin</button>
+							)
+						}
 
-					<button
-					className="btn btn-success"
-					>Trigger Password Reset</button>
-					<button
-					onClick={() => this.props.handleUserDelete(user.id)}
-					className="btn btn-danger"
-					style={{display: 'inline-block'}}
-					>Delete User</button>
-				</div>
-				) : null }
+						<button
+							className="btn btn-success"
+						>Trigger Password Reset</button>
+						<button
+							onClick={() => this.props.handleUserDelete(user.id)}
+							className="btn btn-danger"
+							style={{ display: 'inline-block' }}
+						>Delete User</button>
+					</div>
+				) : null}
 
 				<hr />
-			        <div>
-			        <h3>Past Orders</h3>
-			        <table className="table">
-				        <tbody>
-								<tr>
-									<th>Order</th>
-									<th>Date</th>
-									<th>Total</th>
-									<th>Quantity</th>
-									<th>Status</th>
-								</tr>
-								{pastOrders.length > 0 && pastOrders.map(order =>
-										(
-											<tr key={order.id}>
-												<td>
-													<Link to={`/order/${order.id}`}>Past Order {order.id}</Link>
-												</td>
-												<td>{order.createdAt.slice(0, 10)}</td>
-												<td>${this.getTotalPrice(order)}</td>
-												<td>{this.getQuantity(order)} items</td>
-												<td>{order.status}</td>
-												<td><button>Save</button></td>
-											</tr>
-										)
-									)
-								}
-				         </tbody>
-			        </table>
+				<div>
+					<h3>Past Orders</h3>
+					<table className="table">
+						<tbody>
+							<tr>
+								<th>Order</th>
+								<th>Date</th>
+								<th>Total</th>
+								<th>Quantity</th>
+								<th>Status</th>
+							</tr>
+							{pastOrders.length > 0 && pastOrders.map(order =>
+								(
+									<tr key={order.id}>
+										<td>
+											<Link to={`/order/${order.id}`}>Past Order {order.id}</Link>
+										</td>
+										<td>{order.createdAt.slice(0, 10)}</td>
+										<td>${this.getTotalPrice(order)}</td>
+										<td>{this.getQuantity(order)} items</td>
+										<form onSubmit={this.props.handleOrderChange(order.id)}>
+											<td>
+												<div className="form-group">
+													<select className="form-control" id="status">
+														<option selected>Created</option>
+														<option>Processing</option>
+														<option>Cancelled</option>
+														<option>Completed</option>
+													</select>
+											</div>
+
+											</td>
+											<td><button>Save</button></td>
+										</form>
+									</tr>
+								)
+							)
+							}
+						</tbody>
+					</table>
 				</div>
 			</div>
-			)
+		)
 	}
 }
 
-const mapStateToProps = function(state) {
+const mapStateToProps = function (state) {
 	return {
 		users: state.users,
 	}
 
 }
 
-const mapDispatchToProps = function(dispatch) {
+const mapDispatchToProps = function (dispatch) {
 	return {
 		handleUserDelete: id => dispatch(destroyUser(id)),
-		updateUserAdmin: (user,id) => dispatch(editUser(user,id)),
-		updateOrderStatus: (id, order) => dispatch(editOrder(id, order))
+		updateUserAdmin: (user, id) => dispatch(editUser(user, id)),
+		updateOrderStatus: (id, order) => dispatch(editOrder(id, order)),
+		handleOrderChange: id => event => {
+			event.preventDefault();
+			const status = event.target.status.value;
+			dispatch(editOrder(id, {status}));
+		}
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(EditUser)
+export default connect(mapStateToProps, mapDispatchToProps)(EditUser)

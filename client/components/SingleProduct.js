@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { addProductToCart } from '../store/cart'
 import {addReview} from '../store/reviews'
+import { fetchProducts } from '../store/index';
 
 class SingleProduct extends Component {
 	constructor(props) {
@@ -91,9 +92,9 @@ class SingleProduct extends Component {
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
 		const {reviews, user} = this.props
-		console.log("user", user)
 		return (
 			<div className="container">
+				{foundProduct &&
 				<div className="row">
 					<div className="col-lg-3">
 						<h1 className="my-4">Import Sports</h1>
@@ -129,7 +130,7 @@ class SingleProduct extends Component {
 									<hr />
 								</div>
 							)) : null}
-								{user.id ? 
+								{user.id ?
 									(<div>
 										<a href="#" className="btn btn-success" onClick={this.showForm}>Leave a Review</a>
 										{(this.state.showForm) ? this.reviewForm(event) : null}
@@ -138,8 +139,9 @@ class SingleProduct extends Component {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>}
 			</div>
+
 		)
 	}
 }
@@ -160,8 +162,10 @@ const mapDispatchToProps = function (dispatch) {
 		},
 		addReview: (review) => {
 			dispatch(addReview(review))
-		}
-
+		},
+		// fetchProducts: () => {
+		// 	dispatch(fetchProducts());
+		// }
 	}
 }
 

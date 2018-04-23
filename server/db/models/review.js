@@ -6,11 +6,15 @@ const Review = db.define('review',{
 		type: Sequelize.TEXT,
 		allowNull: false,
 		validate: {
-			notEmpty: true
+			notEmpty: true,
+			len: {
+        args: [5],
+        msg: 'Display name must be more than 5 characters in length'
+      }
 		}
 	},
 	stars: {
-		type: Sequelize.INTEGER,
+		type: Sequelize.RANGE(Sequelize.INTEGER),
 		validate: {
 			max: 5,
 			min: 1
