@@ -34,7 +34,7 @@ class SingleOrder extends Component {
 								<th>Status</th>
 							</tr>
 							<tr>
-								<td>{order.createdAt}</td> 
+								<td>{order.createdAt.slice(0,10)}</td> 
 								<td>${this.getOrderTotal()}</td> 
 								<td>{order.information.address ? order.information.address : null}</td>
 								<td>

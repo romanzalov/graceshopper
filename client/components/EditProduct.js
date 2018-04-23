@@ -11,20 +11,15 @@ class EditProduct extends Component {
 	}
 
 	handleSubmit = event => {
-
-		console.log('event', event.target.availability.value)
-		console.log("category values: ", event.target.categories)
 		let categoryIDs = [];
 		let uncheckedCategoryIDs = [];
 		event.target.categories.forEach(checkbox => {
 			if (checkbox.checked) {
-				console.log("checked: ", checkbox.value);
 				categoryIDs.push(parseInt(checkbox.value));
 			}			
 			else {
 				uncheckedCategoryIDs.push(parseInt(checkbox.value));
 			}
-			console.log("categoryIDs: ", categoryIDs);
 		})
 		event.preventDefault();
 		const title = event.target.title.value;
@@ -55,29 +50,11 @@ class EditProduct extends Component {
 	render() {
 		const { product, categories } = this.props;
 		const categoryIDs = [];
-		console.log("this.state.product: ", this.state.product);
 		if (this.state.product && this.state.product.categories) {
 			this.state.product.categories.forEach(category => {
 				categoryIDs.push(category.id);
 			})
-		}		
-		// if (this.props.product && this.props.product.categories) {
-		// 	this.props.product.categories.forEach(category => {
-		// 		categoryIDs.push(category.id);
-		// 	})
-		// }
-		// else {
-		// 	categories.forEach(category => {
-		// 		category.products.forEach(product => {
-		// 			if (parseInt(product.id) == parseInt(this.props.product.id)) {
-		// 				categoryIDs.push(category.id);
-		// 			}
-		// 		})
-		// 	});
-		// }
-		console.log('props', this.props)
-		// console.log('product', product)
-		console.log("categoryIDs: ", categoryIDs, product);
+		}
 		return (
 			<div className="container">
 				<form onSubmit={this.handleSubmit}>

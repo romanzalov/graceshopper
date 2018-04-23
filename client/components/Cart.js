@@ -11,29 +11,19 @@ class Cart extends Component {
 	}
 
 	changeQuantity(id, instance, amount) {
-
         this.props.editproductInstance(id , {...instance, quantity: amount})
     }
     removeItem(id) {
-        console.log("removing item: ", id);
         this.props.removeProductInstance(id)
     }
 
 	render() {
-		// const {orders, user, productInstances} = this.props;
-		// const {cart} = this.state
 		const {orders, user, productInstances, cart, products} = this.props;
 
 		const instances = productInstances.filter(elem => {
 			return elem.orderId===cart.id
 		})
 
-
-
-		console.log(cart, instances)
-		// const cart = orders.find((order) => {
-		// 	return order.isCart === true && order.user.id === this.props.user.id
-		// })
 
 		return (
 			<div className="container">
