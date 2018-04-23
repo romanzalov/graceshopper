@@ -33,6 +33,12 @@ const Product = db.define('product', {
     description: {
       type: Sequelize.TEXT,
     }
+}, {
+  getterMethods: {
+    lowercaseTitle() {
+      return this.title.toLowerCase();
+    }
+  }
 })
 
 Product.search = function(name) {
@@ -40,6 +46,16 @@ Product.search = function(name) {
     {
       where: {
           title: name
+      }
+  })
+}
+
+Product.findByName = function(name) {
+  return Product.findAll({
+      where: {
+        title: {
+          $iLike: '%' + name.toLowerCase() + '%',
+        },
       }
   })
 }
