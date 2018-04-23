@@ -58,7 +58,15 @@ class AdminDashboard extends Component {
 				</div>
 
 				<div className="col-lg-6">
-				<h3 className="my-4">Users</h3>
+				<h3 className="my-4">Users
+					<button 
+					className="btn btn-primary" 
+					style={{display:"inline-block", "marginLeft":"30px"}}
+					onClick={()=>history.push(`/order-history`)}
+					>View All Orders
+					</button>
+				</h3>
+
 					<table style={{width:"100%"}} className="table">
 					<tbody>
 					<tr>

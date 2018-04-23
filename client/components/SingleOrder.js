@@ -36,7 +36,7 @@ class SingleOrder extends Component {
 							<tr>
 								<td>{order.createdAt}</td> 
 								<td>${this.getOrderTotal()}</td> 
-								<td>{order.user.address.Description ? order.user.address.Description : null}</td>
+								<td>{order.information.address ? order.information.address : null}</td>
 								<td>
 									{order.instances.map(instance => (
 										<div key={instance.id} style={{border: "1px solid black", marginBottom:"5px"}}>

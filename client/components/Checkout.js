@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
 import axios from 'axios';
-import {checkoutCartOrder, removeproductInstance, editproductInstance} from '../store'
+
+import {checkoutCartOrder, removeproductInstance, editproductInstance, editUser} from '../store'
 import history from '../history';
 
 class Checkout extends Component {
 	constructor(props) {
         super(props);
-
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeQuantity = this.changeQuantity.bind(this);
         this.removeItem = this.removeItem.bind(this);
@@ -16,39 +16,11 @@ class Checkout extends Component {
     }
 
     changeQuantity(id, instance, amount) {
-        console.log("changing quantity: ", id, amount)
-
         this.props.editproductInstance(id , {...instance, quantity: amount})
 
-        // axios.put(`/api/orders/${orderId}/products/${id}`, {
-        //     quantity: amount,
-        // }).then(()=> {
-        //     axios.get('/api/session/cart').then(response => {
-        //         if (response.data) {
-        //             this.setState({
-        //                 cart: response.data,
-        //                 loaded: true,
-        //             })
-        //         }
-        //     })
-        // })
     }
     removeItem(id) {
-        console.log("removing item: ", id);
-        
-
         this.props.removeProductInstance(id)
-
-        // axios.delete(`/api/orders/${orderId}/products/${id}`).then(() =>  {
-        //     axios.get('/api/session/cart').then(response => {
-        //         if (response.data) {
-        //             this.setState({
-        //                 cart: response.data,
-        //                 loaded: true,
-        //             })
-        //         }
-        //     })       
-        // })
     }
 
     handleSubmit(event) {
@@ -91,7 +63,7 @@ class Checkout extends Component {
                   { instances.length > 0 ?
                     (instances.map(instance => {
                     return(
-                      <tr key={instance.id}>			  
+                      <tr key={instance.id}>	  
                       <td>
                           {products.find(product => product.id === instance.productId).title}
                       </td>
@@ -169,7 +141,7 @@ const mapStateToProps = function(state) {
 	return {
         cart: state.cart,
         productInstances: state.productInstances,
-        products: state.products
+        products: state.products,
     }
 }
 
@@ -183,7 +155,7 @@ const mapDispatchToProps = function(dispatch) {
         },
         editproductInstance: (id,productInstance) => {
             dispatch(editproductInstance(id,productInstance))
-        }
+        },
     }
 }
 

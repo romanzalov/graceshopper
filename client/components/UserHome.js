@@ -88,7 +88,6 @@ const mapState = (state) => {
   return {
     email: state.user.email,
     products: state.products,
-    categories: state.categories,
   }
 }
 
