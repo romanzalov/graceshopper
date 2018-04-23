@@ -86,6 +86,7 @@ export const UserHome = (props) => {
  */
 const mapState = (state) => {
   return {
+    categories: state.categories,
     email: state.user.email,
     products: state.products,
   }
