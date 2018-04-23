@@ -24,8 +24,8 @@ class AdminDashboard extends Component {
 				<div className="row">
 				<div className="col-lg-6">
 				<h3 className="my-4">Products
-				<button onClick={() => history.push('/add-product')}className="btn btn-success" style={{display:"inline-block", "margin-left":"30px"}}>Add Product</button>
-				<button className="btn btn-primary" style={{display:"inline-block", "margin-left":"30px"}}>View Categories</button>
+				<button onClick={() => history.push('/add-product')}className="btn btn-success" style={{display:"inline-block", "marginLeft":"30px"}}>Add Product</button>
+				<button className="btn btn-primary" style={{display:"inline-block", "marginLeft":"30px"}}>View Categories</button>
 				</h3>
 					<table style={{width:"100%"}} className="table">
 					<tbody>
@@ -38,7 +38,7 @@ class AdminDashboard extends Component {
 					</tr>
 					{products.map(product =>{
 						return (
-						<tr>
+						<tr key={product.id}>
 							<td>{product.sportType}</td>
 							<td>{product.title}</td>
 							<td>{product.quantity}</td>
@@ -58,16 +58,15 @@ class AdminDashboard extends Component {
 					<tbody>
 					<tr>
 						<th>Email</th>
-						<th>Name</th>
 						<th>Address</th>
+						<th></th>
 						<th></th>
 					</tr>
 					{users.map(user =>{
 						return (
-							<tr>
+							<tr key={user.id}>
 								<td>{user.email}</td>
-								<td>{user.name}</td>
-								<td>{user.address}</td>
+								<td>{user.address ? user.address.Description : null}</td>
 								<td><button onClick={()=>history.push(`/edit-user/${user.id}`)} className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
 								<td><button onClick={()=>this.props.handleUserDelete(user.id)} className="btn btn-danger" style={{display:"inline-block"}}>Delete</button></td>
 							</tr>

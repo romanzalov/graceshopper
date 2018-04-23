@@ -53,7 +53,8 @@ class SingleProduct extends Component {
 		this.props.addToCart(parseInt((this.props.match.params.id)));
 	}
 
-	reviewForm(){
+	reviewForm(event){
+		event.preventDefault()
 		return(
 		<form onSubmit = {this.handleSubmit}>
 			<label>
@@ -89,7 +90,8 @@ class SingleProduct extends Component {
 
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
-		const {reviews} = this.props
+		const {reviews, user} = this.props
+		console.log("user", user)
 		return (
 			<div className="container">
 				<div className="row">
@@ -127,8 +129,12 @@ class SingleProduct extends Component {
 									<hr />
 								</div>
 							)) : null}
-								<a href="#" className="btn btn-success" onClick={this.showForm}>Leave a Review</a>
-								{(this.state.showForm) ? this.reviewForm() : null}
+								{user.id ? 
+									(<div>
+										<a href="#" className="btn btn-success" onClick={this.showForm}>Leave a Review</a>
+										{(this.state.showForm) ? this.reviewForm(event) : null}
+									</div>) : null
+								}
 							</div>
 						</div>
 					</div>

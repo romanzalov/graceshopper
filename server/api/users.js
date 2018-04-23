@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
     // explicitly select only the id and email fields - even though
     // users' passwords are encrypted, it won't help if we just
     // send everything to anyone who asks!
-    attributes: ['id', 'email'],
+    attributes: ['id', 'email', 'isAdmin', 'address', 'addressList'],
     include: [
       {model: Order, as: 'orders', nested: true},
     ]
@@ -41,7 +41,6 @@ router.get('/:id', (req, res, next) => {
       user.update(req.body)
     })
     .then(updatedUser => {
-      console.log('updatedUser', updatedUser)
       res.json(updatedUser)
     })
     .catch(next)

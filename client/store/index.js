@@ -8,6 +8,7 @@ import products from './products'
 import orders from './orders'
 import productInstances from './productInstances'
 import cart from './cart'
+// import category from './category'
 import reviews from './reviews'
 import categories from './categories'
 
@@ -20,7 +21,10 @@ const middleware = composeWithDevTools(applyMiddleware(
 ))
 const store = createStore(reducer, middleware)
 
+console.log("store line 20: ", store.getState());
+
 export default store
+// export * from './category'
 export * from './user'
 export * from './products'
 export * from './orders'

@@ -123,19 +123,39 @@ var Users = [
   {email: 'murphy@email.com', password: '123', address: {Description: 'address 2, Chicago'}},
 ]
 
+// var Categores = ['Football', 'Basketball', 'Baseball', 
+// 'Combat Sports', 'Tennis', 'Soccer', 'Hockey', 
+// 'Volleyball', 'Snowboarding', 'Swimming'];
+
+var Categories = [
+    {name: 'Football'},
+    {name: 'Basketball'},
+    {name: 'Baseball'},
+    {name: 'Combat Sports'},
+    {name: 'Tennis'},
+    {name: 'Soccer'},
+    {name: 'Hockey'},
+    {name: 'Volleyball'},
+    {name: 'Snowboarding'},
+    {name: 'Swimming'},
+]
+
 async function seed () {
   await db.sync({force: true});
   console.log('db synced!')
   // Whoa! Because we `await` the promise that db.sync returns, the next line will not be
   // executed until that promise resolves!
 
-  await Product.bulkCreate(Products)
+  await Category.bulkCreate(Categories);
+  
+  await Product.bulkCreate(Products, {returning: true})
 
   await User.bulkCreate(Users)
 
   await Order.bulkCreate(Orders)
 
   await productInstance.bulkCreate(ProductInstances);
+
 
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
