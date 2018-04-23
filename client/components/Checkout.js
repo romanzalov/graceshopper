@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import axios from 'axios';
 import {checkoutCartOrder, removeproductInstance, editproductInstance} from '../store'
 import history from '../history';
@@ -8,9 +8,7 @@ import history from '../history';
 class Checkout extends Component {
 	constructor(props) {
         super(props);
-        this.state = {
-            disabled: false
-        }
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.changeQuantity = this.changeQuantity.bind(this);
         this.removeItem = this.removeItem.bind(this);
@@ -70,7 +68,10 @@ class Checkout extends Component {
     }       
 	render() {
 
-        const cart = this.props.cart;
+        const {cart, products, productInstances} = this.props;
+        const instances = productInstances.filter(elem => {
+            return elem.orderId===cart.id
+        })
 
         return (
 			<div className="container">
@@ -87,14 +88,14 @@ class Checkout extends Component {
                     <th>Quantity</th>
                     <th>Remove</th> 
                   </tr>
-                  { cart.instances ?
-                    (cart.instances.map(instance => {
+                  { instances.length > 0 ?
+                    (instances.map(instance => {
                     return(
-                      <tr key={instance.id}>				  
+                      <tr key={instance.id}>			  
                       <td>
-                          {instance.product.title}
+                          {products.find(product => product.id === instance.productId).title}
                       </td>
-                      <td>${instance.price}</td> 
+                      <td>${instance.price}</td>
                       <td>
                       {instance.quantity}
                       &nbsp; &nbsp;
@@ -153,7 +154,7 @@ class Checkout extends Component {
                 type="submit" 
                 className="btn btn-primary" 
                 style={{"marginTop":"0px"}}
-                disabled={this.state.disabled}
+                disabled={instances.length>0 ? false : true}
                 ><b>
                 Submit Order</b></button>
             </form>
@@ -167,7 +168,8 @@ class Checkout extends Component {
 const mapStateToProps = function(state) {
 	return {
         cart: state.cart,
-        productInstances: state.productInstances
+        productInstances: state.productInstances,
+        products: state.products
     }
 }
 
