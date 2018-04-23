@@ -53,7 +53,7 @@ describe('Product model', () => {
       let testProduct
       beforeEach(() => {
         return Product.create({
-          sportType: 'Test',
+          sportType: 'Baseball',
           title: "testTitle",
           quantity: 1,
         })

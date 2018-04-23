@@ -33,9 +33,7 @@ export const addProduct = function(product){
 }
 
 export const editProduct = function(product, id){
-	console.log('running')
 	return function thunk(dispatch) {
-		console.log('still running')
 		return axios.put(`/api/products/${id}`, product)
 		.then(res => dispatch(edit(res.data)))
 		.catch(err => console.error(err))

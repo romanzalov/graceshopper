@@ -38,9 +38,9 @@ class SingleProduct extends Component {
 	handleSubmit (e) {
 		e.preventDefault()
 		this.props.addReview({
-			content: this.state.tempReview, 
-			stars: this.state.stars, 
-			userId: this.props.user.id, 
+			content: this.state.tempReview,
+			stars: this.state.stars,
+			userId: this.props.user.id,
 			productId: parseInt(this.props.match.params.id)
 		})
 		this.setState({
@@ -108,7 +108,7 @@ class SingleProduct extends Component {
 							<img className="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""/>
 							<div className="card-body">
 								<h3 className="card-title">{foundProduct.title}
-								<button style={{"float":"right"}} className="btn btn-success" onClick={this.handleClick}>Add To Cart</button>
+								{foundProduct.availability ? <button style={{float:"right"}} className="btn btn-success" onClick={this.handleClick}>Add To Cart</button> : <h3 style={{float:"right"}}>Currently Unavailable</h3>}
 								</h3>
 								<h4>{foundProduct.price}</h4>
 								<p className="card-text">{foundProduct.description}</p>
@@ -156,12 +156,12 @@ const mapDispatchToProps = function (dispatch) {
 	return {
 		addToCart: (id) => {
 			dispatch(addProductToCart(id))
-	
+
 		},
 		addReview: (review) => {
 			dispatch(addReview(review))
 		}
-		
+
 	}
 }
 

@@ -22,7 +22,6 @@ router.get('/', (req, res, next) => {
 })
 
 //get all orders by status
-
 router.get('/status/:status', (req, res, next) => {
 	Order.findAll({
 		where: {
@@ -53,23 +52,25 @@ router.put('/:orderId', (req, res, next) => {
 //change product quantity on order or delete if 0
 router.put('/:orderId/products/:productInstanceId', (req, res, next) => {
 	productInstance.findById(req.params.productInstanceId)
-	.then(product => product.update(req.body))
-	.then(product => {
-		product.quantity === 0 ?
-		(product.destroy()
+	.then(instance => instance.update(req.body))
+	.then(instance => {
+		instance.quantity === 0 ?
+		(instance.destroy()
 			.then(() => res.status(204).end())) :
-		(res.json(product))})
+		(res.json(instance))})
 	.catch(next)
 })
 
+//delete product instance
 router.delete('/:orderId/products/:productInstanceId', (req, res, next) => {
 	productInstance.findById(req.params.productInstanceId)
-	.then(product => product.destroy().then(() => {
+	.then(instance => instance.destroy().then(() => {
 		res.status(204).end();
 	}))
 	.catch(next);
 })
 
+//needs to be completed
 router.post('/:orderId/items', (req, res, next) => {
 // router.get('/:orderId/items', (req, res, next) => {
 	var orderId = req.params.orderId;
@@ -83,7 +84,6 @@ router.post('/:orderId/items', (req, res, next) => {
 })
 
 //delete order and all product instances on that order, when cancelled by admin
-
 router.delete('/:orderId', (req, res, next) => {
   productInstance.destroy({where: {orderId: req.params.orderId}})
     .then(() => Order.destroy({where: {id: req.params.orderId}}))
