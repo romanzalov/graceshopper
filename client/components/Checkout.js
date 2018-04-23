@@ -61,7 +61,7 @@ class Checkout extends Component {
         console.log("submitting...", event.target);
         console.log("event.target.email: ", event.target.email.value);
         let orderInfo = {};
-        history.push('/');
+        // history.push('/');
 
         orderInfo.email = event.target.email.value;
         orderInfo.address = event.target.address.value;

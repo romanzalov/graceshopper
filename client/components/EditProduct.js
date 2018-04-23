@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { editProduct, fetchCategories } from '../store'
+import axios from 'axios'
 
 class EditProduct extends Component {
 	constructor(props) {
@@ -33,8 +34,9 @@ class EditProduct extends Component {
 		const availability = event.target.availability.value === 'Available';
 		const id = this.props.product.id;
 		const categories = [];
-		this.props.editProduct({ ...this.props.product, title, description, quantity, price, availability, categories: categoryIDs, removecategories: uncheckedCategoryIDs}, id);
-		this.props.history.push('/admin-dashboard');
+		this.props.editProduct({ ...this.props.product, title, description, quantity, price, availability, categories: categoryIDs, removecategories: uncheckedCategoryIDs}, id).then(result => {
+			this.props.history.push('/admin-dashboard');
+		});
 	}
 
 	componentDidMount() {
@@ -42,19 +44,39 @@ class EditProduct extends Component {
 		this.setState({
 			productCategories:this.props.product.categories,
 		});
+		axios.get(`/api/products/${this.props.match.params.id}`).then(response => {
+			this.setState({
+				product: response.data,
+			})
+		});		
 	}
 
 	render() {
 		const { product, categories } = this.props;
 		const categoryIDs = [];
-		if (this.props.product && this.props.product.categories) {
-			this.props.product.categories.forEach(category => {
+		console.log("this.state.product: ", this.state.product);
+		if (this.state.product && this.state.product.categories) {
+			this.state.product.categories.forEach(category => {
 				categoryIDs.push(category.id);
 			})
-		}
-		// console.log('props', this.props)
+		}		
+		// if (this.props.product && this.props.product.categories) {
+		// 	this.props.product.categories.forEach(category => {
+		// 		categoryIDs.push(category.id);
+		// 	})
+		// }
+		// else {
+		// 	categories.forEach(category => {
+		// 		category.products.forEach(product => {
+		// 			if (parseInt(product.id) == parseInt(this.props.product.id)) {
+		// 				categoryIDs.push(category.id);
+		// 			}
+		// 		})
+		// 	});
+		// }
+		console.log('props', this.props)
 		// console.log('product', product)
-		console.log("categoryIDs: ", categoryIDs, this.props.product);
+		console.log("categoryIDs: ", categoryIDs, product);
 		return (
 			<div className="container">
 				<form onSubmit={this.handleSubmit}>
@@ -92,7 +114,7 @@ class EditProduct extends Component {
 							</div>
 							<b>Product Categories (Check & Uncheck to Add or Remove Categories)</b>
 							<div className="form-check">
-								{categories.length > 0 && categories.map(category => {
+								{categoryIDs.length > 0 && categories.map(category => {
 									return (
 										<div key={category.id}>
 											<input type="checkbox" name="categories" value={category.id} defaultChecked={categoryIDs.includes(parseInt(category.id)) ? true : false} className="form-check-input" id={category.name} />
