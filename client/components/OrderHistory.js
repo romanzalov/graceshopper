@@ -7,6 +7,9 @@ class OrderHistory extends Component {
 
 	constructor(props) {
 		super(props);
+		this.state = {
+			statuses: ""
+		}
 	}
 
 	getTotalPrice = order => {
@@ -34,9 +37,9 @@ class OrderHistory extends Component {
 							</tr>
 							{orders.filter(order => order.isCart===false).map((order) => (
 								<tr key={order.id}>				  
-									<td>{order.createdAt}</td> 
+									<td>{order.createdAt.slice(0,10)}</td> 
 									<td>{this.getTotalPrice(order)}</td> 
-									<td>{order.user.address.Description ? order.user.address.Description : null}</td>
+									<td>{order.information.address ? order.information.address : null}</td>
 									<td>
 										{order.instances.map(instance => (
 											<div key={instance.id} style={{border: "1px solid black", marginBottom:"5px"}}>
@@ -52,11 +55,10 @@ class OrderHistory extends Component {
                   <div className="form-group">
                     <label htmlFor="exampleFormControlSelect1">Order Status:</label>
                     <select className="form-control" id="exampleFormControlSelect1">
-                      <option>{order.status}</option>
-                      <option>Cancelled</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
+                      <option value="Created">Created</option>
+                      <option value="Cancelled">Cancelled</option>
+                      <option value="Processing">Processing</option>
+                      <option value="Completed">Completed</option>
                     </select>
                   </div>
                   <button style={{"marginTop":"10px"}} className="btn btn-primary">Save</button>

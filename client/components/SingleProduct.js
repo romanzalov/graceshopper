@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { addProductToCart } from '../store/cart'
 import {addReview} from '../store/reviews'
-import { fetchProducts } from '../store/index';
+import {editproductInstance} from '../store/productInstances'
+
 
 class SingleProduct extends Component {
 	constructor(props) {
@@ -51,7 +52,7 @@ class SingleProduct extends Component {
 	}
 
 	handleClick(){
-		this.props.addToCart(parseInt((this.props.match.params.id)));
+		this.props.editproductInstance(parseInt(this.props.match.params.id),{orderId: this.props.cart.id});
 	}
 
 	reviewForm(event){
@@ -151,7 +152,9 @@ const mapStateToProps = function (state) {
 		categories: state.categories,
 		products: state.products,
 		reviews: state.reviews,
-		user: state.user
+		user: state.user,
+		productInstances: state.productInstances,
+		cart: state.cart
 	}
 }
 
@@ -159,14 +162,13 @@ const mapDispatchToProps = function (dispatch) {
 	return {
 		addToCart: (id) => {
 			dispatch(addProductToCart(id))
-
 		},
 		addReview: (review) => {
 			dispatch(addReview(review))
 		},
-		// fetchProducts: () => {
-		// 	dispatch(fetchProducts());
-		// }
+		editproductInstance: (id,product) => {
+			dispatch(editproductInstance(id, product))
+		}
 	}
 }
 

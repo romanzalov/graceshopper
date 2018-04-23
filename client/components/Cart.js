@@ -11,41 +11,11 @@ class Cart extends Component {
 	}
 
 	changeQuantity(id, instance, amount) {
-        console.log("changing quantity: ", id, amount)
-        // var orderId = this.props.cart.id;
-        
-
         this.props.editproductInstance(id , {...instance, quantity: amount})
-
-        // axios.put(`/api/orders/${orderId}/products/${id}`, {
-        //     quantity: amount,
-        // }).then(()=> {
-        //     axios.get('/api/session/cart').then(response => {
-        //         if (response.data) {
-        //             this.setState({
-        //                 cart: response.data,
-        //                 loaded: true,
-        //             })
-        //         }
-        //     })
-        // })
     }
     removeItem(id) {
         console.log("removing item: ", id);
-        
-
         this.props.removeProductInstance(id)
-
-        // axios.delete(`/api/orders/${orderId}/products/${id}`).then(() =>  {
-        //     axios.get('/api/session/cart').then(response => {
-        //         if (response.data) {
-        //             this.setState({
-        //                 cart: response.data,
-        //                 loaded: true,
-        //             })
-        //         }
-        //     })       
-        // })
     }
 
 	render() {
