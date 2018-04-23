@@ -65,11 +65,13 @@ class SingleProduct extends Component {
 		event.preventDefault()
 		return(
 		<form onSubmit = {this.handleSubmit}>
+			<hr />
 			<label>
     			<input type="text" value = {this.state.tempReview} onChange = {this.handleChange}/>
 			</label>
+			<hr />
 			<label>
-			Rate this item:
+				<p>Rate this item: </p>
 				<select value={this.state.stars} onChange={this.handleSelectChange}>
 					<option value="1">1</option>
 					<option value="2">2</option>
@@ -78,7 +80,8 @@ class SingleProduct extends Component {
 					<option value="5">5</option>
 				</select>
 			</label>
-			<input type="submit" value="Submit" />
+			<hr />
+			<button className="btn btn-success" type="submit" value="Submit">Submit Review</button>
 		</form>
 		)}
 
@@ -117,7 +120,7 @@ class SingleProduct extends Component {
 							<img className="card-img-top img-fluid" src="http://placehold.it/900x400" alt=""/>
 							<div className="card-body">
 								<h3 className="card-title">{foundProduct.title}
-								{foundProduct.availability ? <button style={{float:"right"}} className="btn btn-success" onClick={this.handleClick}>Add To Cart Test</button> : <h3 style={{float:"right"}}>Currently Unavailable</h3>}
+								{foundProduct.availability ? <button style={{float:"right"}} className="btn btn-success" onClick={this.handleClick}>Add To Cart</button> : <h3 style={{float:"right"}}>Currently Unavailable</h3>}
 								</h3>
 								<h4>{foundProduct.price}</h4>
 								<p className="card-text">{foundProduct.description}</p>
@@ -140,7 +143,7 @@ class SingleProduct extends Component {
 							)) : null}
 								{user.id ?
 									(<div>
-										<a href="#" className="btn btn-success" onClick={this.showForm}>Leave a Review</a>
+										<button className="btn btn-success" onClick={this.showForm}>Leave a Review</button>
 										{(this.state.showForm) ? this.reviewForm(event) : null}
 									</div>) : null
 								}
