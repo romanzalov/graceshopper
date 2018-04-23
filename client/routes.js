@@ -2,12 +2,13 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {SingleProduct, Checkout, Cart, AddProduct, EditProduct, EditUser, AdminDashboard, Login, Signup, UserHome, OrderHistory, SingleUser, SingleOrder, AccountInfo, Confirmation } from './components'
+import {SingleProduct, Checkout, Cart, AddProduct, EditProduct, EditUser, AdminDashboard, Login, Signup, UserHome, OrderHistory, SingleUser, SingleOrder, AccountInfo, Confirmation, CategoryProducts } from './components'
 import {me} from './store'
 import {fetchProducts} from './store/products'
 import {fetchOrders} from './store/orders'
 import {fetchCart} from './store/cart'
 import {fetchproductInstances} from './store/productInstances'
+import {fetchCategories} from './store/categories'
 import {fetchReviews} from './store/reviews'
 import axios from 'axios';
 
@@ -43,6 +44,7 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/order/:id" component={SingleOrder} />
+        <Route path="/category/:id" component={CategoryProducts} />
         <Route exact path="/product/:id" component={SingleProduct} />
         <Route exact path="/" component={UserHome} />
         {
@@ -78,6 +80,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchOrders())
       dispatch(fetchCart())
       dispatch(fetchproductInstances())
+      dispatch(fetchCategories())
       dispatch(fetchReviews())
     }
   }
