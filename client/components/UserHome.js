@@ -8,16 +8,22 @@ import {Link} from 'react-router-dom'
  * COMPONENT
  */
 export const UserHome = (props) => {
+  // constructor() {
+  //   super();
+  //   this.state = {};
+  // }  
+  console.log("UserHome.props: ", props);
   return (
   <div className="container">
     <div className="row">
       <div className="col-lg-3">
 
-        <h1 className="my-4">Shop Name</h1>
+        <h1 className="my-4">Categories</h1>
         <div className="list-group">
-          <a href="#" className="list-group-item">Category 1</a>
-          <a href="#" className="list-group-item">Category 2</a>
-          <a href="#" className="list-group-item">Category 3</a>
+        <Link disabled className="list-group-item" to={`/`}>View All</Link>
+        {props.categories.map(category => {
+          return(<Link key={category.id} disabled className="list-group-item" to={`/category/${category.id}`}>{category.name}</Link>)
+        })}
         </div>
 
       </div>
@@ -87,6 +93,7 @@ const mapState = (state) => {
   return {
     email: state.user.email,
     products: state.products,
+    categories: state.category,
   }
 }
 
