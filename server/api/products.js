@@ -77,8 +77,8 @@ router.get('/:id', async (req, res, next) => {
             id:req.params.id,
         },
         include: [
-            {model: productInstance, as:'instances', required:false},
             {model: Category, as: 'categories', required: false},
+            {model: productInstance, as:'instances', required:false},
         ],
     });
     res.json(product);
@@ -86,7 +86,14 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-    var product = await Product.findById(req.params.id);
+    var product = await Product.findOne({
+            where: {id:req.params.id},
+            include: [
+                {model: Category, as: 'categories', required: false},
+            ]
+        },
+    );
+    await product.update(req.body);
     console.log("req.body 89: ", req.body);
     if (req.body.categories && req.body.categories.length > 0) {
         req.body.categories.forEach(async categoryId => {
@@ -102,7 +109,7 @@ router.put('/:id', async (req, res, next) => {
             await removeCategory.save();
         })
     }
-    await product.update(req.body);
+    await product.save();
     res.json(product);
     return;
 })
