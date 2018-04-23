@@ -7,7 +7,7 @@ const Product = db.define('product', {
     sportType: {
       type: Sequelize.ENUM,
       values: ['Football', 'Basketball', 'Baseball', 'Combat Sports', 'Tennis', 'Soccer', 'Hockey', 'Volleyball', 'Snowboarding', 'Swimming'],
-      allowNull: false,
+      allowNull: true,
     },
     title: {
       type: Sequelize.STRING,
@@ -55,7 +55,7 @@ Product.beforeCreate(product => {
 Product.afterBulkCreate(products => {
   for (const product of products) {
     Category.findOne({
-      where: 
+      where:
       {name:product.sportType}
     })
     .then(category => {
