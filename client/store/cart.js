@@ -33,6 +33,16 @@ export const addProductToCart = function(id){
 	}
 }
 
+export const checkoutCartOrder = function(cart) {
+	return function thunk(dispatch) {
+		return axios.post('/api/session/checkout',{cartId: cart.id, information: cart.information})
+		.then((res) => {
+			dispatch(edit(res.data))
+		})
+	}
+}
+
+
 export const removeCartUponLogout = function() {
 	return function	thunk(dispatch) {
 		return axios.get('/api/session/cart')
@@ -48,7 +58,7 @@ export default function(cart = {}, action){
 		case GET_CART:
 			return action.cart
 		case EDIT_CART:
-			return cart.map(el => (action.cart.id === el.id ? action.cart : el))
+			return action.cart.id === cart.id ? action.cart : cart
 		case REMOVE_CART:
 			return {}
 		default:
