@@ -23,8 +23,9 @@ export const fetchOrders = function(){
 export const addOrder = function(order){
 	return function thunk(dispatch) {
 		return axios.post('/api/orders', order)
-		.then(res =>
-			dispatch(create(res.data)))
+		.then(res => {
+			dispatch(create(res.data))
+		})
 		.catch(err => console.error(err))
 	}
 }
@@ -33,7 +34,6 @@ export const editOrder = function(id, order){
 	return function thunk(dispatch) {
 		return axios.put(`/api/orders/${id}`, order)
 		.then(res => {
-			console.log('res.data',res.data)
 			dispatch(edit(res.data))
 		})
 		.catch(err => console.error(err))
