@@ -74,14 +74,26 @@ router.post('/checkout', async(req, res) => {
     // let thisSession = await axios.get('/api/session');
     console.log("sending confirmedEmail: ");
     console.log("req.body: ", req.body);
+    console.log("cart instances: ", req.body.cart.instances);
+    console.log("req.session.cart: ", req.session.cart);
     var emailInput = confirmed;
     var productString = "";
+    // var updatedCart = await axios.get("/api/session/cart");
+    // req.body.cart = updatedCart.data; 
     req.body.cart.instances.forEach(instance => {
-        productString += instance.product.title + ", ";
+        productString += instance.product.title + " x " + instance.quantity + ", ";
     })
-    emailInput.text = JSON.stringify(req.body.information);
-    emailInput.text += "\nProducts: " + productString;
-    sendMail(confirmed);
+    var orderInfo = req.body.information;
+    // emailInput.text = JSON.stringify(req.body.information);
+    // emailInput.text += "\nProducts: " + productString;
+    let slicedcardNumber = orderInfo.cardNumber.slice(-4);
+
+    emailInput.text = (`Order Confirmation: \nEmail: ${orderInfo.email} \nAddress: ${orderInfo.address} 
+    \nPayment Information: \nName: ${orderInfo.cardName} \nCard Number: ${slicedcardNumber}`)
+    emailInput.text += "\n\nProducts: " + productString;
+
+    sendMail(emailInput);
+
     let thisCart = await Order.findById(req.body.cartId);
     thisCart.isCart = false;
     thisCart.status = "Completed";

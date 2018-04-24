@@ -47,6 +47,7 @@ router.put('/:orderId', (req, res, next) => {
 			console.log("order: ", order);
 			console.log("updated order: ", order);
 			console.log("order new status: ", order.status);
+			// if (order.status == 'Completed')
 			var mailBody = statusUpdate;
 			mailBody.text += " " + order.status;
 			sendMail(mailBody);
