@@ -59,7 +59,7 @@ class SingleUser extends Component {
 			        	<div>
 			        		<h3>Account Info</h3>
 							<p>{user.email}</p>
-							<button className="btn btn-success" onClick={this.showChangePassword}>Change Password</button>
+							<button className="btn btn-success"><Link to="/change-password">Change Password</Link></button>
 						</div>
 					}
 			        <hr />

@@ -24,9 +24,7 @@ router.post('/login', async (req, res, next) => {
           });
         }
         else {
-          console.log("NO CART...")
           user.findCart().then(cart => {
-            console.log("cart...", cart);
             if (cart) {
               req.session.cart = cart;
             }
@@ -55,6 +53,19 @@ router.post('/signup', (req, res, next) => {
         next(err)
       }
     })
+})
+
+router.post('/change-password', (req, res, next) => {
+  // console.log(req.session);
+  // res.json(req.session)
+  const password = req.body.password;
+  User.findById(req.session.passport.user)
+  .then(user => {
+    user.update({password})
+    req.login(user, err => (err ? next(err) : res.json(user)))
+  })
+  .catch(next)
+
 })
 
 router.post('/logout', (req, res) => {
