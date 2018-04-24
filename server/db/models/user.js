@@ -12,6 +12,10 @@ const User = db.define('user', {
       isEmail: true,
     }
   },
+  resetPassword: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   address: {
     type: Sequelize.JSON,
     allowNull: true,

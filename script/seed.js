@@ -165,7 +165,9 @@ async function seed () {
 //       await User.create(user);
 //   })
 
-  await User.bulkCreate(Users)
+  await User.create(Users[0])
+  await User.create(Users[1])
+  await User.create(Users[2])
 
   await Order.bulkCreate(Orders)
 
