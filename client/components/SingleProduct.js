@@ -52,13 +52,9 @@ class SingleProduct extends Component {
 	}
 
 	handleClick(){
-		if (!this.props.cart || Object.keys(this.props.cart).length == 0) {
-			this.props.addToCart(parseInt(this.props.match.params.id));
-		}
-		else {
-			// this.props.addToCart(parseInt(this.props.match.params.id));
-			this.props.editproductInstance(parseInt(this.props.match.params.id),{orderId: this.props.cart.id});
-		}
+		console.log("handleClick: 55");
+		this.props.addToCart(parseInt(this.props.match.params.id));
+
 		// this.props.fetchCart();
 	}
 

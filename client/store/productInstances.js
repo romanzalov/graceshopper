@@ -33,6 +33,7 @@ export const addproductInstance = function(productInstance){
 }
 
 export const editproductInstance = function(id, productInstance){
+	console.log("editproductInstance: productId: ", id);
 	return function thunk(dispatch) {
 		return axios.put(`/api/product-instances/${id}`, productInstance)
 		.then(res => dispatch(edit(res.data)))

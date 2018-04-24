@@ -27,7 +27,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin, cart }) => (
             <Link className="nav-link" to={'/single-user'} style={{"marginRight": "10px"}}>User Account</Link>
           </li>
           <li className="nav-item">
-          <Link className="nav-link"  to={'/cart'} style={{"marginRight": "10px"}}>Cart ({(cart && Object.keys(cart).length > 0) ? cart.instances.length : "0"})</Link>
+          <Link className="nav-link"  to={'/cart'} style={{"marginRight": "10px"}}>Cart ({(cart && Object.keys(cart).length > 0  && cart.instances) ? cart.instances.length : "0"})</Link>
           </li>
           {isAdmin ? (
             <li className="nav-item">
@@ -48,7 +48,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin, cart }) => (
           <Link className="nav-link" to="/signup">Sign Up</Link>
         </li>
           <li className="nav-item">
-            <Link className="nav-link"  to={'/cart'} style={{"marginRight": "10px"}}>Cart ({(cart && Object.keys(cart).length > 0) ? cart.instances.length : "0"})</Link>
+            <Link className="nav-link"  to={'/cart'} style={{"marginRight": "10px"}}>Cart ({(cart && Object.keys(cart).length > 0 && cart.instances) ? cart.instances.length : "0"})</Link>
           </li>
         </ul>
         )}

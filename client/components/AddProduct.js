@@ -111,7 +111,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
 				quantity,
 				price,
 				availability,
-        categories:categoryIDs,
+		        categories:categoryIDs,
 			}))
 			ownProps.history.push('/admin-dashboard')
 		}
