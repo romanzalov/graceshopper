@@ -8,8 +8,8 @@ class ChangePassword extends Component {
 		super(props);
 
 		this.state = {
-			newPassword: "",
-			confirmPassword: "",
+			newPassword: '',
+			confirmPassword: '',
 			dirty: false
 		}
 	}
