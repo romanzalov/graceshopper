@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const {Category, User, Product, productInstance, Order, Review} = require('../db/models');
 const axios = require ('axios');
+const {isAdmin, isUser, SelforAdmin} = require('./security');
 
 router.get('/search/:term', (req, res, next) => {
     console.log("req.params.term: ", req.params.term);
@@ -22,7 +23,7 @@ router.get('/', (req, res, next) => {
     })
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', isAdmin, (req, res, next) => {
     Product
     .create(req.body)
     .then((product) => {
@@ -49,7 +50,7 @@ router.get('/instances', (req, res, next) => {
     })
 })
 
-router.post('/instances', (req, res, next) => {
+router.post('/instances', isUser, (req, res, next) => {
     productInstance.create(req.body).then((instance) => res.json(instance));
 })
 
@@ -66,7 +67,7 @@ router.get('/instances/:id', (req, res, next) => {
     })
 })
 
-router.put('/instances/:id', (req, res, next) => {
+router.put('/instances/:id', isUser, (req, res, next) => {
     productInstance.findById(req.params.id)
     .then(instance => {
         instance.update(req.body)
@@ -76,7 +77,7 @@ router.put('/instances/:id', (req, res, next) => {
     })
 })
 
-router.delete("/instances/:id", (req, res, next) => {
+router.delete("/instances/:id", isUser, (req, res, next) => {
     productInstance.findById(req.params.id)
     .then((instance) => {
         return instance.destroy()
@@ -99,7 +100,7 @@ router.get('/:id', async (req, res, next) => {
     return;
 })
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', isAdmin, async (req, res, next) => {
     var product = await Product.findOne({
             where: {id:req.params.id},
             include: [
@@ -128,7 +129,7 @@ router.put('/:id', async (req, res, next) => {
     return;
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", isAdmin, async (req, res) => {
     var product = await Product.findById(req.params.id);
     await product.destroy();
     res.json(204);
@@ -148,7 +149,7 @@ router.get('/:id/instances', (req, res) => {
     })
 })
 
-router.post('/:id/instances', (req, res, next) => { //Should Work (Add to cart here)
+router.post('/:id/instances', isUser, (req, res, next) => { //Should Work (Add to cart here)
     productInstance.create({
         productId:req.params.id,
         orderId: req.body.orderId,
@@ -157,25 +158,10 @@ router.post('/:id/instances', (req, res, next) => { //Should Work (Add to cart h
     })
 });
 
-//How will product instances be added to orders?
-// 'user/:id/cart/add' -> product.id -> create a new product instance, add it to the user's cart
-// set instance.orderId to the user's "order"
-router.get('/:id/add-to-cart', async (req, res, next) => {
-    var _Product = await Product.findOne({
-        where:{
-            id:req.params.id,
-        },
-    });
-    var _Instance = await _Product.createInstance(0, req.body.orderId);
-    res.json(_Instance);
-})
-
-///:id
-// /user/:id/cart
 
 
 //Review routes
-router.get('/:productId/reviews', (req,res,next)=>{
+router.get('/:productId/reviews', (req, res, next)=>{
    Review.findAll({
         where: {
            productId: req.params.productId

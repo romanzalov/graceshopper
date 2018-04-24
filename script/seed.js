@@ -121,6 +121,7 @@ var Orders = [
 var Users = [
   {email: 'cody@email.com', password: '123', address: {Description: 'address 1, Chicago'}},
   {email: 'murphy@email.com', password: '123', address: {Description: 'address 2, Chicago'}},
+  {email: 'adminuser@email.com', password: 'adminuser', isAdmin: true}
 ]
 
 // var Categores = ['Football', 'Basketball', 'Baseball', 
@@ -149,6 +150,10 @@ async function seed () {
   await Category.bulkCreate(Categories);
   
   await Product.bulkCreate(Products, {returning: true})
+
+//   Users.forEach(async user => {
+//       await User.create(user);
+//   })
 
   await User.bulkCreate(Users)
 

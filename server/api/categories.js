@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const {User, Category, Product, productInstance, Order, Review} = require('../db/models');
+const {isAdmin, isUser} = require('./security');
 const axios = require ('axios');
 
 module.exports = router;
@@ -15,7 +16,7 @@ router.get('/', (req, res, next) => {
     })
 })
 
-router.post('/', (req, res, next) => {
+router.post('/', isAdmin, (req, res, next) => {
     Category.create(req.body).then(
         (category) => {
         res.json(category);
@@ -49,7 +50,7 @@ router.get('/:id/products', (req, res, next) => {
 })
 
 // Add product to a specific category
-router.post('/:id', (req, res, next) => {
+router.post('/:id', isAdmin, (req, res, next) => {
     Product.create(req.body).then(product => {
         product.categoryId = req.params.id;
         product.save().then(() => {
@@ -58,7 +59,7 @@ router.post('/:id', (req, res, next) => {
     })
 })
 
-router.put("/:id", (req, res, next) => {
+router.put("/:id", isAdmin, (req, res, next) => {
     Category.findById(req.params.id).then(category => {
         category.update(req.body).then((category) => {
             res.json(category);
@@ -66,7 +67,7 @@ router.put("/:id", (req, res, next) => {
     })
 })
 // Delete a product from a category
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", isAdmin, (req, res, next) => {
     Category.findById(req.params.id).then(category => {
         category.destroy().then(() => {
             res.json(204);
