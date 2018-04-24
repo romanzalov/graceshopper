@@ -9,10 +9,6 @@ class CategoryProducts extends Component {
 		this.handleClick = this.handleClick.bind(this);
 	}
 
-	handleClick(){
-	// 	this.props.addToCart(parseInt((this.props.match.params.id)));
-	}
-
 	render() {
 		const foundProduct = this.props.products.find(product => product.id === parseInt((this.props.match.params.id)))
         const foundCategory = this.props.categories.find(category => category.id === parseInt((this.props.match.params.id)))

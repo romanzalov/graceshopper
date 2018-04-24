@@ -15,9 +15,7 @@ class AdminDashboard extends Component {
 	}
 
 	render() {
-		console.log('users', this.props.users);
 		const {products, users, categories} = this.props;
-		console.log("products: ", products);
 		return (
 			<div className="container">
 			<h1 className="my-4">Admin Dashboard</h1>

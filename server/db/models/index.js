@@ -44,11 +44,6 @@ Product.belongsToMany(Category, { through: ProductCategory, as: 'categories' });
 Category.belongsToMany(Product, { through: ProductCategory });
 // through is required!
 
-// user.addProject(project, { through: { role: 'manager' }});
-
-
-// Product.belongsToMany(Category, {through: });
-// Category.belongsToMany(Product, {as: "products"});
 
 module.exports = {
   User,

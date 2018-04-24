@@ -11,7 +11,6 @@ router.post('/login', async (req, res, next) => {
         res.status(401).send('Incorrect password')
       } else {
         if ('cart' in req.session && Object.keys(req.session.cart).length > 0) {
-          console.log('cart in req.session');
           Order.findById(req.session.cart.id).then(thisCart => {
             thisCart.setUser(user.id);
             thisCart.save().then(() => {
@@ -34,12 +33,10 @@ router.post('/login', async (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-  console.log("req.body signup: ", req.body);
   User.create(req.body) 
     .then(user => {
       user.isAdmin = true; //For testing purposes only
       user.save().then(user => {
-        console.log("ran")
         req.login(user, err => (err ? next(err) : res.json(user)))
       })            
     })

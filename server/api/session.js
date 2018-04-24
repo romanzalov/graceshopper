@@ -6,11 +6,6 @@ const {confirmedEmail, sendMail, confirmed, shipped, updated} = require('./sende
 
 module.exports = router;
 
-router.post('/test', (req, res) => {
-    console.log("test post route hit");
-    res.json({test: "test"});
-})
-
 router.get('/cart', (req, res) => {
     if ('cart' in req.session && Object.keys(req.session.cart).length > 0) {
         Order.findById(req.session.cart.id).then(cart => {
@@ -23,24 +18,16 @@ router.get('/cart', (req, res) => {
 })
 //ADD TO CART
 router.post('/cart', async (req, res) => {
-    console.log("line 13");
     var productId = parseInt(req.body.productId);
-    console.log("line 15 req.body.productId: ", req.body.productId);
-    console.log("line 16 req.body: ", req.body, productId);
     var relatedProduct = await Product.findById(productId);
-    console.log("line 17");
     req.session.test = "post edit";
     var hasCart = !(!('cart' in req.session) || req.session.cart == {}
     || !(req.session.cart) || Object.keys(req.session.cart).length == 0);
     var hasUser = (('passport' in req.session) && ('user' in req.session.passport));
-    console.log(req.session);
     if (hasCart) {
-        console.log("has existing cart: ", req.session);
         var orderId = parseInt(req.session.cart.id);
         if (hasUser) {
-            console.log("hasUser");
             var userId = parseInt(req.session.passport.user);
-            console.log("order ID: ", orderId);
             let thisCart = await Order.findById(orderId);
             if (parseInt(thisCart.userId) != userId) {
                 thisCart.userId = userId;
@@ -48,15 +35,12 @@ router.post('/cart', async (req, res) => {
                 await thisCart.save();
             }
         }
-        console.log("line 51");
         let newItem = await relatedProduct.createInstance(0, parseInt(orderId), 1);
-        console.log("line 52");
         let updatedCart = await Order.findById(orderId);
         req.session.cart = updatedCart;
         res.json(updatedCart);
     }
     else {
-        console.log("no existing cart");
         let newCart = await Order.create({});
         var orderId = newCart.id;
         let newItem = await relatedProduct.createInstance(0, parseInt(orderId), 1);
@@ -71,9 +55,6 @@ router.post('/cart', async (req, res) => {
 })
 
 router.post('/checkout', async(req, res) => {
-    // let thisSession = await axios.get('/api/session');
-    console.log("sending confirmedEmail: ");
-    console.log("req.body: ", req.body);
     var emailInput = confirmed;
     var productString = "";
     req.body.cart.instances.forEach(instance => {
@@ -97,12 +78,9 @@ router.post('/checkout', async(req, res) => {
     //user logout
     //order completion
 
-// router.put('/update-cart', (req, res) => {
 router.get('/set-cart/:id', (req, res) => { //IF CART EXISTS -> GET FROM CART ID
-    // res.send(req.params.id);
         Order.findOne({
         where: {
-            // id:req.body.id,
             id:req.params.id,
         },
 		include: [User, {

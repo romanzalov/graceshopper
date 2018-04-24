@@ -19,14 +19,9 @@ router.get('/', isAdmin, (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
-  console.log("line 25 req.body: ", req.body);    
   User.create(req.body)
   .then(user => {
-    // user.isAdmin = true;
-    // user.save().then(user => {
-    //   console.log("ran")
       res.json(user)
-    // });
   })
   .catch(next)
 })
