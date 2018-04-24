@@ -101,16 +101,6 @@ User.stashCarts = async function() {
   }
 }
 
-User.beforeCreate(user => {
-  // Order.create({
-  //   userId: user.id
-  // }).then(cart => {
-  //   cart.userId = user.id;
-  //   cart.save().then(() => {
-  //     return;
-  //   });
-  // });
-});
 
 /**
  * classMethods

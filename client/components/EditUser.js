@@ -22,9 +22,7 @@ class EditUser extends Component {
 		order.instances.forEach((instance) => {
 			quantity = quantity + instance.quantity
 		})
-		// for (var i = 0; i < order.instances.length; i++) {
-		// 	quantity += order.instances.quantity;
-		// }
+
 		return quantity;
 	}
 

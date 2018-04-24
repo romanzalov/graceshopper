@@ -6,11 +6,6 @@ import axios from 'axios'
 class CategoryProducts extends Component {
 	constructor(props) {
 		super(props);
-		this.handleClick = this.handleClick.bind(this);
-	}
-
-	handleClick(){
-	// 	this.props.addToCart(parseInt((this.props.match.params.id)));
 	}
 
 	render() {

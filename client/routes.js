@@ -19,12 +19,6 @@ import axios from 'axios';
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData()
-    // var url = `/api/users/${req.session.passport.user}`;
-    // console.log("LINE 81: ", url);
-    // axios.get(url).then(response => {
-    //   console.log("LINE 82");
-    //   console.log("user's current cart:", response.data.orders[-1]);
-    // });
   }
 
   render() {
