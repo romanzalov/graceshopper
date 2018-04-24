@@ -35,11 +35,12 @@ router.post('/cart', async (req, res) => {
     var hasUser = (('passport' in req.session) && ('user' in req.session.passport));
     console.log(req.session);
     if (hasCart) {
-        console.log("has existing cart");
+        console.log("has existing cart: ", req.session);
         var orderId = parseInt(req.session.cart.id);
         if (hasUser) {
             console.log("hasUser");
             var userId = parseInt(req.session.passport.user);
+            console.log("order ID: ", orderId);
             let thisCart = await Order.findById(orderId);
             if (parseInt(thisCart.userId) != userId) {
                 thisCart.userId = userId;
@@ -47,7 +48,9 @@ router.post('/cart', async (req, res) => {
                 await thisCart.save();
             }
         }
+        console.log("line 51");
         let newItem = await relatedProduct.createInstance(0, parseInt(orderId), 1);
+        console.log("line 52");
         let updatedCart = await Order.findById(orderId);
         req.session.cart = updatedCart;
         res.json(updatedCart);
@@ -76,8 +79,8 @@ router.post('/checkout', async(req, res) => {
     req.body.cart.instances.forEach(instance => {
         productString += instance.product.title + ", ";
     })
-    // emailInput.text = JSON.stringify(req.body.information);
-    emailInput.text = "Products: " + productString;
+    emailInput.text = JSON.stringify(req.body.information);
+    emailInput.text += "\nProducts: " + productString;
     sendMail(confirmed);
     let thisCart = await Order.findById(req.body.cartId);
     thisCart.isCart = false;

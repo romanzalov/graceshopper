@@ -21,7 +21,7 @@ var Products = [
         quantity: 7,
         price: 23.00,
         imageUrls: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7aBJG9i08FDWB2VIRPfRx8e1VQsMfXpXfmLo7iH_Tr_mMiCCJ9g"],
-        description: "A sport"
+        description: "Football shoulder pads for $23"
     },
     {
         sportType: 'Football',
@@ -29,7 +29,7 @@ var Products = [
         quantity: 6,
         price: 35.00,
         imageUrls: ["https://s7d2.scene7.com/is/image/dkscdn/17SHUYYTHVNGNC3WHFTA_White_Grey_is/"],
-        description: "A sport"
+        description: "Football helmet for $35"
     },
     {
         sportType: 'Soccer',
@@ -37,7 +37,7 @@ var Products = [
         quantity: 3,
         price: 50.00,
         imageUrls: ["https://s7d2.scene7.com/is/image/dkscdn/17NIKUSTRKSMBKBWHSCB_Black_Blue_White_is/"],
-        description: "A sport"
+        description: "Soccer ball for $50"
     },
     {
         sportType: 'Basketball',
@@ -45,7 +45,7 @@ var Products = [
         quantity: 13,
         price: 250.00,
         imageUrls: ["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1gJq_HvPO-gQ1gEPjX7AE5-E4OVcOJa_i6XB8xCBgaTxzfwTD0A"],
-        description: "A sport"
+        description: "Basketball shoes for $250"
     },
     {
         sportType: 'Combat Sports',
@@ -53,7 +53,7 @@ var Products = [
         quantity: 4,
         price: 80.00,
         imageUrls: ["https://img2.cgtrader.com/items/85324/7343b508cf/large/boxing-gloves-3d-model-max.jpg"],
-        description: "A sport"
+        description: "Boxing gloves for $80"
     },
     {
         sportType: 'Swimming',
@@ -61,7 +61,7 @@ var Products = [
         quantity: 200,
         price: 2.00,
         imageUrls: ["https://www.pride.com/sites/www.pride.com/files/2016/07/12/screen_shot_2016-07-12_at_9.51.02_am.png"],
-        description: "A sport"
+        description: "Men's speedos for $2.00"
     },
     {
         sportType: 'Football',
@@ -69,7 +69,7 @@ var Products = [
         quantity: 4,
         price: 150.00,
         imageUrls: ["https://s7d2.scene7.com/is/image/dkscdn/17NIKMFRCSVGSHRKBDLT_Black_Silver_is/"],
-        description: "A sport"
+        description: "Football cleats for $150"
     },
     {
         sportType: 'Hockey',
@@ -77,7 +77,7 @@ var Products = [
         quantity: 9,
         price: 5.00,
         imageUrls: ["https://cdn3.volusion.com/fo6fv.qvja3/v/vspfiles/photos/PUCK-official-100-2.jpg"],
-        description: "A sport"
+        description: "Hockey puck for $5"
 
     },
     {
@@ -86,7 +86,7 @@ var Products = [
         quantity: 6,
         price: 100.00,
         imageUrls: ["http://cdn.shopify.com/s/files/1/0669/3891/products/Breakaway_Balsa_Baseball_Bat_grande.jpg?v=1460419252"],
-        description: "A sport"
+        description: "Baseball Bat for $100"
     },
     {
         sportType: 'Volleyball',
@@ -94,7 +94,7 @@ var Products = [
         quantity: 15,
         price: 8.00,
         imageUrls: ["http://thumbs3.ebaystatic.com/d/l225/m/m83hlQH7GaIq1lpCSNue-_A.jpg"],
-        description: "A sport"
+        description: "Girls Volleyball Shorts for $8.00"
     }
 ];
 
@@ -165,7 +165,9 @@ async function seed () {
 //       await User.create(user);
 //   })
 
-  await User.bulkCreate(Users)
+  await User.create(Users[0])
+  await User.create(Users[1])
+  await User.create(Users[2])
 
   await Order.bulkCreate(Orders)
 

@@ -54,7 +54,7 @@ class Cart extends Component {
 								{products.find(product => product.id === item.productId).description}
 							</div>
 						</td>
-						<td>${item.price}</td> 
+						<td>${item.price}</td>
 						<td>
 						{item.quantity} 
 						<br/><br/>

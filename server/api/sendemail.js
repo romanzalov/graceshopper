@@ -13,6 +13,14 @@ let transporter = nodemailer.createTransport({
     }
 });
 
+let statusUpdate = {
+    from: '"Import Sports LLC" <importsportsllc@gmail.com>',
+    to: 'importsportsllc@gmail.com',
+    subject: 'Order status update',
+    text: 'Your order status has been updated to: '
+};
+
+
 let confirmed = {
     from: '"Import Sports LLC" <importsportsllc@gmail.com>',
     to: 'importsportsllc@gmail.com',
@@ -77,5 +85,6 @@ module.exports = {
     sendMail,
     confirmed,
     updated,
-    shipped
+    shipped,
+    statusUpdate,
 }
