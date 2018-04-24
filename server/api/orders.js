@@ -42,12 +42,12 @@ router.get('/:orderId', (req, res, next) => {
 
 //change order status, used by admin
 router.put('/:orderId', (req, res, next) => {
+
 	Order.findById(req.params.orderId).then(order => {
 		order.update({status:req.body.status}).then(order => {
 			var mailBody = statusUpdate;
 			mailBody.text += " " + order.status;
 			sendMail(mailBody);
-
 			res.json(order)})				
 		})
 		.catch(next)
