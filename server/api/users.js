@@ -1,8 +1,10 @@
 const router = require('express').Router()
 const {User, Order, Review, productInstance} = require('../db/models')
+const {isAdmin, isUser, isSelforAdmin} = require('./security');
 module.exports = router
 
-router.get('/', (req, res, next) => {
+
+router.get('/', isAdmin, (req, res, next) => {
   User.findAll({
     // explicitly select only the id and email fields - even though
     // users' passwords are encrypted, it won't help if we just
@@ -17,10 +19,14 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/', (req, res, next) => {
+  console.log("line 25 req.body: ", req.body);    
   User.create(req.body)
   .then(user => {
-    console.log("ran")
-    res.json(user)
+    // user.isAdmin = true;
+    // user.save().then(user => {
+    //   console.log("ran")
+      res.json(user)
+    // });
   })
   .catch(next)
 })
@@ -35,7 +41,7 @@ router.get('/:id', (req, res, next) => {
   }).then(user => res.json(user)).catch(next);
  })
 
- router.put('/:id', (req, res, next) => {
+ router.put('/:id',  isAdmin, (req, res, next) => {
   User.findById(req.params.id)
     .then(user => {
       user.update(req.body)
@@ -48,7 +54,7 @@ router.get('/:id', (req, res, next) => {
 
 //delete a user and all orders belonging to that user, used by admin
 
-router.delete('/:userId', (req, res, next) => {
+router.delete('/:userId', isAdmin, (req, res, next) => {
   Order.findAll({where: {userId: req.params.userId}})
     .then(orders => orders.forEach(order => {
       productInstance.destroy({where: {orderId: order.id}})
@@ -82,7 +88,7 @@ router.get('/:userId/orders/:orderId', (req, res, next) => {
   .catch(next)
 })
 //delete an order on an user
-router.delete('/:userId/orders/:orderId', (req, res, next) => {
+router.delete('/:userId/orders/:orderId',isAdmin, (req, res, next) => {
   Order.destroy({
       where: {
           id: req.params.orderId,
@@ -92,7 +98,7 @@ router.delete('/:userId/orders/:orderId', (req, res, next) => {
   .catch(next)
 })
 //update an order on an user
-router.put('/:userId/orders/:orderId', (req, res, next) => {
+router.put('/:userId/orders/:orderId', isAdmin, (req, res, next) => {
   Order.update(req.body, {
       where: {
           id: req.params.orderId,
@@ -103,7 +109,7 @@ router.put('/:userId/orders/:orderId', (req, res, next) => {
   .catch(next)
 })
 //create an order on an user
-router.post('/:userId/orders', (req, res, next) => {
+router.post('/:userId/orders', isAdmin, isUser, (req, res, next) => {
   Order.create(req.body)
   .then(() => res.sendStatus(201))
   .catch(next)
