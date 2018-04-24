@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { addProductToCart } from '../store/cart'
+import { addProductToCart, fetchCart } from '../store/cart'
 import {addReview} from '../store/reviews'
 import {editproductInstance} from '../store/productInstances'
 
@@ -52,12 +52,15 @@ class SingleProduct extends Component {
 	}
 
 	handleClick(){
+		console.log("handleClick: 55");
 		if (!this.props.cart || Object.keys(this.props.cart).length == 0) {
 			this.props.addToCart(parseInt(this.props.match.params.id));
 		}
 		else {
+			// this.props.addToCart(parseInt(this.props.match.params.id));
 			this.props.editproductInstance(parseInt(this.props.match.params.id),{orderId: this.props.cart.id});
 		}
+		// this.props.fetchCart();
 	}
 
 	reviewForm(event){
@@ -189,7 +192,10 @@ const mapDispatchToProps = function (dispatch) {
 		},
 		editproductInstance: (id,product) => {
 			dispatch(editproductInstance(id, product))
-		}
+		},
+		// fetchCart: () => {
+		// 	dispatch(fetchCart())
+		// }
 	}
 }
 

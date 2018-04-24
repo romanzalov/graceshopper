@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const { Order, productInstance, Product, User } = require('../db/models')
+const {confirmedEmail, sendMail, confirmed, shipped, updated, statusUpdate} = require('./sendemail');
 
 module.exports = router
 
@@ -41,12 +42,39 @@ router.get('/:orderId', (req, res, next) => {
 
 //change order status, used by admin
 router.put('/:orderId', (req, res, next) => {
-	Order.update({status: req.body.status}, {
-		where: {id: req.params.orderId}, returning: true
-	})
-	.then(order => {
-		res.json(order)})
-	.catch(next)
+	Order.findById(req.params.orderId).then(order => {
+		order.update({status:req.body.status}).then(order => {
+			console.log("order: ", order);
+			console.log("updated order: ", order);
+			console.log("order new status: ", order.status);
+			var mailBody = statusUpdate;
+			mailBody.text += " " + order.status;
+			sendMail(mailBody);
+			// req.body.cart.instances.forEach(instance => {
+			//     productString += instance.product.title + ", ";
+			// })
+			// emailInput.text = JSON.stringify(req.body.information);
+			// emailInput.text += "\nProducts: " + productString;
+			res.json(order)})				
+		})
+		.catch(next)
+	// Order.update(
+	// 	{status: req.body.status},
+	// 	{
+	// 		where: {id: req.params.orderId}, returning: true
+	// 	}
+	// )
+	// .then(order => {
+	// 	console.log("order: ", order);
+	// 	console.log("updated order: ", order[1][0]);
+	// 	console.log("order new status: ", order[1][0].status);
+	// 	// req.body.cart.instances.forEach(instance => {
+	// 	//     productString += instance.product.title + ", ";
+	// 	// })
+	// 	// emailInput.text = JSON.stringify(req.body.information);
+	// 	// emailInput.text += "\nProducts: " + productString;
+	// 	res.json(order)})
+	// .catch(next)
 })
 
 //change product quantity on order or delete if 0

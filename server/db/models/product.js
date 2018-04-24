@@ -95,11 +95,13 @@ Product.findByName = function(name) {
 Product.prototype.createInstance = function(priceDiff=0, orderId=null, quantity=1) {
   //- 1 from quantity?
   console.log("creating product instance with price: ", parseFloat(this.price + priceDiff), orderId, quantity);
-  return productInstance.create({
+  productInstance.create({
       productId: this.id,
-      orderId,
       price: parseFloat(this.price) + priceDiff,
       quantity,
+  }).then(instance => {
+    instance.setOrder(orderId);
+    return instance.save();
   });
 }
 
