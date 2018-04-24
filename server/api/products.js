@@ -17,6 +17,7 @@ router.get('/', (req, res, next) => {
         include: [
             {model: productInstance, as:'instances', required:false},
             {model: Category, as: 'categories', required: false},
+            {model: Review, as: 'reviews', required: false},
         ],
     }).then((products) => {
         res.json(products);

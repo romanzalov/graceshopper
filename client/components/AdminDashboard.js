@@ -25,7 +25,7 @@ class AdminDashboard extends Component {
 				<div className="col-lg-6">
 				<h3 className="my-4">Products
 				<button onClick={() => history.push('/add-product')}className="btn btn-success" style={{display:"inline-block", "marginLeft":"30px"}}>Add Product</button>
-				<button className="btn btn-primary" style={{display:"inline-block", "marginLeft":"30px"}}>View Categories</button>
+				<button onClick={() => history.push('/add-category')} className="btn btn-primary" style={{display:"inline-block", "marginLeft":"30px"}}>View/Add Categories</button>
 				</h3>
 					<table style={{width:"100%"}} className="table">
 					<tbody>
@@ -59,8 +59,8 @@ class AdminDashboard extends Component {
 
 				<div className="col-lg-6">
 				<h3 className="my-4">Users
-					<button 
-					className="btn btn-primary" 
+					<button
+					className="btn btn-primary"
 					style={{display:"inline-block", "marginLeft":"30px"}}
 					onClick={()=>history.push(`/order-history`)}
 					>View All Orders
@@ -96,7 +96,6 @@ class AdminDashboard extends Component {
 }
 
 const mapStateToProps = function(state) {
-	console.log('state', state)
 	return {
 		users: state.users,
 		products: state.products

@@ -30,7 +30,7 @@ class SingleUser extends Component {
 		})
 		return total
 	}
-	
+
 	showChangePassword() {
 		if (!this.state.showChangePassword) {
 			this.setState({
@@ -40,12 +40,12 @@ class SingleUser extends Component {
 		else {
 			this.setState({
 				showChangePassword: false,
-			})			
+			})
 		}
 	}
 	//user not eager loaded
 	render() {
-		const { user, orders,reviews, productInstances, products, cart } = this.props;
+		const { user, orders, reviews, productInstances, products, cart } = this.props;
 		const pastOrders = orders.filter(order => order.isCart === false)
 
 		const instances = productInstances.filter(elem => {
@@ -69,21 +69,25 @@ class SingleUser extends Component {
 			        	<tbody>
 				        	<tr>
 								<th>Item</th>
-								<th>Category</th>
+								<th>Categories</th>
 								<th>Quantity</th>
 								<th>Price</th>
 							</tr>
 				        	{
-								instances.length > 0 ? instances.map(instance => (
-									
+								instances.length > 0 ? instances.map(instance => {
+									const selectedProduct = products.find(product => product.id === instance.productId)
+									let categories = []
+									selectedProduct.categories.forEach(category => categories.push(category.name))
+									categories = categories.join(', ')
+									return (
 										<tr key={instance.id}>
-											<td>{products.find(product => product.id === instance.productId).title}</td>
-											<td>{products.find(product => product.id === instance.productId).sportType}</td>
+											<td>{selectedProduct.title}</td>
+											<td>{categories}</td>
 											<td>{instance.quantity} item(s)</td>
 											<td>${instance.price}</td>
-										</tr>
-									)
-								) : null
+										</tr>)
+
+								}) : null
 							}
 						</tbody>
 			        </table>
@@ -98,7 +102,7 @@ class SingleUser extends Component {
 									<th>Date</th>
 									<th>Total</th>
 									<th>Quantity</th>
-									<th>Status</th> 
+									<th>Status</th>
 								</tr>
 								{orders.length > 0 && pastOrders.map(order =>
 										(
@@ -133,7 +137,7 @@ class SingleUser extends Component {
 						)) : <div>No reviews</div>}
 						</div>
 					</div>
-			    </div> 
+			    </div>
 	        </div>
 		)
 	}
