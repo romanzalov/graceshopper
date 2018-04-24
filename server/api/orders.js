@@ -45,7 +45,7 @@ router.put('/:orderId', (req, res, next) => {
 		where: {id: req.params.orderId}, returning: true
 	})
 	.then(order => {
-		res.json(order)})
+		res.json(order[1][0])})
 	.catch(next)
 })
 

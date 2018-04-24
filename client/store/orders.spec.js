@@ -46,16 +46,16 @@ describe('Frontend tests', () => {
         testingStore.dispatch({
           type: GET_ORDERS,
           orders: [{
-            "id": 1,
-            "isCart": false,
-            "status": "Created",
-            "userId": 1
+            id: 1,
+            isCart: false,
+            status: 'Created',
+            userId: 1
           },
           {
-            "id": 2,
-            "isCart": true,
-            "status": "Completed",
-            "userId": 1
+            id: 2,
+            isCart: true,
+            status: 'Completed',
+            userId: 1
           }]
         });
 
@@ -93,30 +93,30 @@ describe('Frontend tests', () => {
 
       let existingOrders = [
         {
-          "id": 1,
-          "isCart": false,
-          "status": "Created",
-          "userId": 1
+          id: 1,
+          isCart: false,
+          status: 'Created',
+          userId: 1
         },
         {
-          "id": 2,
-          "isCart": true,
-          "status": "Completed",
-          "userId": 1
+          id: 2,
+          isCart: true,
+          status: 'Completed',
+          userId: 1
         },
         {
-          "id": 3,
-          "isCart": true,
-          "status": "Cancelled",
-          "userId": 2
+          id: 3,
+          isCart: true,
+          status: 'Cancelled',
+          userId: 2
         }
       ]
 
       const dispatchedOrder = {
-        "id": 4,
-        "isCart": true,
-        "status": "Cancelled",
-        "userId": 3
+        id: 4,
+        isCart: true,
+        status: 'Cancelled',
+        userId: 3
       }
 
       const CREATE_ORDER = 'CREATE_ORDER';
@@ -129,9 +129,6 @@ describe('Frontend tests', () => {
       });
 
       it('affects the state by appends dispatched orders to state orders', () => {
-
-
-
 
         testingStore.dispatch({
           type: CREATE_ORDER,
@@ -169,34 +166,62 @@ describe('Frontend tests', () => {
 
     });
 
-    describe('reducing on CREATE_ORDER', () => {
+    describe('reducing on EDIT_ORDER', () => {
 
-      beforeEach('initialize the store to be creating new order', () => {
-        testingStore.replaceReducer(() => ({ ...testingStore.getState() }));
-        testingStore.dispatch({ type: 'INITIALIZE_FOR_CREATE_ORDER_TEST' });
-        testingStore.replaceReducer(orders);
+      let existingOrders = [
+        {
+          id: 1,
+          isCart: false,
+          status: 'Created',
+          userId: 1
+        },
+        {
+          id: 2,
+          isCart: true,
+          status: 'Completed',
+          userId: 1
+        },
+        {
+          id: 3,
+          isCart: true,
+          status: 'Cancelled',
+          userId: 2
+        }
+      ]
+
+      const dispatchedOrder = {
+        id: 2,
+        isCart: true,
+        status: 'Created',
+        userId: 1
+      }
+
+      // beforeEach('initialize the store to edit an existing order', () => {
+      //   testingStore.replaceReducer(() => ({ ...testingStore.getState() }));
+      //   testingStore.dispatch({ type: 'INITIALIZE_FOR_CREATE_ORDER_TEST' });
+      //   testingStore.replaceReducer(orders);
+      // });
+
+      beforeEach(() => {
+        testingStore = createStore(
+          orders, existingOrders
+        );
+
       });
 
-      it('affects the state by adding newly created order', () => {
+      it('affects the state by by editing existing order', () => {
 
-
-
-        const CREATE_ORDER = 'CREATE_ORDER';
+        const EDIT_ORDER = 'EDIT_ORDER';
 
         testingStore.dispatch({
-          type: CREATE_ORDER,
-          order: {
-            "id": 1,
-            "isCart": false,
-            "status": "Created",
-            "userId": 1
-          }
+          type: EDIT_ORDER,
+          order: dispatchedOrder
         });
 
         const newState = testingStore.getState();
 
-        expect(newState.length).to.be.equal(1);
-        expect(newState.id).to.be.equal('1');
+        expect(newState[1].status).to.be.equal('Created');
+        expect(newState.length).to.be.equal(3);
 
       });
 

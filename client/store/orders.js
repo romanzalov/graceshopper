@@ -48,7 +48,8 @@ export default function(orders = [], action){
 		case CREATE_ORDER:
 			return [...orders, action.order]
 		case EDIT_ORDER:
-			console.log('running')
+			console.log('orders', orders)
+			console.log('action order', action.order)
 			return orders.map(order => (action.order.id === order.id ? action.order : order))
 		default:
 			return orders
