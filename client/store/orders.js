@@ -34,6 +34,7 @@ export const editOrder = function(id, order){
 	return function thunk(dispatch) {
 		return axios.put(`/api/orders/${id}`, order)
 		.then(res => {
+			console.log('resdata', res.data)
 			dispatch(edit(res.data))
 		})
 		.catch(err => console.error(err))
@@ -48,7 +49,6 @@ export default function(orders = [], action){
 		case CREATE_ORDER:
 			return [...orders, action.order]
 		case EDIT_ORDER:
-			console.log('running')
 			return orders.map(order => (action.order.id === order.id ? action.order : order))
 		default:
 			return orders
