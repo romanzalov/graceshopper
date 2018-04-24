@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {SingleProduct, Checkout, Cart, AddProduct, EditProduct, EditUser, AdminDashboard, Login, Signup, UserHome, OrderHistory, SingleUser, SingleOrder, AccountInfo, Confirmation, CategoryProducts } from './components'
+import {SingleProduct, Checkout, Cart, AddCategory, AddProduct, EditProduct, EditUser, AdminDashboard, Login, Signup, UserHome, OrderHistory, SingleUser, SingleOrder, AccountInfo, Confirmation, CategoryProducts } from './components'
 import {me} from './store'
 import {fetchProducts} from './store/products'
 import {fetchOrders} from './store/orders'
@@ -56,6 +56,7 @@ class Routes extends Component {
                 <Route path="/edit-product/:id" component={EditProduct} />
                 <Route path="/edit-user/:id" component={EditUser} />
                 <Route path="/add-product" component={AddProduct} />
+                <Route path="/add-category" component={AddCategory} />
                 <Route path="/admin-dashboard" component={AdminDashboard} />
               </Switch>
             }

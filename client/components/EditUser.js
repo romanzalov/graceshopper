@@ -90,7 +90,6 @@ class EditUser extends Component {
 										<td>{order.createdAt.slice(0, 10)}</td>
 										<td>${this.getTotalPrice(order)}</td>
 										<td>{this.getQuantity(order)} items</td>
-										<td>
 										<form onSubmit={this.props.handleOrderChange(order.id)}>
 											<td>
 												{order.status === 'Created' &&
@@ -134,10 +133,8 @@ class EditUser extends Component {
 												</div>
 												}
 											</td>
-											<td><button>Save</button></td>
+											<td><button type="submit" style={{ "marginTop": "10px" }} className="btn btn-primary">Save</button></td>
 										</form>
-										</td>
-										<td><button>Save</button></td>
 									</tr>
 								)
 							)
@@ -165,6 +162,7 @@ const mapDispatchToProps = function (dispatch) {
 		handleOrderChange: id => event => {
 			event.preventDefault();
 			const status = event.target.status.value;
+			console.log('status', status)
 			dispatch(editOrder(id, {status}));
 		}
 	}
