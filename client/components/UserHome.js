@@ -95,13 +95,13 @@ class UserHome extends Component {
           </ol>
           <div className="carousel-inner" role="listbox">
           <div className="carousel-item active">
-          <img className="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide"/>
+          <img className="d-block img-fluid" src="/images/croppedImage1.jpeg" alt="First slide"/>
           </div>
           <div className="carousel-item">
-          <img className="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide"/>
+          <img className="d-block img-fluid" src="/images/croppedImage2.png" alt="Second slide"/>
           </div>
           <div className="carousel-item">
-          <img className="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide"/>
+          <img className="d-block img-fluid" src="/images/TysonCropped.png" alt="Third slide"/>
           </div>
           </div>
           <a className="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -119,7 +119,7 @@ class UserHome extends Component {
             return(
               <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
               <div className="card h-100">
-              <a href="#"><img className="card-img-top" src={product.imageUrls[0]} alt=""/></a>
+              <a href={`/product/${product.id}`}><img className="card-img-top" src={product.imageUrls[0]} alt=""/></a>
               <div className="card-body">
               <h4 className="card-title">
               <Link to={`/product/${product.id}`}>{product.title}</Link>
