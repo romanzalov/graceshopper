@@ -1,8 +1,9 @@
 /* global describe beforeEach it */
 
 import { expect } from 'chai'
+import {last} from 'lodash'
 import React from 'react'
-import {createStore} from 'redux'
+import { createStore } from 'redux'
 import enzyme, { shallow } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import {
@@ -10,7 +11,7 @@ import {
   withRouter,
   MemoryRouter
 } from 'react-router-dom'
-import orders, {} from './orders'
+import orders, { } from './orders'
 
 describe('Frontend tests', () => {
   describe('store/reducer', () => {
@@ -31,7 +32,7 @@ describe('Frontend tests', () => {
 
       beforeEach('initialize the store to fetch all orders', () => {
         testingStore.replaceReducer(() => (
-           {...testingStore.getState()}
+          { ...testingStore.getState() }
         ));
         testingStore.dispatch({ type: 'INITIALIZE_FOR_GET_ORDER_TEST' });
         testingStore.replaceReducer(orders);
@@ -48,8 +49,9 @@ describe('Frontend tests', () => {
             "id": 1,
             "isCart": false,
             "status": "Created",
-            "userId": 1},
-            {
+            "userId": 1
+          },
+          {
             "id": 2,
             "isCart": true,
             "status": "Completed",
@@ -87,45 +89,72 @@ describe('Frontend tests', () => {
 
 
 
-    describe('reducing on NEW_MESSAGE', () => {
+    describe('reducing on CREATE_ORDER', () => {
 
-      let existingRandomMessages;
+      let existingOrders = [
+        {
+          "id": 1,
+          "isCart": false,
+          "status": "Created",
+          "userId": 1
+        },
+        {
+          "id": 2,
+          "isCart": true,
+          "status": "Completed",
+          "userId": 1
+        },
+        {
+          "id": 3,
+          "isCart": true,
+          "status": "Cancelled",
+          "userId": 2
+        }
+      ]
+
+      const dispatchedOrder = {
+        "id": 4,
+        "isCart": true,
+        "status": "Cancelled",
+        "userId": 3
+      }
+
+      const CREATE_ORDER = 'CREATE_ORDER';
+
       beforeEach(() => {
-        existingRandomMessages = testUtilities.createRandomMessages(5);
         testingStore = createStore(
-          rootReducer,
-          // this just sets the initial state of our store.
-          { messagesLoading: false, messages: existingRandomMessages }
+          orders, existingOrders
         );
+
       });
 
-      it('affects the state by appends dispatched message to state messages', () => {
+      it('affects the state by appends dispatched orders to state orders', () => {
 
-        const dispatchedMessage = testUtilities.createOneRandomMessage();
+
+
 
         testingStore.dispatch({
-          type: NEW_MESSAGE,
-          message: dispatchedMessage
+          type: CREATE_ORDER,
+          order: dispatchedOrder
         });
 
         const newState = testingStore.getState();
-        const lastMessageOnState = last(newState.messages);
 
-        // the NEW_MESSAGE action, when reduced, results in a
-        // message being added to the redux state's `messages` arr.
-        expect(newState.messages).to.have.length(6);
-        expect(lastMessageOnState).to.be.deep.equal(dispatchedMessage);
+        console.log('NEWSTATE', newState)
+        const lastOrderOnState = last(newState);
+
+        expect(newState).to.have.length(4);
+        expect(lastOrderOnState).to.be.deep.equal(dispatchedOrder);
 
       });
 
       it('sets messages to different array from previous state', () => {
 
         const originalState = testingStore.getState();
-        const dispatchedMessage = testUtilities.createOneRandomMessage();
 
         testingStore.dispatch({
-          type: NEW_MESSAGE,
-          message: dispatchedMessage
+          type: CREATE_ORDER,
+          order: dispatchedOrder
         });
 
         const newState = testingStore.getState();
@@ -133,8 +162,8 @@ describe('Frontend tests', () => {
         // Once again, don't mutate old data! Generate new data
         // that looks the way you want. There are many ways to do
         // so with arrays.
-        expect(newState.messages).to.not.be.equal(originalState.messages);
-        expect(originalState.messages).to.have.length(5);
+        expect(newState).to.not.be.equal(originalState);
+        expect(originalState).to.have.length(3);
 
       });
 
@@ -143,7 +172,7 @@ describe('Frontend tests', () => {
     describe('reducing on CREATE_ORDER', () => {
 
       beforeEach('initialize the store to be creating new order', () => {
-        testingStore.replaceReducer(() => ({ ...testingStore.getState()}));
+        testingStore.replaceReducer(() => ({ ...testingStore.getState() }));
         testingStore.dispatch({ type: 'INITIALIZE_FOR_CREATE_ORDER_TEST' });
         testingStore.replaceReducer(orders);
       });
@@ -160,7 +189,8 @@ describe('Frontend tests', () => {
             "id": 1,
             "isCart": false,
             "status": "Created",
-            "userId": 1}
+            "userId": 1
+          }
         });
 
         const newState = testingStore.getState();
