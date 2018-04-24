@@ -26,6 +26,7 @@ describe('Order routes', () => {
         .expect(200)
         .then(res => {
           expect(res.body).to.be.an('array')
+          console.log(res.body)
           expect(res.body[0].status).to.be.equal('Processing')
         })
     })
