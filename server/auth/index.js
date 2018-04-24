@@ -50,8 +50,6 @@ router.post('/signup', (req, res, next) => {
 })
 
 router.post('/change-password', (req, res, next) => {
-  // console.log(req.session);
-  // res.json(req.session)
   const password = req.body.password;
   User.findById(req.session.passport.user)
   .then(user => {

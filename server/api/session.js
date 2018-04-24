@@ -140,9 +140,7 @@ router.get('/get-info', async(req, res) => {
     res.json(req.session);
 })
 
-// function hasKey() {
 
-// }
 
 //Initialize/update -> get the number of items in "cart" (0 if it doesn't exist)
 router.get('/initialize', async(req, res) => {
@@ -181,7 +179,6 @@ router.get('/initialize', async(req, res) => {
             thisCart.isCart = true;
             thisCart.setUser(userId);
             thisCart.save();
-            console.log("found thisCart", thisCart);
             req.session.cart = thisCart;
         }
         req.session.numcartItems = req.session.cart.instances.length;
@@ -251,7 +248,6 @@ router.get('/add-product', async (req, res) => { //On add product
         }
         Order.findById(req.session.cart.id).then(cart => {
             // order.addProductInstance
-            console.log("adding to cart: ", req.session.cart);
             req.session.cart = cart;
             req.session.newCart = false;
             res.json(req.session);
