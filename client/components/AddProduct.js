@@ -6,6 +6,9 @@ import { addProduct } from '../store'
 class AddProduct extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			categories: false
+		}
 	}
 
 	render() {
@@ -13,7 +16,7 @@ class AddProduct extends Component {
 			<div className="container">
 				<h1 className="my-4">Add Product</h1>
 				<form onSubmit={this.props.handleSubmit}>
-					<div className="row" style={{ "padding-bottom": "10px" }}>
+					<div className="row" style={{ "paddingBottom": "10px" }}>
 						<div className="col-lg-6">
 							<div className="form-group">
 								<label><b>Product Title</b></label>
@@ -46,8 +49,11 @@ class AddProduct extends Component {
 								{this.props.categories.map(category => {
 									return(
 										<div key={category.id}>
-											<input value={category.id} name="categories" type="checkbox" className="form-check-input" id="exampleCheck1" />
-											<label value={category.id} className="form-check-label" for="exampleCheck1">{category.name}</label>
+											<input 
+											onChange={(event) => this.setState({categories: true})}
+											value={category.id} 
+											name="categories" type="checkbox" className="form-check-input" id="exampleCheck1" />
+											<label value={category.id} className="form-check-label" htmlFor="exampleCheck1">{category.name}</label>
 											<br />
 										</div>
 									)
@@ -60,7 +66,11 @@ class AddProduct extends Component {
 									<option>Not Available</option>
 								</select>
 							</div>
-							<button type="submit" className="btn btn-primary" style={{ "margin-top": "10px" }}><b>Submit</b></button>
+							<button type="submit" 
+							className="btn btn-primary" 
+							style={{ "marginTop": "10px" }}
+							disabled={!this.state.categories}
+							><b>Submit</b></button>
 						</div>
 					</div>
 				</form>
@@ -84,7 +94,7 @@ const mapDispatchToProps = function (dispatch, ownProps) {
 			const description = event.target.productDescription.value
 			const quantity = event.target.quantity.value
 			const price = event.target.price.value
-			const categoryChecklist = event.target.categories		
+			const categoryChecklist = event.target.categories
 
 			let categoryIDs = [];
 			categoryChecklist.forEach(checkbox => {

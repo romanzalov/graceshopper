@@ -90,8 +90,8 @@ class EditUser extends Component {
 										<td>{order.createdAt.slice(0, 10)}</td>
 										<td>${this.getTotalPrice(order)}</td>
 										<td>{this.getQuantity(order)} items</td>
-										<form onSubmit={this.props.handleOrderChange(order.id)}>
 											<td>
+										<form onSubmit={this.props.handleOrderChange(order.id)}>
 												{order.status === 'Created' &&
 												<div className="form-group">
 													<select className="form-control" id="status">
@@ -132,9 +132,9 @@ class EditUser extends Component {
 													</select>
 												</div>
 												}
-											</td>
-											<td><button type="submit" style={{ "marginTop": "10px" }} className="btn btn-primary">Save</button></td>
+											<button type="submit" style={{ "marginTop": "10px" }} className="btn btn-primary">Save</button>
 										</form>
+											</td>
 									</tr>
 								)
 							)
