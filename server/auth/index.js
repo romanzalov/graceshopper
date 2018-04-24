@@ -37,9 +37,14 @@ router.post('/login', async (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-  User.create(req.body)
+  console.log("req.body signup: ", req.body);
+  User.create(req.body) 
     .then(user => {
-      req.login(user, err => (err ? next(err) : res.json(user)))
+      user.isAdmin = true; //For testing purposes only
+      user.save().then(user => {
+        console.log("ran")
+        req.login(user, err => (err ? next(err) : res.json(user)))
+      })            
     })
     .catch(err => {
       if (err.name === 'SequelizeUniqueConstraintError') {
