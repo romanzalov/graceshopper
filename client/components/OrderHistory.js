@@ -121,7 +121,7 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch) {
 	return {
 		handleOrderChange: (event, id) => {
-			// event.preventDefault();
+			event.preventDefault();
 			const status = event.target.status.value;
 			console.log(status)
 			dispatch(editOrder(id, { status }));
