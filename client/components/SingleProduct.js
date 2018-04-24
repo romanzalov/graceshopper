@@ -53,7 +53,7 @@ class SingleProduct extends Component {
 
 	handleClick(){
 		if (!this.props.cart || Object.keys(this.props.cart).length == 0) {
-			this.props.addToCart(parseInt((this.props.match.params.id)));				
+			this.props.addToCart(parseInt(this.props.match.params.id));
 		}
 		else {
 			this.props.editproductInstance(parseInt(this.props.match.params.id),{orderId: this.props.cart.id});
@@ -66,12 +66,20 @@ class SingleProduct extends Component {
 		<form onSubmit = {this.handleSubmit}>
 			<hr />
 			<label>
-    			<input type="text" value = {this.state.tempReview} onChange = {this.handleChange}/>
+				<textarea
+				className="form-control" 
+				type="text" 
+				value = {this.state.tempReview}
+				onChange = {this.handleChange} />
 			</label>
+			{this.state.tempReview.length < 5 ? <div className="alert alert-danger">Enter more than 5 characters</div> : null }
 			<hr />
 			<label>
 				<p>Rate this item: </p>
-				<select value={this.state.stars} onChange={this.handleSelectChange}>
+				<select
+				className="form-control"
+				value={this.state.stars}
+				onChange={this.handleSelectChange}>
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>
@@ -80,7 +88,12 @@ class SingleProduct extends Component {
 				</select>
 			</label>
 			<hr />
-			<button className="btn btn-success" type="submit" value="Submit">Submit Review</button>
+			<button 
+			className="btn btn-success" 
+			type="submit" 
+			value="Submit"
+			disabled={this.state.tempReview.length<6}
+			>Submit Review</button>
 		</form>
 		)}
 
@@ -109,8 +122,8 @@ class SingleProduct extends Component {
 						<h1 className="my-4">Categories</h1>
 						<div className="list-group">
 						{this.props.categories.map(category => {
-							return(<Link key={category.id} disabled className="list-group-item" to={`/category/${category.id}`}>{category.name}</Link>)
-						  })}							
+							return (<Link key={category.id} disabled className="list-group-item" to={`/category/${category.id}`}>{category.name}</Link>)
+						})}
 						</div>
 					</div>
 					<div className="col-lg-9">

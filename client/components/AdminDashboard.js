@@ -36,7 +36,7 @@ class AdminDashboard extends Component {
 						<th>Availability</th>
 						<th></th>
 					</tr>
-					{products.map(product =>{
+					{products.length ? products.map(product =>{
 						return (
 						<tr key={product.id}>
 							<td>{(product.categories.length == 1) ? (product.categories[0].name)
@@ -47,11 +47,11 @@ class AdminDashboard extends Component {
 							</td>
 							<td>{product.title}</td>
 							<td>{product.quantity}</td>
-							<td>{product.availability}</td>
+							{product.availability ? <td>Available</td> : <td>Not Available</td>}
 							<td><button onClick={()=>history.push(`/edit-product/${product.id}`)} className="btn btn-primary" style={{display:"inline-block"}}>View & Edit</button></td>
 						</tr>
 						)
-					})
+					}) : null
 					}
 					</tbody>
 					</table>

@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {editOrder} from '../store'
+import {editOrder, fetchOrders} from '../store'
 
 class OrderHistory extends Component {
 
@@ -120,9 +120,11 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch) {
 	return {
 		handleOrderChange: id => event => {
-			event.preventDefault();
 			const status = event.target.status.value;
 			dispatch(editOrder(id, { status }));
+		},
+		fetchOrders: () => {
+			dispatch(fetchOrders())
 		}
 	}
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import store from '../store'
+import {fetchOrders} from '../store/orders'
 
 class SingleUser extends Component {
 	constructor() {
@@ -43,6 +43,10 @@ class SingleUser extends Component {
 			})
 		}
 	}
+
+	componentDidMount() {
+		this.props.fetchOrders()
+	}
 	//user not eager loaded
 	render() {
 		const { user, orders, reviews, productInstances, products, cart } = this.props;
@@ -59,7 +63,7 @@ class SingleUser extends Component {
 			        	<div>
 			        		<h3>Account Info</h3>
 							<p>{user.email}</p>
-							<button className="btn btn-success"><Link to="/change-password">Change Password</Link></button>
+							<button className="btn"><Link to="/change-password">Change Password</Link></button>
 						</div>
 					}
 			        <hr />
@@ -156,7 +160,9 @@ const mapStateToProps = function (state) {
 
 const mapDispatchToProps = function (dispatch) {
 	return {
-
+		fetchOrders: () => {
+			dispatch(fetchOrders())
+		}
 	}
 }
 

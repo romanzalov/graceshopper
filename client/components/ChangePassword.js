@@ -24,6 +24,8 @@ class ChangePassword extends Component {
 			confirmPassword: '',
 			dirty: false
 		})
+
+		this.props.history.push('/home')
 	}
 
 	render() {
