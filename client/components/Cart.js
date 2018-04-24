@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link, withRouter} from 'react-router-dom'
 import history from '../history';
-import {checkoutCartOrder, removeproductInstance, editproductInstance, fetchCart, fetchOrders} from '../store'
+import {checkoutCartOrder, removeproductInstance, editproductInstance, fetchCart, fetchOrders, fetchproductInstances} from '../store'
 
 
 class Cart extends Component {
@@ -20,6 +20,7 @@ class Cart extends Component {
     componentDidMount() {
     	this.props.fetchOrders();
     	this.props.fetchCart();
+    	this.props.fetchproductInstances()
     }
 
 	render() {
@@ -113,6 +114,9 @@ const mapDispatchToProps = function(dispatch) {
         },
         fetchCart: () => {
         	dispatch(fetchCart())
+        },
+        fetchproductInstances: () => {
+        	dispatch(fetchproductInstances())
         }
     }
 }
