@@ -65,7 +65,7 @@ class CategoryProducts extends Component {
                   return(
                     <div className="col-lg-4 col-md-6 mb-4" key={product.id}>
                     <div className="card h-100">
-                      <a href="#"><img className="card-img-top" src={product.imageUrls[0]} alt=""/></a>
+                    <a href={`/product/${product.id}`}><img className="card-img-top" src={product.imageUrls[0]} alt=""/></a>
                       <div className="card-body">
                         <h4 className="card-title">
                           <Link to={`/product/${product.id}`}>{product.title}</Link>
