@@ -10,8 +10,11 @@ class EditUser extends Component {
 
 	toggleAdmin = (user) => {
 		user.isAdmin ? user.isAdmin = false : user.isAdmin = true
-		console.log(user, user.id)
-		this.props.updateUserAdmin(user, user.id)
+		this.props.updateUser(user, user.id)
+	}
+
+	triggerPasswordReset = (user) => {
+		this.props.updateUser({...user, resetPassword: true }, user.id)
 	}
 
 	getQuantity = order => {
@@ -59,6 +62,7 @@ class EditUser extends Component {
 
 						<button
 							className="btn btn-success"
+							onClick={() => this.triggerPasswordReset(user)}
 						>Trigger Password Reset</button>
 						<button
 							onClick={() => this.props.handleUserDelete(user.id)}
@@ -157,12 +161,11 @@ const mapStateToProps = function (state) {
 const mapDispatchToProps = function (dispatch) {
 	return {
 		handleUserDelete: id => dispatch(destroyUser(id)),
-		updateUserAdmin: (user, id) => dispatch(editUser(user, id)),
+		updateUser: (user, id) => dispatch(editUser(user, id)),
 		updateOrderStatus: (id, order) => dispatch(editOrder(id, order)),
 		handleOrderChange: id => event => {
 			event.preventDefault();
 			const status = event.target.status.value;
-			console.log('status', status)
 			dispatch(editOrder(id, {status}));
 		}
 	}

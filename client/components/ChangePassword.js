@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import { password } from '../store/user'
+import {editUser, password} from '../store'
 
 class ChangePassword extends Component {
 	constructor(props) {
@@ -16,9 +16,8 @@ class ChangePassword extends Component {
 
 	handleSubmit = event => {
 		event.preventDefault();
-		console.log(this.state.newPassword)
-
 		this.props.postPassword(this.state.confirmPassword)
+		this.props.updateUser({...this.props.user, resetPassword: false},this.props.user.id)
 		this.setState({
 			newPassword: '',
 			confirmPassword: '',
@@ -42,16 +41,20 @@ class ChangePassword extends Component {
 					<form onSubmit={this.handleSubmit}>
 						<div className="form-group">
 							<label><b>New Password</b></label>
-							<input type="password" className="form-control" 
+							<input 
+							type="password" 
+							className="form-control" 
 							onChange={(event) => this.setState({newPassword: event.target.value})}/>
 							<label><b>Confirm Password</b></label>
-							<input type="password" className="form-control"
+							<input 
+							type="password" 
+							className="form-control"
 							onChange={(event) => this.setState({confirmPassword: event.target.value, dirty: true})}/>
 						</div>
 
 						<button 
-						type="submit" 
-						className="btn btn-primary" 
+						type="submit"
+						className="btn btn-primary"
 						style={{ "marginTop": "0px"}}
 						disabled={(this.state.newPassword!==this.state.confirmPassword) || this.state.newPassword===""}
 						>Save</button>
@@ -66,7 +69,7 @@ class ChangePassword extends Component {
 
 const mapStateToProps = function(state) {
 	return {
-		user: state.user
+		user: state.user,
 	}
 }
 
@@ -74,7 +77,8 @@ const mapDispatchToProps = function(dispatch) {
 	return {
 		postPassword: (pass) => {
 			dispatch(password(pass))
-		}
+		},
+		updateUser: (user, id) => dispatch(editUser(user, id)),
 	}
 }
 
