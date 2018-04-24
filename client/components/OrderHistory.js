@@ -23,6 +23,7 @@ class OrderHistory extends Component {
 
 	render() {
 		const { orders } = this.props
+		console.log('orders', orders)
 		return (
 			<div className="container">
 				<div className="row">
@@ -53,7 +54,7 @@ class OrderHistory extends Component {
 									<td>
 										<p>{order.status}</p>
 										<br />
-										<form onSubmit={this.props.handleOrderChange(order.id)}>
+										<form onSubmit={event => {this.props.handleOrderChange(event, order.id)}}>
 										<div className="form-group">
 											<label htmlFor="exampleFormControlSelect1">Order Status:</label>
 											{order.status === 'Created' &&
@@ -119,13 +120,12 @@ const mapStateToProps = function (state) {
 
 const mapDispatchToProps = function (dispatch) {
 	return {
-		handleOrderChange: id => event => {
+		handleOrderChange: (event, id) => {
+			// event.preventDefault();
 			const status = event.target.status.value;
+			console.log(status)
 			dispatch(editOrder(id, { status }));
 		},
-		fetchOrders: () => {
-			dispatch(fetchOrders())
-		}
 	}
 }
 
