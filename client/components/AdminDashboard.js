@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import history from '../history'
-import {fetchUsers, removeProduct, destroyUser} from '../store'
+import {fetchUsers, fetchProducts, removeProduct, destroyUser} from '../store'
 
 class AdminDashboard extends Component {
 	constructor(props) {
@@ -12,6 +12,7 @@ class AdminDashboard extends Component {
 
 	componentDidMount(){
 		this.props.fetchUsers();
+		this.props.fetchProducts();
 	}
 
 	render() {
@@ -103,6 +104,7 @@ const mapStateToProps = function(state) {
 const mapDispatchToProps = function(dispatch) {
 	return {
 		fetchUsers: () => dispatch(fetchUsers()),
+		fetchProducts: () => dispatch(fetchProducts()),
 		handleUserDelete: id => dispatch(destroyUser(id))
 	}
 }
