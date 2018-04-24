@@ -11,7 +11,7 @@
  */
 
 const db = require('../server/db')
-const {User, Review, Order, productInstance, Product, Category, ProductCategory} = require('../server/db/models');
+const {User, Review, Order, productInstance, Product, Category} = require('../server/db/models');
 
 
 var Products = [
@@ -109,11 +109,11 @@ var ProductInstances = [
 ]
 
 var Orders = [
-  {isCart: false, userId: 1, status: 'Created'},
-  {isCart: false, userId: 2, status: 'Processing'},
-  {isCart: false, userId: 1, status: 'Created'},
-  {isCart: false, userId: 2, status: 'Cancelled'},
-  {isCart: false, userId: 1, status: 'Completed'},
+  {isCart: false, userId: 1, status: 'Created', information : {email:"a@a.com",address:"123 main st"}},
+  {isCart: false, userId: 2, status: 'Processing', information : {email:"d@a.com",address:"12345 address st"}},
+  {isCart: false, userId: 1, status: 'Created', information : {email:"c@a.com",address:"ABC Ave"}},
+  {isCart: false, userId: 2, status: 'Cancelled', information : {email:"b@a.com",address:"123 Ave"}},
+  {isCart: false, userId: 1, status: 'Completed', information : {email:"a@a.com",address:"Main St"}},
   {isCart: true, userId: 1},
   {isCart: true, userId: 2},
 ]
@@ -141,6 +141,21 @@ var Categories = [
     {name: 'Swimming'},
 ]
 
+var Reviews = [
+  {content: 'A great purchase', stars: 5, productId: 1, userId: 1},
+  {content: 'A great purchase', stars: 3, productId: 1, userId: 2},
+  {content: 'Not a great purchase', stars: 4, productId: 1, userId: 2},
+  {content: 'A great purchase', stars: 5, productId: 1, userId: 1},
+  {content: 'Not a great purchase', stars: 3, productId: 2, userId: 1},
+  {content: 'A great purchase', stars: 2, productId: 3, userId: 1},
+  {content: 'A great purchase', stars: 5, productId: 4, userId: 1},
+  {content: 'A great purchase', stars: 3, productId: 2, userId: 1},
+  {content: 'A great purchase', stars: 4, productId: 2, userId: 1},
+  {content: 'A great purchase', stars: 5, productId: 7, userId: 1},
+  {content: 'A great purchase', stars: 5, productId: 7, userId: 1},
+  {content: 'A great purchase', stars: 5, productId: 9, userId: 1},
+]
+
 async function seed () {
   await db.sync({force: true});
   console.log('db synced!')
@@ -158,18 +173,15 @@ async function seed () {
     let category = await Category.findOne({
         where: {name: obj.sportType}});
     product.addCategory(category);
-    // category.addProduct(product);
   }
 
-//   Users.forEach(async user => {
-//       await User.create(user);
-//   })
 
   await User.create(Users[0])
   await User.create(Users[1])
   await User.create(Users[2])
 
   await Order.bulkCreate(Orders)
+  await Review.bulkCreate(Reviews)
 
   await productInstance.bulkCreate(ProductInstances);
 

@@ -60,38 +60,6 @@ Product.findByName = function(name) {
   })
 }
 
-// Product.beforeBulkCreate()
-// Product.beforeCreate(product => {
-//     Category.findOne({where: {name:product.sportType}})
-//     .then(category => {
-//       category.addProduct(product);
-//     })
-// })
-
-// Product.afterBulkCreate(products => {
-//   for (const product of products) {
-//     Category.findOne({
-//       where:
-//       {name:product.sportType}
-//     })
-//     .then(category => {
-//       console.log("line 61 product: ", product);
-//       console.log("line 62 category: ", category.name);
-//       category.addProduct(product);
-//     })
-//   }
-// })
-
-
-// Product.searchbyCategory = function(category) {
-//   return Product.findAll(
-//     {
-//       where: {
-//           sportType: category
-//       }
-//   })
-// }
-
 Product.prototype.createInstance = function(priceDiff=0, orderId=null, quantity=1) {
   //- 1 from quantity?
   console.log("creating product instance with price: ", parseFloat(this.price + priceDiff), orderId, quantity);

@@ -52,7 +52,6 @@ class SingleProduct extends Component {
 	}
 
 	handleClick(){
-		console.log("handleClick: 55");
 		if (!this.props.cart || Object.keys(this.props.cart).length == 0) {
 			this.props.addToCart(parseInt(this.props.match.params.id));
 		}

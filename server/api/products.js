@@ -4,7 +4,6 @@ const axios = require ('axios');
 const {isAdmin, isUser, SelforAdmin} = require('./security');
 
 router.get('/search/:term', (req, res, next) => {
-    console.log("req.params.term: ", req.params.term);
     Product.findByName(req.params.term).then(foundProducts => {
         res.json(foundProducts);
     })
@@ -110,7 +109,6 @@ router.put('/:id', isAdmin, async (req, res, next) => {
         },
     );
     await product.update(req.body);
-    console.log("req.body 89: ", req.body);
     if (req.body.categories && req.body.categories.length > 0) {
         req.body.categories.forEach(async categoryId => {
             var addCategory = await Category.findById(categoryId);
