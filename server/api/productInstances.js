@@ -48,10 +48,12 @@ router.get('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
     productInstance.findById(req.params.id)
     .then((instance) => {
-        instance.update(req.body)
-        .then(() => {
-            res.json(instance);
-        })
+        if (instance) {
+            instance.update(req.body)
+            .then(() => {
+                res.json(instance);
+            })
+        }
     })
 })
 

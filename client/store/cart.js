@@ -23,6 +23,7 @@ export const fetchCart = function(){
 
 //add product to cart
 export const addProductToCart = function(id){
+	console.log("addProductToCart 26");
 	return function thunk(dispatch) {
 		return axios.post('/api/session/cart', {
 			productId: id,
