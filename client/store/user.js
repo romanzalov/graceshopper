@@ -5,6 +5,7 @@ import history from '../history'
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 
 /**
  * INITIAL STATE
@@ -46,6 +47,14 @@ export const logout = () =>
         history.push('/login')
       })
       .catch(err => console.log(err))
+
+export const password = (password) =>
+  dispatch =>
+    axios.post('/auth/change-password', { password })
+      .then(res => {
+        console.log(res.data, password)
+      })
+      .catch(err => console.error(err))
 
 /**
  * REDUCER
