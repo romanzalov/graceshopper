@@ -34,7 +34,6 @@ export const editOrder = function(id, order){
 	return function thunk(dispatch) {
 		return axios.put(`/api/orders/${id}`, order)
 		.then(res => {
-			console.log('resdata', res.data)
 			dispatch(edit(res.data))
 		})
 		.catch(err => console.error(err))

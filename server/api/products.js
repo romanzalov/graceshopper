@@ -32,9 +32,9 @@ router.post('/', isAdmin, (req, res, next) => {
                 var addCategory = await Category.findById(categoryId);
                 addCategory.addProduct(product);
                 await addCategory.save();
-            })                
+                res.json(product);
+            })
         }
-        res.json(product);
     })
 })
 
