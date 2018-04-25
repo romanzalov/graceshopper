@@ -14,7 +14,7 @@ describe('User routes', () => {
 
   describe('/api/users/', () => {
     const codysEmail = 'cody@puppybook.com'
-
+    const isAdmin = true
     beforeEach(() => {
       return User.create({
         email: codysEmail
@@ -44,7 +44,7 @@ describe('User routes', () => {
 
     it('PUT /api/users/:id', () => {
       return request(app)
-        .put('/api/users/1')
+        .put('/api/users/1', isAdmin)
         .send({email: 'newtest@newemail.com'})
         .expect(200)
         .then(res => {

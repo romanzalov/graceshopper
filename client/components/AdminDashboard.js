@@ -38,12 +38,14 @@ class AdminDashboard extends Component {
 					{products.length ? products.map(product =>{
 						return (
 						<tr key={product.id}>
+							{products.categories &&
 							<td>{(product.categories.length == 1) ? (product.categories[0].name)
 								:
 								product.categories.map(category => {
 									return(category.name + " ")
 							})}
 							</td>
+						}
 							<td>{product.title}</td>
 							<td>{product.quantity}</td>
 							{product.availability ? <td>Available</td> : <td>Not Available</td>}

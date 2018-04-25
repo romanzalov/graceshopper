@@ -47,12 +47,12 @@ class AddProduct extends Component {
 							<b>Product Categories</b>
 							<div className="form-check">
 								{this.props.categories.map(category => {
-									return(
+									return (
 										<div key={category.id}>
-											<input 
-											onChange={(event) => this.setState({categories: true})}
-											value={category.id} 
-											name="categories" type="checkbox" className="form-check-input" id="exampleCheck1" />
+											<input
+												onChange={(event) => this.setState({ categories: true })}
+												value={category.id}
+												name="categories" type="checkbox" className="form-check-input" id="exampleCheck1" />
 											<label value={category.id} className="form-check-label" htmlFor="exampleCheck1">{category.name}</label>
 											<br />
 										</div>
@@ -66,10 +66,10 @@ class AddProduct extends Component {
 									<option>Not Available</option>
 								</select>
 							</div>
-							<button type="submit" 
-							className="btn btn-primary" 
-							style={{ "marginTop": "10px" }}
-							disabled={!this.state.categories}
+							<button type="submit"
+								className="btn btn-primary"
+								style={{ "marginTop": "10px" }}
+								disabled={!this.state.categories}
 							><b>Submit</b></button>
 						</div>
 					</div>
@@ -82,7 +82,7 @@ class AddProduct extends Component {
 
 const mapStateToProps = function (state) {
 	return {
-		categories:state.categories,
+		categories: state.categories,
 	}
 }
 
@@ -103,15 +103,14 @@ const mapDispatchToProps = function (dispatch, ownProps) {
 				}
 			})
 			const availability = event.target.availability.value === 'Available'
-			// const imgUrl
+			console.log('running')
 			dispatch(addProduct({
-				// sportType: 'Baseball', //for testing
 				title,
 				description,
 				quantity,
 				price,
 				availability,
-		        categories:categoryIDs,
+				categories: categoryIDs,
 			}))
 			ownProps.history.push('/admin-dashboard')
 		}

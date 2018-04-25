@@ -50,15 +50,6 @@ describe('Order routes', () => {
           expect(res.body.status).to.be.equal('Processing')
         })
     })
-  })
-
-  describe('/api/orders/:id', () => {
-    beforeEach(() => {
-      return Order.create({
-        isCart: true,
-        status: 'Processing'
-      })
-    })
 
     it('PUT /api/orders/:id', () => {
       return request(app)
