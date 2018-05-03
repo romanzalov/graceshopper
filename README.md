@@ -1,3 +1,1 @@
-Grace Hopper Workshop - FullStack Academy
-
-https://the-imports-sports.herokuapp.com/
+E-Commerce website selling Sports Producs
